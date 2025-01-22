@@ -38,9 +38,9 @@ export async function POST(request) {
         const token = jwt.sign(payload, process.env.SECRET_TOKEN, {expiresIn : '1h'});
         const response = NextResponse.json({message : 'Registration successfully', savedUser});
 
-        response.cookies.set("next-auth.session-token",token,{
-            httpOnly : true
-        });
+        // response.cookies.set("next-auth.session-token",token,{
+        //     httpOnly : true
+        // });
 
         return response;
     }catch(error){

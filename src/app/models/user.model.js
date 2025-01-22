@@ -13,11 +13,9 @@ const userSchema = new mongoose.Schema({
     },
     password : {
         type : String,
-        required : [true, "Please provide password"],
     },
     dateofBirth : {
         type : Date,
-        required : [true, "please provide date of birth"],
     },
     profileImage : {
         type : String,

@@ -3,7 +3,7 @@ import User from "@/app/models/user.model";
 import { connect } from "@/app/db/db.config";
 import bcrypt from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
     session : {
@@ -11,6 +11,10 @@ const handler = NextAuth({
         maxAge : 3600
     },
     providers : [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
         CredentialsProvider({
             name : "Credentials",
             credentials : {
@@ -37,6 +41,22 @@ const handler = NextAuth({
         })
     ],
     callbacks : {
+        async signIn({ account, profile }) {
+            if (account.provider === "google") {
+                console.log(`Google login with email :: ${profile.email} and name :: ${profile.name}`);
+                await connect();
+                const existingUser = await User.findOne({email : profile.email});
+                if(!existingUser){
+                    await User.create({
+                        username : profile.name,
+                        email : profile.email,
+                        isVerified : true
+                    })
+                }
+                return true;
+            }
+            return true;
+        },
         async jwt({token, user}){
             if(user){
                 token._id = user._id,
