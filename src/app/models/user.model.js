@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : [true, "Please provide password"],
     },
+    dateofBirth : {
+        type : Date,
+        required : [true, "please provide date of birth"],
+    },
     profileImage : {
         type : String,
         validate: {
