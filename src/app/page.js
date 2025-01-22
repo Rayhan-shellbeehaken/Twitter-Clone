@@ -58,6 +58,7 @@ export default function Login() {
       {/* <input placeholder='date of birth' type='date' onChange={(e) => setDateofBirth(e.target.value)}></input> */}
       <button onClick={handleSubmit}>Login</button>
       <button onClick={() => handleProvider("google")}>Login with google</button>
+      <button onClick={() => handleProvider("github")}>Login with github</button>
     </div>
   )
 }

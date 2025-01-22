@@ -4,6 +4,7 @@ import { connect } from "@/app/db/db.config";
 import bcrypt from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 
 const handler = NextAuth({
     session : {
@@ -11,6 +12,10 @@ const handler = NextAuth({
         maxAge : 3600
     },
     providers : [
+        GitHubProvider({
+            clientId: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET
+        }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -42,7 +47,7 @@ const handler = NextAuth({
     ],
     callbacks : {
         async signIn({ account, profile }) {
-            if (account.provider === "google") {
+            if(account.provider === "google") {
                 console.log(`Google login with email :: ${profile.email} and name :: ${profile.name}`);
                 await connect();
                 const existingUser = await User.findOne({email : profile.email});
@@ -53,7 +58,19 @@ const handler = NextAuth({
                         isVerified : true
                     })
                 }
-                return true;
+            }
+            if(account.provider === "github"){
+                console.log(`Github login with email :: ${profile.email} and name :: ${profile.name || profile.login}`);
+                await connect();
+                const existingUser = await User.findOne({email : profile.email});
+                if(!existingUser){
+                    await User.create({
+                        username : profile.name || profile.login,
+                        email : profile.email,
+                        isVerified : true,
+                        profileImage : profile.image
+                    })
+                }
             }
             return true;
         },
