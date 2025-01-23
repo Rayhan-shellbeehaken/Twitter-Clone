@@ -1,7 +1,7 @@
 .footer-container{
     position: absolute;
-    width: 90%;
-    bottom: 5%;
+    margin-top: 50px;
+    width: 95%;
     left : 50%;
     transform: translateX(-50%);
 }
@@ -9,7 +9,7 @@
 .footer{
     color : rgb(109, 109, 109);
     list-style: none;
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 200;
     display: flex;
     flex-wrap: wrap;

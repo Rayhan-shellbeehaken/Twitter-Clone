@@ -11,7 +11,7 @@ export default function Footer() {
             <ul className={styles.footer}>
                 {
                     items.map((item) => (
-                        <li>{item}</li>
+                        <li key={item}>{item}</li>
                     ))
                 }
             </ul>

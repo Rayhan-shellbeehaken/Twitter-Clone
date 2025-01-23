@@ -15,6 +15,7 @@ export default function Login() {
 
   return (
     <div className={`${styles.page} ${geologica.className}`}>
+
       <div className={styles["main-section"]}>
         <div className={styles["logo-container"]}>
           <Image src={xlogo} alt='xlogo' priority layout="intrinsic"/>
