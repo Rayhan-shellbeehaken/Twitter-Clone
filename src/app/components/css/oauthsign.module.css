@@ -1,0 +1,10 @@
+.oauth-form{
+    display : flex;
+    flex-direction : column;
+    margin-top: 4%;
+    margin-bottom: 3%;
+}
+
+.oauth-form > button > p{
+    padding: 0 5px;
+}

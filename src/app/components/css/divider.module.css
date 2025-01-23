@@ -1,0 +1,16 @@
+.divider-container{
+    display : flex;
+    align-items : center;
+    justify-content : center;
+}
+
+.divider-container hr{
+    flex-grow : 1;
+    border: none;
+    border-top: 1px solid rgb(63, 63, 63);
+}
+
+.divider-container span{
+    padding : 0 5px;
+    color : white;
+}

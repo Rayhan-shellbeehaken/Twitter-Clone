@@ -1,0 +1,22 @@
+.footer-container{
+    position: absolute;
+    width: 90%;
+    bottom: 5%;
+    left : 50%;
+    transform: translateX(-50%);
+}
+
+.footer{
+    color : rgb(109, 109, 109);
+    list-style: none;
+    font-size: 12.5px;
+    font-weight: 200;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer > li{
+    padding: 4px 6px;
+}
