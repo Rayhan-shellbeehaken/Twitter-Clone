@@ -9,6 +9,9 @@ export default async function Home() {
 
     if(!session?.user) redirect('/');
 
+    console.log("Printing session.user");
+    console.log(session?.user);
+
     return (
         <div>
             <h1>{session?.user?.email}</h1>

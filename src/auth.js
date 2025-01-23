@@ -38,7 +38,7 @@ export const {
                     if(!user){
                         throw new Error("No user found :(");
                     }
-                    const isValid = await bcrypt.compare(credentials.password, user.password);
+                    const isValid = bcrypt.compare(credentials.password, user.password);
                     if(!isValid){
                         throw new Error("Wrong credentials :(");
                     }
@@ -55,35 +55,43 @@ export const {
             if(account.provider === "google") {
                 console.log(`Google login with email :: ${profile.email} and name :: ${profile.name}`);
                 await connect();
-                const existingUser = await User.findOne({email : profile.email});
-                if(!existingUser){
-                    await User.create({
-                        username : profile.name,
+                let user = await User.findOne({email : profile.email});
+                if(!user){
+                    user = await User.create({
+                        username : profile.name || "Google user",
                         email : profile.email,
                         isVerified : true
                     })
                 }
+                account.user = user;
             }
             if(account.provider === "github"){
                 console.log(`Github login with email :: ${profile.email} and name :: ${profile.name || profile.login}`);
                 await connect();
-                const existingUser = await User.findOne({email : profile.email});
-                if(!existingUser){
-                    await User.create({
+                let user = await User.findOne({email : profile.email});
+                if(!user){
+                    user = await User.create({
                         username : profile.name || profile.login,
                         email : profile.email,
                         isVerified : true,
                         profileImage : profile.image
                     })
                 }
+                account.user = user
             }
             return true;
         },
-        async jwt({token, user}){
+        async jwt({token, user, account}){
             if(user){
                 token._id = user._id,
                 token.username = user.username,
                 token.email = user.email
+            }
+
+            if (account?.user) {
+                token._id = account.user._id;
+                token.username = account.user.username;
+                token.email = account.user.email;
             }
             return token;
         },
