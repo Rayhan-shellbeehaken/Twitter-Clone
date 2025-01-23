@@ -1,33 +1,20 @@
-"use client"
 import React from 'react';
-import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react'
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
+import { doLogout } from '../helpers/authentication';
 
-export default function Home() {
-    const router = useRouter();
-    const { data: session, status } = useSession();
-    const onSignOut = async() => {
-        await signOut({
-            redirect: false
-        });
-        router.push("/");
-    }
+export default async function Home() {
+    
+    const session = await auth();
 
-    if(status === "loading"){
-        return <div>Loading...</div>
-    }
+    if(!session?.user) redirect('/');
 
-    if(!session){
-        return <div>No session available.</div>
-    }
     return (
         <div>
-            <h1>{session.user?.username}</h1>
-            <h1>{session.user?._id}</h1>
-            <h1>{session.user?.email}</h1>
-
-            <button onClick={onSignOut}>Logout</button>
+            <h1>{session?.user?.email}</h1>
+            <form action={doLogout}>
+                <button type='submit'>Logout</button>
+            </form>
         </div>
     )
 }
