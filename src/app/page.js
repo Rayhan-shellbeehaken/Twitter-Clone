@@ -15,24 +15,23 @@ export default function Login() {
 
   return (
     <div className={`${styles.page} ${geologica.className}`}>
+      <div className={styles.container}>
+          <div className={styles.image}>
+            <Image src={xlogo} alt='xlogo' priority layout="intrinsic"/>
+          </div>
+          <div className={styles["right-container"]}>
+            <div className={styles.title}>
+              <h1>Happening now</h1>
+              <h3>Join today.</h3>
+            </div>
 
-      <div className={styles["main-section"]}>
-        <div className={styles["logo-container"]}>
-          <Image src={xlogo} alt='xlogo' priority layout="intrinsic"/>
-        </div>
-        <div className={styles.title}>
-          <h1>Happening now</h1>
-          <h3>Join today.</h3>
-        </div>
-        <div className={styles["action-container"]}>
-          <OAuthSign/>
-          <Divider/>
-          <SignUp/>
-          <p className={styles["terms-condition"]}>By signing up, you agree to the <span>Terms of Service</span> and <span>Privacy Policy</span>, including <span>Cookie Use.</span></p>
-          <CredentialSign/>  
-        </div>    
+            <OAuthSign/>
+            <Divider/>
+            <SignUp/>
+            <p className={styles["terms-condition"]}>By signing up, you agree to the <span>Terms of Service</span> and <span>Privacy Policy</span>, including <span>Cookie Use.</span></p>
+            <CredentialSign/> 
+          </div>
       </div>
-
       <Footer/>
     </div>
   )

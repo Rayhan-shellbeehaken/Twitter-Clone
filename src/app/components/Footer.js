@@ -7,7 +7,7 @@ export default function Footer() {
         'Marketing', 'X for Business', 'Developers', 'Directory', 'Settings', '© 2025 X Corp'
     ]
     return (
-        <div className={styles["footer-container"]}>
+        <div>
             <ul className={styles.footer}>
                 {
                     items.map((item) => (
