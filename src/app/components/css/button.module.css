@@ -11,3 +11,7 @@
     border-width: 0px;
     cursor: pointer;
 }
+
+.margin{
+    margin : 20px 0;
+}

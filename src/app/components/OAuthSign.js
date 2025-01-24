@@ -5,18 +5,22 @@ import styles from './css/oauthsign.module.css';
 import buttonStyle from './css/button.module.css';
 import { doLogin } from '../helpers/authentication';
 
-export default function OAuthSign() {
+export default function OAuthSign({inForm}) {
   return (
     <>
         <form action={doLogin} className={styles["oauth-form"]}>
-            <button className={buttonStyle.button} name='action' value='google'>
+            <button className={`${buttonStyle.button} ${inForm ? buttonStyle.margin : ''}`} name='action' value='google'>
               <FcGoogle />
-              <p>Sign up with Google</p> 
+              <p>
+                {inForm ? 'Sign in with Google' : 'Sign up with Google'}
+              </p>
             </button>
 
             <button className={buttonStyle.button} name='action' value='github'>
               <FaGithub />
-              <p>Sign up with github</p>
+              <p>
+                {inForm ? 'Sign in with Github' : 'Sign up with Github'}
+              </p>
             </button>
         </form>
     </>
