@@ -52,8 +52,7 @@
     .page{
         display: flex;
         flex-direction: column;
-        align-items: center;
-        
+        align-items: center;   
     }
     .container{
         flex-direction: column;
@@ -61,12 +60,34 @@
         align-items: flex-start;
         max-width: 600px;
         padding-right: 100px;
-        padding-top: 35px;
+        padding-left : 40px;
+        padding-top: 65px;
         padding-bottom: 45px;
         height: 100%;
     }
 
     .image{
         width: 40px;
+    }
+}
+
+@media screen and (max-width : 500px) {
+
+    .container{
+        padding-right: 0px;
+    }
+
+    .title{
+        width: 100%;
+        word-break: break-word;
+        white-space: normal;
+    }
+    .title h1{
+        font-size : 2.75rem;
+    }
+    
+    .title h3{
+        font-size: 1.5rem;
+        margin-top : 35px;
     }
 }
