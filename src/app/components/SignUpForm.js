@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import signInStyle from './css/signinform.module.css';
 import styles from './css/signupform.module.css';
 import { RxCross2 } from "react-icons/rx"; 
@@ -7,8 +8,24 @@ import xlogo from '../../../public/images/xlogo.png';
 import InputBox from './InputBox';
 import inputBoxStyle from './css/inputbox.module.css'
 import SelectorInput from './SelectorInput';
+import width from './css/width.module.css';
+import daysDeclaration from '../helpers/birthdate';
 
 export default function SignUpForm() {
+    const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});
+
+    const handleChange = (type, event) => {
+        console.log(event.target.value);
+        if(type === 'Month'){
+            daysDeclaration(event.target.value,dateofBirth.Year);
+        }else if(type === "Year"){
+            daysDeclaration(dateofBirth.Month,event.target.value);
+        }
+        setDateofBirth((prevState) => ({
+            ...prevState,
+            [type] : event.target.value
+        }))
+    }
 
     return (
         <div className={signInStyle.container}>
@@ -35,8 +52,10 @@ export default function SignUpForm() {
                     <div className={styles["date-of-birth-container"]}>
                         <h3>Date of birth</h3>
                         <p>This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
-                        <div>
-                            <SelectorInput/>
+                        <div className={styles["date-of-birth"]}>
+                            <SelectorInput width={width["width-200"]} label="Month" onChange={(e) => handleChange("Month",e)}/>
+                            <SelectorInput width={width["width-85"]} label="Day" onChange={(e) => handleChange("Date",e)}/>
+                            <SelectorInput width={width["width-150"]} label="Year" onChange={(e) => handleChange("Year",e)}/>
                         </div>
                     </div>
                 </form>

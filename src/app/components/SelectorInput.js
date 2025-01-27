@@ -3,18 +3,27 @@ import React from 'react'
 import styles from './css/selectorinput.module.css';
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { useRef } from 'react';
+import { Months, Days, Years } from '../helpers/birthdate';
 
-export default function SelectorInput() {
-    const selectRef = useRef(null);
-
+export default function SelectorInput({width, label, onChange}) {
+    let options;
+    if(label === "Month") options = Months;
+    else if(label === "Day") options = Days;
+    else if(label === "Year") options = Years;
     return (
-        <div className={styles["selector-container"]}>
-            <select id="month" className={styles.selector} ref={selectRef}>
-                <option value="1">January</option>
-                <option value="2">February</option>
+        <div className={`${styles["selector-container"]} ${width}`}>
+            <select id="select" className={styles.selector} onChange={onChange}>
+                { label === "Month" ?
+                    options.map((option) => (
+                        <option key={option.name} value={option.name}>{option.name}</option>
+                    )) :
+                    options.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                    ))
+                }
             </select>
             <RiArrowDropDownLine className={styles["dropdown-icon"]}/>
-            <label htmlFor='month' className={styles.label}>Month</label>
+            <label htmlFor='select' className={styles.label}>{label}</label>
         </div>
     )
 }
