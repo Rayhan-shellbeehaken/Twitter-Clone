@@ -6,10 +6,9 @@
 
 .input{
     background-color: transparent;
-    padding: 15px 10px 10px 10px;
+    padding: 25px 10px 10px 10px;
     width: 100%;
-    /* padding : 15px; */
-    border : none;
+    outline: none;
     border: 0.5px solid rgb(63, 63, 63);
     color: white;
     font-size: 16px;
@@ -18,9 +17,18 @@
 .label{
     position: absolute;
     color : rgb(63, 63, 63);
-    transition: all 0.3s ease;
+    top : 50%;
+    left : 12%;
+    transform: translate(-12%, -50%);
+    transition: 0.3s;
 }
 
-.input:focus + .label{
-    transform: translateX(20px);
+.input:focus{
+    border: 0.5px solid #00B2FF;
+}
+
+.input:focus~label{
+    top : 25%;
+    font-size: 14px;
+    color : #00B2FF;
 }

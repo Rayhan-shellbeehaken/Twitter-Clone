@@ -5,8 +5,8 @@ export default function InputBox() {
 
     return (
         <div className={styles["input-box-container"]}>
-            {/* <label className={styles.label}>E-mail</label> */}
-            <input className={styles.input} placeholder='Email'></input>
+            <input className={styles.input} id='email'></input>
+            <label className={styles.label} htmlFor='email'>email or username</label>
         </div>
     )
 }
