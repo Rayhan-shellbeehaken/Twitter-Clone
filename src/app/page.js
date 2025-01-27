@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import Image from 'next/image';
 import xlogo from '../../public/images/xlogo.png';
@@ -9,13 +10,16 @@ import SignUp from './components/SignUp';
 import CredentialSign from './components/CredentialSign';
 import Footer from './components/Footer';
 import SignInForm from './components/SignInForm';
+import { useAppContext } from './store/store';
 
 const geologica = Geologica({subsets : ["latin"], weight : ["100", "200", "600"]});
 
 export default function Login() {
 
+  const { popUp } = useAppContext();
+
   return (
-    <div className={`${styles.page} ${geologica.className}`}>
+    <div className={`${styles.page} ${geologica.className} ${popUp ? styles["background-color"] : ''}`}>
       <SignInForm/>
       <div className={styles.container}>
           <div className={styles.image}>
