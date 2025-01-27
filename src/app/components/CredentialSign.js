@@ -10,7 +10,7 @@ export default function CredentialSign() {
   return (
     <div className={styles["credentials-signin"]}>
         <h2>Already have an account?</h2>
-        <button className={buttonStyle.button} onClick={showPopUp}>Sign in</button>
+        <button className={`${buttonStyle.button} ${styles.hover}`} onClick={showPopUp}>Sign in</button>
     </div>
   )
 }

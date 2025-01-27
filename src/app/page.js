@@ -20,7 +20,7 @@ export default function Login() {
   const { popUp, signUpPop } = useAppContext();
 
   return (
-    <div className={`${styles.page} ${geologica.className} ${popUp ? styles["background-color"] : ''}`}>
+    <div className={`${styles.page} ${geologica.className} ${popUp || signUpPop ? styles["background-color"] : ''}`}>
       <SignInForm/>
       <SignUpForm/>
       <div className={styles.container}>

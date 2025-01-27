@@ -10,6 +10,7 @@ export default function SignUp() {
     event.preventDefault();
     showSignUp();
   }
+  
   return (
     <>
         <form className={styles["signup-form"]}>
