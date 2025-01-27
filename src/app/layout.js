@@ -1,5 +1,5 @@
 import "./globals.css";
-import { SessionProvider } from 'next-auth/react';
+import AppWrapper from "./store/store";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,7 +10,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="background">
-        {children}
+        <AppWrapper>
+          {children}
+        </AppWrapper>
       </body>
     </html>
   );
