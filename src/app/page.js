@@ -10,6 +10,7 @@ import SignUp from './components/SignUp';
 import CredentialSign from './components/CredentialSign';
 import Footer from './components/Footer';
 import SignInForm from './components/SignInForm';
+import SignUpForm from './components/SignUpForm';
 import { useAppContext } from './store/store';
 
 const geologica = Geologica({subsets : ["latin"], weight : ["100", "200", "600"]});
@@ -21,6 +22,7 @@ export default function Login() {
   return (
     <div className={`${styles.page} ${geologica.className} ${popUp ? styles["background-color"] : ''}`}>
       <SignInForm/>
+      <SignUpForm/>
       <div className={styles.container}>
           <div className={styles.image}>
             <Image src={xlogo} alt='xlogo' priority layout="intrinsic"/>

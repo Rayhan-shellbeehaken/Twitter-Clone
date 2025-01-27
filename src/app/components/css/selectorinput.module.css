@@ -1,0 +1,44 @@
+.selector-container{
+    position: relative;
+    width: 200px;
+}
+
+.selector{
+    width: 100%;
+    padding: 30px 10px 5px 7px;
+    font-size: 17px;
+    outline: none;
+    border: 0.5px solid rgb(120, 116, 116);
+    color : rgb(121, 117, 117);
+    background-color: black;
+    border-radius: 5px;
+    appearance: none;
+}
+
+.label{
+    position: absolute;
+    left : 10px;
+    top : 10px;
+    font-size: 14px;
+    color : rgb(121, 117, 117);
+}
+
+.selector:focus{
+    border: 0.5px solid #00B2FF;
+    color : white;
+}
+
+.selector:focus~label{
+    color: #00B2FF;
+}
+
+.dropdown-icon{
+    position: absolute;
+    font-size: 3rem;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color : rgb(121, 117, 117);
+    cursor: pointer;
+    pointer-events: none;
+}

@@ -1,0 +1,33 @@
+.form-container{
+    padding: 0 80px;
+}
+
+.title{
+    width: 100%;
+    font-size: 1.25rem;
+    margin-top : 30px;
+}
+
+.form{
+    width: 100%;
+    margin: 10px 0;
+}
+
+.input-box{
+    margin : 30px 0;
+}
+
+.date-of-birth-container h3{
+    font-size: 16px;
+    margin: 6px 0;
+}
+
+.date-of-birth-container p{
+    font-size: 14px;
+    color: rgb(98, 98, 98);
+}
+
+.date-of-birth-container div{
+    margin : 15px 0;
+}
+

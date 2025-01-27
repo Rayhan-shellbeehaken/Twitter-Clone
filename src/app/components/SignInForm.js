@@ -15,8 +15,8 @@ export default function SignInForm() {
 
     return (
         popUp && 
-        <div className={styles.container} onClick={hidePopUp}>
-            <div className={styles.cross} >
+        <div className={styles.container}>
+            <div className={styles.cross} onClick={hidePopUp}>
                 <RxCross2 />
             </div>
             <div className={styles["form-container"]}>

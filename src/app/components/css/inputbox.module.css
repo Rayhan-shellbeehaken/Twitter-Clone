@@ -1,6 +1,6 @@
 .input-box-container{
-    width: 60%;
-    padding: 0 3%;
+    width: 100%;
+    padding: 0 0%;
     position: relative;
 }
 
@@ -18,8 +18,8 @@
     position: absolute;
     color : rgb(63, 63, 63);
     top : 50%;
-    left : 12%;
-    transform: translate(-12%, -50%);
+    left : 12px;
+    transform: translateY(-50%);
     transition: 0.3s;
 }
 
