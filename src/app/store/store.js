@@ -6,6 +6,7 @@ const AppContext = createContext();
 
 export default function AppWrapper({ children }) {
     const [popUp, setPopUp] = useState(false);
+    const [signUpPop, setSignUpPop] = useState(false);
 
     const showPopUp = () => {
         setPopUp(true);
@@ -14,7 +15,18 @@ export default function AppWrapper({ children }) {
         setPopUp(false);
     }
 
-    const store = {popUp, showPopUp, hidePopUp};
+    const showSignUp = () => {
+        setSignUpPop(true);
+    }
+
+    const hideSignUp = () => {
+        setSignUpPop(false);
+    }
+
+    const store = {
+        popUp, showPopUp, hidePopUp,
+        signUpPop, showSignUp, hideSignUp
+    };
 
     return (
         <AppContext.Provider value={store}>

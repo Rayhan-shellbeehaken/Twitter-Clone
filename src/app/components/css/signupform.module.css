@@ -1,3 +1,15 @@
+.container{
+    position: absolute;
+    color: white;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    width: 600px;
+    padding: 12px 0 12px;
+    border-radius: 20px;
+}
+
 .form-container{
     padding: 0 80px;
 }
@@ -35,5 +47,13 @@
 
 .date-of-birth-container div{
     margin : 15px 0;
+}
+
+.next-button{
+    width: 100%;
+    margin-top : 90px;
+    padding : 16px;
+    background-color: rgb(138, 136, 136);
+    font-size: 18px;
 }
 

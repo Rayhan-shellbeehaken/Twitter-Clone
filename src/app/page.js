@@ -17,7 +17,7 @@ const geologica = Geologica({subsets : ["latin"], weight : ["100", "200", "600"]
 
 export default function Login() {
 
-  const { popUp } = useAppContext();
+  const { popUp, signUpPop } = useAppContext();
 
   return (
     <div className={`${styles.page} ${geologica.className} ${popUp ? styles["background-color"] : ''}`}>
