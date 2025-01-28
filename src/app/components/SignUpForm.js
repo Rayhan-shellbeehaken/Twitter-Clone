@@ -62,7 +62,7 @@ export default function SignUpForm() {
                         </div>
                     </div>
 
-                    <button className={`${buttonStyle.button} ${styles["next-button"]}`} disabled>Next</button>
+                    <button className={`${buttonStyle.button} ${styles["next-button"]}`}>Register</button>
                 </form>
                 
             </div>

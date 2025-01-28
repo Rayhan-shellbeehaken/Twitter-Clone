@@ -28,17 +28,35 @@ export const {
         CredentialsProvider({
             name : "Credentials",
             credentials : {
+                name : {label : "Name", type : "text"}, // for auto login
                 email : { label : "Email" , type : "email" },
-                password : { label : "Password", type : "password" }
+                password : { label : "Password", type : "password" },
+                dateofbirth : {label : "Date of Birth", type : "Date"} // for auto login
             },
             async authorize(credentials) {
                 try{
                     await connect();
+                    // if(credentials.name || credentials.dateofbirth){
+                    //     const user = await User.findOne({email : credentials.email});
+                    //     if(user){
+                    //         throw new Error("User already Exist! :(");
+                    //     }
+                    //     const salt = await bcrypt.genSalt(10);
+                    //     const hashedPassword = bcrypt.hash(credentials.password, salt);
+                    //     const savedUser = await User.create({
+                    //         username : credentials.name,
+                    //         email : credentials.email,
+                    //         password : hashedPassword,
+                    //         dateofBirth : credentials.dateofbirth
+                    //     })
+                    //     return savedUser;
+                    // }
+                    console.log("EMAIL :: "+credentials.email);
                     const user = await User.findOne({email : credentials.email});
                     if(!user){
                         throw new Error("No user found :(");
                     }
-                    const isValid = bcrypt.compare(credentials.password, user.password);
+                    const isValid = await bcrypt.compare(credentials.password, user.password);
                     if(!isValid){
                         throw new Error("Wrong credentials :(");
                     }

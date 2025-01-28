@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image';
 import xlogo from '../../../public/images/xlogo.png';
 import styles from './css/signinform.module.css';
@@ -7,8 +7,18 @@ import OAuthSign from './OAuthSign';
 import Divider from './Divider';
 import InputBox from './InputBox';
 import buttonStyle from './css/button.module.css';
+import { useAppContext } from '../store/store';
 
 export default function SignFirstPhase({setPhaseComplete}) {
+
+    const {userSign, setUserSign} = useAppContext();
+
+    const onChange = (type, value) => {
+        setUserSign((prev)=>({
+            ...prev,
+            [type] : value
+        }))
+    }
 
     const clickedNext = (event) => {
         event.preventDefault();
@@ -25,9 +35,9 @@ export default function SignFirstPhase({setPhaseComplete}) {
             </div>
             <OAuthSign inForm={true}/>
             <Divider inForm={true}/>
-            <InputBox label="Email"/>
+            <InputBox label="Email" onChange={onChange}/>
             <form className={styles["button-form"]}>
-                <button className={buttonStyle.button} onClick={clickedNext}>Next</button>
+                <button className={buttonStyle.button} onClick={clickedNext} disabled={userSign.Email === ''}>Next</button>
                 <button className={`${buttonStyle.button} ${styles["forget-password"]}`}>Forgot password?</button>
             </form>
             <div className={styles["sign-up-message"]}>

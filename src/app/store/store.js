@@ -7,6 +7,7 @@ const AppContext = createContext();
 export default function AppWrapper({ children }) {
     const [popUp, setPopUp] = useState(false);
     const [signUpPop, setSignUpPop] = useState(false);
+    const [userSign, setUserSign] = useState({Email : '', Password : ''});
 
     const showPopUp = () => {
         setPopUp(true);
@@ -25,7 +26,8 @@ export default function AppWrapper({ children }) {
 
     const store = {
         popUp, showPopUp, hidePopUp,
-        signUpPop, showSignUp, hideSignUp
+        signUpPop, showSignUp, hideSignUp,
+        userSign, setUserSign
     };
 
     return (

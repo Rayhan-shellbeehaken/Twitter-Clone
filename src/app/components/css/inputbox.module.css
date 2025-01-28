@@ -27,8 +27,19 @@
     border: 0.5px solid #00B2FF;
 }
 
-.input:focus~label{
+.disabled-input{
+    background-color: rgb(74, 74, 74);
+    pointer-events: none;
+}
+
+.input:focus~label,
+.input:valid~label,
+.disabled-input~label{
     top : 25%;
     font-size: 14px;
     color : #00B2FF;
+}
+
+.input:disabled{
+    background-color: rgb(75, 74, 74);
 }
