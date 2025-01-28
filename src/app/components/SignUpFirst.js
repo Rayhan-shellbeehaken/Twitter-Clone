@@ -9,9 +9,30 @@ import SelectorInput from './SelectorInput';
 import width from './css/width.module.css';
 import daysDeclaration from '../helpers/birthdate';
 import buttonStyle from './css/button.module.css';
+import { useAppContext } from '../store/store';
 
 export default function SignUpFirst({setPhaseComplete}) {
     const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});
+    const { userSignUp, setUserSignUp } = useAppContext();
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const username = formData.get("username");
+        const email = formData.get("email");
+        const dateofbirth = `${dateofBirth.Month} ${dateofBirth.Day}, ${dateofBirth.Year}`;
+
+        setUserSignUp((prev) => ({
+            ...prev,
+            name : username,
+            email : email,
+            dateofBirth : dateofBirth
+        }))
+
+        if(username && email && dateofbirth.length >= 8){
+            setPhaseComplete(true);
+        }
+    }
 
     const handleChange = (type, event) => {
         console.log(event.target.value);
@@ -34,7 +55,7 @@ export default function SignUpFirst({setPhaseComplete}) {
             <div className={styles.title}>
                 <h2>Create your account</h2>
             </div>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={onSubmit}>
                 <div className={`${inputBoxStyle["input-box-container"]} ${styles["input-box"]}`}>
                     <input className={inputBoxStyle.input} name="username" id='name' type='text' required></input>
                     <label className={inputBoxStyle.label} htmlFor='name'>Name</label>
@@ -54,7 +75,7 @@ export default function SignUpFirst({setPhaseComplete}) {
                     </div>
                 </div>
 
-                <button onClick={() => setPhaseComplete(true)} className={`${buttonStyle.button} ${styles["next-button"]}`}>Next</button>
+                <button type='submit' className={`${buttonStyle.button} ${styles["next-button"]}`}>Next</button>
             </form>
             
         </div>

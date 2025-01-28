@@ -9,6 +9,7 @@ export default function AppWrapper({ children }) {
     const [signUpPop, setSignUpPop] = useState(false);
     const [userSign, setUserSign] = useState({Email : '', Password : ''});
     const [alertVisible, setAlertVisible] = useState({visible : false, type : '', message : ''});
+    const [userSignUp, setUserSignUp] = useState({name : '', email : '', password : '', dateofbirth : ''});
 
     const toggleAlert = (type, message) => {
         setAlertVisible({visible : true, type : type, message : message});
@@ -36,7 +37,8 @@ export default function AppWrapper({ children }) {
         popUp, showPopUp, hidePopUp,
         signUpPop, showSignUp, hideSignUp,
         userSign, setUserSign,
-        alertVisible, toggleAlert
+        alertVisible, toggleAlert,
+        userSignUp, setUserSignUp
     };
 
     return (

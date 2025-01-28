@@ -2,7 +2,6 @@
 import React from 'react'
 import styles from './css/selectorinput.module.css';
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { useRef } from 'react';
 import { Months, Days, Years } from '../helpers/birthdate';
 
 export default function SelectorInput({width, label, onChange}) {
@@ -12,7 +11,7 @@ export default function SelectorInput({width, label, onChange}) {
     else if(label === "Year") options = Years;
     return (
         <div className={`${styles["selector-container"]} ${width}`}>
-            <select id="select" className={styles.selector} onChange={onChange}>
+            <select id="select" className={styles.selector} onChange={onChange} required>
                 { label === "Month" ?
                     options.map((option) => (
                         <option key={option.name} value={option.name}>{option.name}</option>
