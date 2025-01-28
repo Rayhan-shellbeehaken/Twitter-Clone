@@ -12,6 +12,12 @@
     cursor: pointer;
 }
 
+.button:disabled{
+    background-color: rgb(123, 123, 123);
+    color: black;
+    cursor: default;
+}
+
 .margin{
     margin : 20px 0;
 }

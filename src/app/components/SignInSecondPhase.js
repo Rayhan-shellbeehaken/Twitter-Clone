@@ -28,8 +28,6 @@ export default function SignInSecondPhase() {
             <div className={styles["signup-text"]}>
                 <p>Don't have an account? <span>Sign up</span></p>
             </div>
-            
-            
         </div>
     )
 }

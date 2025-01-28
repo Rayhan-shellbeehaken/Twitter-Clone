@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './css/signinform.module.css';  
 import { RxCross2 } from "react-icons/rx"; 
 import { useAppContext } from '../store/store';
@@ -8,15 +8,26 @@ import SignInSecondPhase from './SignInSecondPhase';
 
 export default function SignInForm() {
     const {popUp, hidePopUp} = useAppContext();
+    const [phaseComplete, setPhaseComplete] = useState(false);
+
+    const minimize = () => {
+        setPhaseComplete(false);
+        hidePopUp();
+    }
 
     return (
         popUp && 
-        <div className={styles.container}>
-            <div className={styles.cross} onClick={hidePopUp}>
+        <div className={`${styles.container} ${phaseComplete ? '' : styles["extra-padding"]}`}>
+            <div className={styles.cross} onClick={minimize}>
                 <RxCross2 />
             </div>
-            {/* <SignFirstPhase/> */}
-            <SignInSecondPhase/>
+            {
+                phaseComplete ? (
+                    <SignInSecondPhase/>
+                ) : (
+                    <SignFirstPhase setPhaseComplete={setPhaseComplete}/>
+                )
+            }
         </div>
     )
 }

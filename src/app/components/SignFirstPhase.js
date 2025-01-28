@@ -8,7 +8,12 @@ import Divider from './Divider';
 import InputBox from './InputBox';
 import buttonStyle from './css/button.module.css';
 
-export default function SignFirstPhase() {
+export default function SignFirstPhase({setPhaseComplete}) {
+
+    const clickedNext = (event) => {
+        event.preventDefault();
+        setPhaseComplete(true);
+    }
 
     return (
         <div className={styles["form-container"]}>
@@ -20,9 +25,9 @@ export default function SignFirstPhase() {
             </div>
             <OAuthSign inForm={true}/>
             <Divider inForm={true}/>
-            <InputBox/>
+            <InputBox label="Email"/>
             <form className={styles["button-form"]}>
-                <button className={buttonStyle.button}>Next</button>
+                <button className={buttonStyle.button} onClick={clickedNext}>Next</button>
                 <button className={`${buttonStyle.button} ${styles["forget-password"]}`}>Forgot password?</button>
             </form>
             <div className={styles["sign-up-message"]}>
