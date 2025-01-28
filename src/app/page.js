@@ -40,7 +40,7 @@ export default function Login() {
             <CredentialSign/> 
           </div>
       </div>
-      <Footer/>
+      {!popUp && !signUpPop && <Footer />}
     </div>
   )
 }

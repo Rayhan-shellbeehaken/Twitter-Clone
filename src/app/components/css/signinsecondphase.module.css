@@ -40,3 +40,10 @@
 .signup-text span{
     color : #009bde;
 }
+
+
+@media screen and (max-width: 615px) {
+    .title{
+        margin-top: 130px;
+    }
+}
