@@ -1,0 +1,71 @@
+.password-info{
+    font-size: 16px;
+    color : rgb(63,63,63);
+}
+
+.form{
+    margin-top: 30px;
+    width: 100%;
+}
+
+.input-box-container{
+    width: 100%;
+    padding: 0 0%;
+    position: relative;
+}
+
+.input{
+    background-color: transparent;
+    padding: 35px 10px 10px 10px;
+    width: 100%;
+    outline: none;
+    border: 0.5px solid rgb(63, 63, 63);
+    color: white;
+    font-size: 16px;
+}
+
+.label{
+    position: absolute;
+    color : rgb(63, 63, 63);
+    top : 50%;
+    left : 12px;
+    transform: translateY(-50%);
+    transition: 0.3s;
+}
+
+.eye{
+    position: absolute;
+    right: 15px;
+    bottom : 1px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.input:focus{
+    border: 0.5px solid #00B2FF;
+}
+
+.input:focus~label,
+.input:valid~label{
+    top : 25%;
+    font-size: 14px;
+    color : #00B2FF;
+}
+
+.info-text{
+    margin-top: 220px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    color : rgb(115, 115, 115);
+}
+
+.info-text span{
+    color : #00B2FF;
+}
+
+.button{
+    width: 100%;
+    padding: 18px;
+    margin-top : 20px;
+    margin-bottom : 20px;
+}
