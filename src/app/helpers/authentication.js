@@ -5,21 +5,30 @@ import { signIn, signOut } from "@/auth";
 export async function doLogin(formData) {
     const action = formData.get('action');
     console.log(action);
-    if(action === "credentials"){
-        const email = formData.get('Email');
-        const password = formData.get('Password');
+    await signIn(action, { redirectTo : "/home"});
+}
 
-        console.log("EMAIL :: "+email);
-        console.log("PASSWORD :: "+password);
+export async function doCredentialLogin(formData){
+    const email = formData.get('Email');
+    const password = formData.get('Password');
+    const action = formData.get('action');
 
-        await signIn(action, {
-            redirectTo : "/home",
+    console.log("EMAIL :: "+email);
+    console.log("PASSWORD :: "+password);
+    console.log("ACTION  :: "+action);
+
+    try{
+        const response = await signIn("credentials", {
             email,
-            password
-        })
-    }
-    else{
-        await signIn(action, { redirectTo : "/home"});
+            password,
+            redirect : false,
+        });
+        console.log(response);
+        return response;
+    }catch(error){
+        console.log("ERROR : ");
+        console.log(error);
+        throw error;
     }
     
 }
