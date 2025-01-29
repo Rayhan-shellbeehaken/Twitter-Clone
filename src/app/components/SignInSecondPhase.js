@@ -10,10 +10,14 @@ import buttonStyle from './css/button.module.css';
 import { useAppContext } from '../store/store';
 import { doCredentialLogin } from '../helpers/authentication';
 import { useRouter } from 'next/navigation';
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+import { useState } from 'react';
 
 export default function SignInSecondPhase() {
 
-    const {userSign, setUserSign, toggleAlert} = useAppContext();
+    const {userSign, setUserSign, toggleAlert, hidePopUp} = useAppContext();
+    const [eyeOpen, setEyeOpen] = useState(true);
     const router = useRouter();
 
     async function onSubmit(event) {
@@ -24,6 +28,7 @@ export default function SignInSecondPhase() {
             const response = await doCredentialLogin(formData);
             toggleAlert('success', 'Success to login');
             setTimeout(() => {
+                hidePopUp();
                 router.push('/home');
             },1000);
 
@@ -51,7 +56,20 @@ export default function SignInSecondPhase() {
             </div>
             <form onSubmit={onSubmit} className={width["width-full"]}>
                 <InputBox label="Email" margin={margin["margin-30"]} value={userSign.Email} disabled={true}/>
-                <InputBox label="Password" onChange={onChange}/>
+                
+                <div className={styles["input-box-container"]}>
+                    <input className={styles.input} name="Password" id='password' type={eyeOpen ? "password" : "text"} onChange={(e) => onChange("Password", e.target.value)} required></input>
+                    <label className={styles.label} htmlFor='password'>Password</label>
+                    <div className={styles.eye} onClick={() => setEyeOpen(!eyeOpen)}>
+                        {
+                            eyeOpen ? (
+                                <FaEye/>
+                            ) : (
+                                <FaEyeSlash/>
+                            )
+                        }
+                    </div>
+                </div>
                 <div className={styles["forget-password"]}>
                     <p>Forgot password?</p>
                 </div>
