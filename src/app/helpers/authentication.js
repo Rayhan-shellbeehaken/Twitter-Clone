@@ -11,11 +11,6 @@ export async function doLogin(formData) {
 export async function doCredentialLogin(formData){
     const email = formData.get('Email');
     const password = formData.get('Password');
-    const action = formData.get('action');
-
-    console.log("EMAIL :: "+email);
-    console.log("PASSWORD :: "+password);
-    console.log("ACTION  :: "+action);
 
     try{
         const response = await signIn("credentials", {
@@ -31,6 +26,33 @@ export async function doCredentialLogin(formData){
         throw error;
     }
     
+}
+
+export async function doCredentialSignUp(formData) {
+    const name = formData.get('username');
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const dateofbirth = formData.get('dateofbirth');
+
+    console.log("USERNAME :: "+name);
+    console.log("EMAIL :: "+email);
+    console.log("PASSWORD :: "+password);
+    console.log("DATE OF BIRTH :: "+dateofbirth);
+
+    try{
+        const response = await signIn("credentials",{
+            name,
+            email,
+            password,
+            dateofbirth,
+            redirect : false
+        })
+        return response;
+    }catch(error){
+        console.log("SIGN UP ERROR");
+        console.log(error);
+        throw error;
+    }
 }
 
 export async function doLogout() {

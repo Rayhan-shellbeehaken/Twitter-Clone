@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 import signInStyle from './css/signinform.module.css';
 import signUpStyle from './css/signupform.module.css';
@@ -7,11 +8,39 @@ import xlogo from '../../../public/images/xlogo.png';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import buttonStyle from './css/button.module.css';
+import { useAppContext } from '../store/store';
+import { doCredentialSignUp } from '../helpers/authentication';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpSecond() {
 
     const [eyeOpen, setEyeOpen] = useState(true);
     const [password, setPassword] = useState("");
+
+    const router = useRouter();
+
+    const { userSignUp, toggleAlert, hideSignUp } = useAppContext();
+
+    async function onSubmit(event){
+        event.preventDefault();
+        try{
+            const formData = new FormData(event.currentTarget);
+            formData.set("email", userSignUp.email);
+            formData.set("username", userSignUp.name);
+            formData.set("dateofbirth",userSignUp.dateofbirth);
+
+            const response = await doCredentialSignUp(formData);
+            toggleAlert('success', 'Success to register');
+            setTimeout(()=>{
+                hideSignUp();
+                router.push('/home');
+            },1000);
+
+        }catch(error){
+            console.log("ERROR APPEARED");
+            toggleAlert('error', 'Failed to register');
+        }
+    }
 
     return (
         <div className={`${signInStyle["form-container"]} ${signUpStyle["form-container"]}`}>
@@ -22,9 +51,9 @@ export default function SignUpSecond() {
                 <h2>You'll need a password</h2>
                 <p className={styles["password-info"]}>Make sures it's 8 characters or more.</p>
             </div>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={onSubmit}>
                 <div className={styles["input-box-container"]}>
-                    <input className={styles.input} id='password' type={eyeOpen ? "password" : "text"} onChange={(e) => setPassword(e.target.value)} required></input>
+                    <input className={styles.input} name="password" id='password' type={eyeOpen ? "password" : "text"} onChange={(e) => setPassword(e.target.value)} required></input>
                     <label className={styles.label} htmlFor='password'>Password</label>
                     <div className={styles.eye} onClick={() => setEyeOpen(!eyeOpen)}>
                         {

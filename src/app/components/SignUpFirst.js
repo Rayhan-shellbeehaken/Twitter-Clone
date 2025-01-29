@@ -13,20 +13,20 @@ import { useAppContext } from '../store/store';
 
 export default function SignUpFirst({setPhaseComplete}) {
     const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});
-    const { userSignUp, setUserSignUp } = useAppContext();
+    const { setUserSignUp } = useAppContext();
 
     const onSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const username = formData.get("username");
         const email = formData.get("email");
-        const dateofbirth = `${dateofBirth.Month} ${dateofBirth.Day}, ${dateofBirth.Year}`;
+        const dateofbirth = dateofBirth.Month + " " + dateofBirth.Day + "," + dateofBirth.Year;
 
         setUserSignUp((prev) => ({
             ...prev,
             name : username,
             email : email,
-            dateofBirth : dateofBirth
+            dateofbirth : dateofbirth
         }))
 
         if(username && email && dateofbirth.length >= 8){
@@ -70,7 +70,7 @@ export default function SignUpFirst({setPhaseComplete}) {
                     <p>This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
                     <div className={styles["date-of-birth"]}>
                         <SelectorInput width={width["width-200"]} label="Month" onChange={(e) => handleChange("Month",e)}/>
-                        <SelectorInput width={width["width-85"]} label="Day" onChange={(e) => handleChange("Date",e)}/>
+                        <SelectorInput width={width["width-85"]} label="Day" onChange={(e) => handleChange("Day",e)}/>
                         <SelectorInput width={width["width-150"]} label="Year" onChange={(e) => handleChange("Year",e)}/>
                     </div>
                 </div>
