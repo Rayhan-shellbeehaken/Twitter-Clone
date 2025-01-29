@@ -6,12 +6,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  signIn,
-  signOut,
-} = NextAuth({
+export const authOptions = {
   session: {
     strategy: "jwt",
     maxAge: 3600,
@@ -28,10 +23,10 @@ export const {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        name: { }, // for auto login
+        name: { },
         email: { },
         password: { },
-        dateofbirth: { }, // for auto login
+        dateofbirth: { },
       },
       async authorize(credentials) {
         try {
@@ -138,4 +133,12 @@ export const {
     signIn: "/",
   },
   secret: process.env.SECRET_TOKEN,
-});
+};
+
+
+export const {
+  handlers: { GET, POST },
+  auth,
+  signIn,
+  signOut,
+} = NextAuth(authOptions);
