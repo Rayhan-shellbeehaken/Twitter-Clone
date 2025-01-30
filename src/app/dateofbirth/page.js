@@ -6,8 +6,13 @@ import Image from 'next/image';
 import xlogo from '../../../public/images/xlogo.png';
 import DateOfBirth from '../components/DateOfBirth';
 import {birthDate} from '../helpers/birthdate';
+import { useRouter } from 'next/navigation';
+import { useAppContext } from '../store/store';
 
 export default function page() {
+
+    const router = useRouter();
+    const { toggleAlert } = useAppContext();
 
     async function handleSubmit(event) {
         event.preventDefault()
@@ -19,9 +24,11 @@ export default function page() {
             }
             const response = await axios.patch('/api/user',data);
             console.log(response);
-
+            toggleAlert("success", "User registration successfully");
+            router.push('/home');
             
         }catch(error){
+            toggleAlert("error", "User registration failed");
             console.log("ERROR IN UPTADING DATE OF BIRTH");
             console.log(error);
         }

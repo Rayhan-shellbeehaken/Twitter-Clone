@@ -58,7 +58,7 @@ export const authOptions = {
               throw new Error("Wrong credentials :(");
             }
             return user;
-            }
+          }
           
         } catch (error) {
           console.log(error);
@@ -81,6 +81,9 @@ export const authOptions = {
             email: profile.email,
             isVerified: true,
           });
+          account.isNewUser = true;
+        }else{
+          account.isNewUser = false;
         }
         account.user = user;
       }
@@ -104,17 +107,19 @@ export const authOptions = {
       }
       return true;
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user, account, isNewUser }) {
       if (user) {
-        (token._id = user._id),
-          (token.username = user.username),
-          (token.email = user.email);
+        token._id = user._id;
+        token.username = user.username;
+        token.email = user.email;
+        token.isNewUser = isNewUser;
       }
 
       if (account?.user) {
         token._id = account.user._id;
         token.username = account.user.username;
         token.email = account.user.email;
+        token.isNewUser = account.isNewUser;
       }
       return token;
     },
@@ -124,6 +129,7 @@ export const authOptions = {
           _id: token._id,
           username: token.username,
           email: token.email,
+          isNewUser : token.isNewUser
         };
       }
       return session;

@@ -6,6 +6,7 @@ import buttonStyle from './css/button.module.css';
 import { doLogin } from '../helpers/authentication';
 
 export default function OAuthSign({inForm}) {
+
   return (
     <>
         <form action={doLogin} className={styles["oauth-form"]}>

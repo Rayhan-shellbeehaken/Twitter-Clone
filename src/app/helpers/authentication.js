@@ -5,7 +5,7 @@ import { signIn, signOut } from "@/auth";
 export async function doLogin(formData) {
     const action = formData.get('action');
     console.log(action);
-    await signIn(action, { redirectTo : "/dateofbirth"});
+    const response = await signIn(action);
 }
 
 export async function doCredentialLogin(formData){

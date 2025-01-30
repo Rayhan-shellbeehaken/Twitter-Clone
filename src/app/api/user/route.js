@@ -9,8 +9,6 @@ connect();
 export async function PATCH(request) {
     try{
         const reqBody = await request.json();
-        console.log("REQUEST BODY : ");
-        console.log(reqBody);
         const session = await auth();
         console.log("SESSION :: ");
         console.log(session?.user);
