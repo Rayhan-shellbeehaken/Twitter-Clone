@@ -11,7 +11,7 @@ export default function SelectorInput({width, label, onChange}) {
     else if(label === "Year") options = Years;
     return (
         <div className={`${styles["selector-container"]} ${width}`}>
-            <select id="select" className={styles.selector} onChange={onChange} required>
+            <select id="select" name={label} className={styles.selector} onChange={onChange} required>
                 { label === "Month" ?
                     options.map((option) => (
                         <option key={option.name} value={option.name}>{option.name}</option>

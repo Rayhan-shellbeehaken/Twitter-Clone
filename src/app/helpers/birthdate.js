@@ -40,4 +40,14 @@ export default function daysDeclaration(monthName, year){
     if(leapYear && monthName === "February") Days.push(29);
 }
 
+export function birthDate(formData){
+    const date = formData.get("Day");
+    const month = formData.get("Month")
+    const year = formData.get("Year");
+    const birthDate = new Date(`${month} ${date}, ${year}`);
+    const formattedDate = birthDate.toISOString().split("T")[0];
+
+    return formattedDate;
+}
+
 export {Days, Months, Years};

@@ -9,20 +9,17 @@ connect();
 export async function PATCH(request) {
     try{
         const reqBody = await request.json();
-        console.log("FULL REQUEST ------------------->");
-        console.log(request);
-
+        console.log("REQUEST BODY : ");
+        console.log(reqBody);
         const session = await auth();
         console.log("SESSION :: ");
-        console.log(session);
-        const token = await getToken(request);
-        console.log("TOKEN :: "+token);
+        console.log(session?.user);
+
         if(!session?.user){
-            return NextResponse.json({message : 'Login first', token},{status : 400});
+            return NextResponse.json({message : 'Login first', session},{status : 400});
         }
         const id = session?.user._id;
         
-
         const user = await User.findByIdAndUpdate(id, reqBody, {
             new : true,
             runValidators : true,
@@ -30,11 +27,12 @@ export async function PATCH(request) {
 
         return NextResponse.json({
             message : 'Successfully Updated',
-            user,
+            user
         },{status : 200});
 
     }catch(error){
         console.log("FAILED TO UPDATE");
+        console.log(error);
         return NextResponse.json({error : error.message},{status : 500});
     }
 }
