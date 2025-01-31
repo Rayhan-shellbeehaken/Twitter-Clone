@@ -28,7 +28,6 @@ export default function AppWrapper({ children }) {
     const showSignUp = () => {
         setSignUpPop(true);
     }
-
     const hideSignUp = () => {
         setSignUpPop(false);
     }

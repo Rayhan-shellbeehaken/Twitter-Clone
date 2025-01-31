@@ -11,7 +11,7 @@ import { useAppContext } from '../store/store';
 
 export default function SignFirstPhase({setPhaseComplete}) {
 
-    const {userSign, setUserSign} = useAppContext();
+    const {userSign, setUserSign, hidePopUp, showSignUp} = useAppContext();
 
     const onChange = (type, value) => {
         setUserSign((prev)=>({
@@ -23,6 +23,11 @@ export default function SignFirstPhase({setPhaseComplete}) {
     const clickedNext = (event) => {
         event.preventDefault();
         setPhaseComplete(true);
+    }
+
+    const toSignUp = () =>{
+        hidePopUp();
+        showSignUp();
     }
 
     return (
@@ -41,7 +46,7 @@ export default function SignFirstPhase({setPhaseComplete}) {
                 <button className={`${buttonStyle.button} ${styles["forget-password"]}`}>Forgot password?</button>
             </form>
             <div className={styles["sign-up-message"]}>
-                <p>Don't have an account? <span>Sign up</span></p>
+                <p>Don't have an account? <span onClick={toSignUp}>Sign up</span></p>
             </div>
         </div>
     )
