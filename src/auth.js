@@ -1,10 +1,9 @@
 import NextAuth from "next-auth";
-import User from "@/app/models/user.model";
-import { connect } from "@/app/db/db.config";
-import bcrypt from "bcryptjs";
+import { setToken, userAuthorize } from "./app/helpers/authmethods";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
+import { OAuthLogin } from "./app/helpers/authmethods";
 
 export const authOptions = {
   session: {
@@ -30,36 +29,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         try {
-          await connect();
-          if(credentials.name || credentials.dateofbirth){
-            const user = await User.findOne({email : credentials.email});
-            if(user){
-                throw new Error("User already Exist! :(");
-            }
-            const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(credentials.password, salt);
-            const savedUser = await User.create({
-                username : credentials.name,
-                email : credentials.email,
-                password : hashedPassword,
-                dateofBirth : credentials.dateofbirth
-            })
-            return savedUser;
-          }else{
-            const user = await User.findOne({ email: credentials.email });
-            if (!user) {
-              throw new Error("No user found :(");
-            }
-            const isValid = await bcrypt.compare(
-              credentials.password,
-              user.password
-            );
-            if (!isValid) {
-              throw new Error("Wrong credentials :(");
-            }
-            return user;
-          }
-          
+          return await userAuthorize(credentials);
         } catch (error) {
           console.log(error);
           return null;
@@ -69,56 +39,16 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      if (account.provider === "google") {
-        console.log(
-          `Google login with email :: ${profile.email} and name :: ${profile.name}`
-        );
-        await connect();
-        let user = await User.findOne({ email: profile.email });
-        if (!user) {
-          user = await User.create({
-            username: profile.name || "Google user",
-            email: profile.email,
-            isVerified: true,
-          });
-          account.isNewUser = true;
-        }else{
-          account.isNewUser = false;
-        }
-        account.user = user;
-      }
-      if (account.provider === "github") {
-        console.log(
-          `Github login with email :: ${profile.email} and name :: ${
-            profile.name || profile.login
-          }`
-        );
-        await connect();
-        let user = await User.findOne({ email: profile.email });
-        if (!user) {
-          user = await User.create({
-            username: profile.name || profile.login,
-            email: profile.email,
-            isVerified: true,
-            profileImage: profile.image,
-          });
-        }
-        account.user = user;
+      if (account.provider === "google" || account.provider === "github") {
+        await OAuthLogin();
       }
       return true;
     },
     async jwt({ token, user, account, isNewUser }) {
       if (user) {
-        token._id = user._id;
-        token.username = user.username;
-        token.email = user.email;
-        token.isNewUser = isNewUser;
-      }
-
-      if (account?.user) {
-        token._id = account.user._id;
-        token.username = account.user.username;
-        token.email = account.user.email;
+        token = setToken(token, user);
+      }else if(account?.user){
+        token = setToken(token, account?.user);
         token.isNewUser = account.isNewUser;
       }
       return token;
