@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
-import styles from './css/selectorinput.module.css';
+import styles from './selectorinput.module.css';
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { Months, Days, Years } from '../helpers/birthdate';
+import { Months, Days, Years } from '@/app/helpers/birthdate';
 
 export default function SelectorInput({width, label, onChange}) {
     let options;

@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
-import buttonStyle from './css/button.module.css';
-import styles from './css/signup.module.css';
-import { useAppContext } from '../store/store';
+import buttonStyle from '@/app/components/css/button.module.css';
+import styles from './signup.module.css';
+import { useAppContext } from '@/app/store/store';
 
 export default function SignUp() {
   const {showSignUp} = useAppContext();

@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import { setToken, userAuthorize } from "./app/helpers/authmethods";
+import { userAuthorize } from "./app/helpers/authmethods";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
@@ -39,16 +39,22 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      if (account.provider === "google" || account.provider === "github") {
-        await OAuthLogin();
+      if (account.provider === "google") {
+        await OAuthLogin(account, profile);
       }
       return true;
     },
     async jwt({ token, user, account, isNewUser }) {
       if (user) {
-        token = setToken(token, user);
-      }else if(account?.user){
-        token = setToken(token, account?.user);
+        token._id = user._id;
+        token.username = user.username;
+        token.email = user.email;
+        token.isNewUser = isNewUser;
+      }
+      if (account?.user) {
+        token._id = account.user._id;
+        token.username = account.user.username;
+        token.email = account.user.email;
         token.isNewUser = account.isNewUser;
       }
       return token;

@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
-import styles from './css/popup.module.css'; 
-import { useAppContext } from '../store/store';
+import styles from './popup.module.css'; 
+import { useAppContext } from '@/app/store/store';
 
 export default function Popup() {
     const types = {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
-import styles from './css/oauthsign.module.css';
-import buttonStyle from './css/button.module.css';
-import { doLogin } from '../helpers/authentication';
+import styles from './oauthsign.module.css';
+import buttonStyle from '@/app/components/css/button.module.css';
+import { doLogin } from '@/app/helpers/authentication';
 
 export default function OAuthSign({inForm}) {
 

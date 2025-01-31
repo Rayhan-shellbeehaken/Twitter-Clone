@@ -1,10 +1,10 @@
 "use client"
 import React from 'react'
-import SelectorInput from './SelectorInput';
+import SelectorInput from '@/app/components/selectorinput/SelectorInput';
 import width from '@/app/components/css/width.module.css';
 import { useState } from 'react';
-import daysDeclaration from '../helpers/birthdate';
-import styles from './css/dateofbirth.module.css';
+import daysDeclaration from '@/app/helpers/birthdate';
+import styles from './dateofbirth.module.css';
 
 export default function DateOfBirth() {
     const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});

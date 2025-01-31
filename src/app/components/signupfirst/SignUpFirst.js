@@ -1,15 +1,15 @@
 "use client"
 import React, { useState } from 'react'
-import signInStyle from './css/signinform.module.css';
-import styles from './css/signupform.module.css';
+import signInStyle from '@/app/components/signinform/signinform.module.css';
+import styles from '@/app/components/signupform/signupform.module.css';
 import Image from 'next/image';
-import xlogo from '../../../public/images/xlogo.png';
-import inputBoxStyle from './css/inputbox.module.css'
-import SelectorInput from './SelectorInput';
-import width from './css/width.module.css';
-import daysDeclaration from '../helpers/birthdate';
-import buttonStyle from './css/button.module.css';
-import { useAppContext } from '../store/store';
+import xlogo from '../../../../public/images/xlogo.png';
+import inputBoxStyle from '@/app/components/inputbox/inputbox.module.css'
+import SelectorInput from '@/app/components/selectorinput/SelectorInput';
+import width from '@/app/components/css/width.module.css';
+import daysDeclaration from '@/app/helpers/birthdate';
+import buttonStyle from '@/app/components/css/button.module.css';
+import { useAppContext } from '@/app/store/store';
 
 export default function SignUpFirst({setPhaseComplete}) {
     const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});

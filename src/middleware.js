@@ -7,6 +7,7 @@ export async function middleware(request) {
         const currentPath = request.nextUrl.pathname;
         console.log(currentPath);
         const token = await getToken({ req: request, secret: process.env.SECRET_TOKEN });
+        console.log(token);
         if(token && currentPath==='/'){
             if(token.isNewUser){
                 return NextResponse.redirect(new URL("/dateofbirth", request.url));

@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
-import styles from './css/credentialsign.module.css';
-import buttonStyle from './css/button.module.css';
-import { useAppContext } from '../store/store';
+import styles from './credentialsign.module.css';
+import buttonStyle from '@/app/components/css/button.module.css';
+import { useAppContext } from '@/app/store/store';
 
 export default function CredentialSign() {
   const { showPopUp } = useAppContext();

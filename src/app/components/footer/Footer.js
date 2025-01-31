@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './css/footer.module.css';
+import styles from './footer.module.css';
 
 export default function Footer() {
     const items = ['About', 'Download the X app', 'Help Center', 'Terms of Service', 'Privacy Policy', 

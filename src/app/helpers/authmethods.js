@@ -52,6 +52,7 @@ async function registration(credentials) {
 }
 
 export async function OAuthLogin(account, profile) {
+    
     try{
         await connect();
         let user = await User.findOne({ email: profile.email });
@@ -64,6 +65,7 @@ export async function OAuthLogin(account, profile) {
             userName = profile.login || profile.name;
             image = profile.image
         }
+        console.log("HELLO")
         if(!user){
             user = await User.create({
                 username: userName,
@@ -78,12 +80,4 @@ export async function OAuthLogin(account, profile) {
     }catch(error){
         throw error;
     }
-}
-
-export function setToken(token , user){
-    token._id = user._id;
-    token.username = user.username;
-    token.email = user.email;
-
-    return token;
 }

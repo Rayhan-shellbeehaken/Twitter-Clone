@@ -1,10 +1,10 @@
 "use client"
 import React, { useState } from 'react'
-import styles from './css/signinform.module.css';  
+import styles from './signinform.module.css';  
 import { RxCross2 } from "react-icons/rx"; 
-import { useAppContext } from '../store/store';
-import SignFirstPhase from './SignFirstPhase';
-import SignInSecondPhase from './SignInSecondPhase';
+import { useAppContext } from '@/app/store/store';
+import SignFirstPhase from '@/app/components/signfirstphase/SignFirstPhase';
+import SignInSecondPhase from '@/app/components/signinsecondphase/SignInSecondPhase';
 
 export default function SignInForm() {
     const {popUp, hidePopUp} = useAppContext();

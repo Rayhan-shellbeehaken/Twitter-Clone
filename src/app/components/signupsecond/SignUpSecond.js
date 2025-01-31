@@ -1,15 +1,15 @@
 "use client"
 import React, { useState } from 'react'
-import signInStyle from './css/signinform.module.css';
-import signUpStyle from './css/signupform.module.css';
-import styles from './css/signupsecond.module.css';
+import signInStyle from '@/app/components/signinform/signinform.module.css';
+import signUpStyle from '@/app/components/signupform/signupform.module.css';
+import styles from './signupsecond.module.css';
 import Image from 'next/image';
-import xlogo from '../../../public/images/xlogo.png';
+import xlogo from '../../../../public/images/xlogo.png';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import buttonStyle from './css/button.module.css';
-import { useAppContext } from '../store/store';
-import { doCredentialSignUp } from '../helpers/authentication';
+import buttonStyle from '@/app/components/css/button.module.css';
+import { useAppContext } from '@/app/store/store';
+import { doCredentialSignUp } from '@/app/helpers/authentication';
 import { useRouter } from 'next/navigation';
 
 export default function SignUpSecond() {

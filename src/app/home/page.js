@@ -1,7 +1,7 @@
 import React from 'react';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { doLogout } from '../helpers/authentication';
+import { doLogout } from '@/app/helpers/authentication';
 
 export default async function Home() {
     

@@ -4,10 +4,10 @@ import axios from 'axios';
 import styles from './page.module.css';
 import Image from 'next/image';
 import xlogo from '../../../public/images/xlogo.png';
-import DateOfBirth from '../components/DateOfBirth';
-import {birthDate} from '../helpers/birthdate';
+import DateOfBirth from '@/app/components/dateofbirth/DateOfBirth';
+import {birthDate} from '@/app/helpers/birthdate';
 import { useRouter } from 'next/navigation';
-import { useAppContext } from '../store/store';
+import { useAppContext } from '@/app/store/store';
 
 export default function page() {
 
