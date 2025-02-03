@@ -39,7 +39,7 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      if (account.provider === "google") {
+      if (account.provider === "google" || account.provider === "github") {
         await OAuthLogin(account, profile);
       }
       return true;

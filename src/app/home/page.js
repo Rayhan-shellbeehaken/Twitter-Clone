@@ -2,6 +2,7 @@ import React from 'react';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { doLogout } from '@/app/helpers/authentication';
+import styles from './page.module.css'
 
 export default async function Home() {
     
@@ -13,11 +14,11 @@ export default async function Home() {
     console.log(session?.user);
 
     return (
-        <div>
-            <h1>{session?.user?.email}</h1>
+        <div className={styles.background}>
+            {/* <h1>{session?.user?.email}</h1>
             <form action={doLogout}>
                 <button type='submit'>Logout</button>
-            </form>
+            </form> */}
         </div>
     )
 }
