@@ -10,7 +10,8 @@ import { PiBookmarkSimpleBold } from "react-icons/pi";
 import { IoMdPeople } from "react-icons/io";
 import { PiXLogoBold } from "react-icons/pi";
 import { GiElectric } from "react-icons/gi";
-import { FaRegUser } from "react-icons/fa";
+// import { FaRegUser } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa6";
 import { CiCircleMore } from "react-icons/ci";
 import { RiMoreFill } from "react-icons/ri";
 
