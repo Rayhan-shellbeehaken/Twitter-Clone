@@ -3,10 +3,10 @@
     width: 100%;
     max-width: 250px;
     height: 100vh;
-    padding: 15px 0;
-    padding-right: 15px;
+    padding: 17px 0;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     position: relative;
 }
 
@@ -17,12 +17,13 @@
 }
 
 .menu-items{
+    width: 95%;
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     justify-content: space-around;
     list-style: none;
-    height: 85%;
+    height: 80%;
 }
 
 .menu-items > li > a{
@@ -36,8 +37,7 @@
 
 .menu-items > li > a > span{
     margin-left: 15px;
-    font-size: 22px;
-
+    font-size: 20px;
 }
 
 .menu-items > li{
@@ -63,13 +63,18 @@
     background-color: rgb(223, 223, 223);
 }
 
+.feather{
+    visibility: hidden;
+    font-size: 0px;
+}
+
 .profile{
     margin-top: 50px;
     display: flex;
     justify-content: space-between;
     align-items: start;
     position: absolute;
-    bottom: 15px;
+    bottom: 25px;
     width: 100%;
 }
 
@@ -95,3 +100,69 @@
     color: rgb(133, 132, 132)
 }
 
+@media screen and (max-width : 1279px) {
+
+    .sidemenu{
+        max-width: 70px;
+        align-items: center;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .image{
+        padding-left: 0;
+        width: 27px;
+    }
+
+    .menu-items{
+        align-items: center;
+        padding: 0;
+    }
+
+    .menu-items > li{
+        padding: 0px;
+    }
+
+    .menu-items > li > a{
+        font-size: 30px;
+    }
+
+    .menu-items > li > a > span{
+        font-size: 0px;
+        margin: 0px;
+    }
+
+    .button{
+        border-radius: 50%;
+        width: 78%;
+        padding: 15px;
+    }
+
+    .button > span{
+        font-size: 0px;
+    }
+    
+    .feather{
+        visibility: visible;
+        font-size: 20px;
+    }
+
+    .profile{
+        justify-content: center;
+    }
+
+    .profile-image{
+        width: 45px;
+    }
+
+    .profile-info{
+        visibility: hidden;
+        width: 0px;
+    }
+
+    .profile-more{
+        visibility: hidden;
+        width: 0px;
+    }
+}

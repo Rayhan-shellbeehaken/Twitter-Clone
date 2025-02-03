@@ -10,10 +10,10 @@ import { PiBookmarkSimpleBold } from "react-icons/pi";
 import { IoMdPeople } from "react-icons/io";
 import { PiXLogoBold } from "react-icons/pi";
 import { GiElectric } from "react-icons/gi";
-// import { FaRegUser } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import { CiCircleMore } from "react-icons/ci";
 import { RiMoreFill } from "react-icons/ri";
+import { BsFeather } from "react-icons/bs";
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -37,7 +37,10 @@ export default function Sidemenu() {
                 <li><Link href="#"><GiElectric/> <span>Verified Orgs</span></Link></li>
                 <li><Link href="#"><FaRegUser/> <span>Profile</span></Link></li>
                 <li><Link href="#"><CiCircleMore/> <span>More</span></Link></li>
-                <button className={styles.button}>Post</button>
+                <button className={styles.button}>
+                    <BsFeather className={styles.feather}/>
+                    <span>Post</span>
+                </button>
             </ul>
             
             <div className={styles.profile}>
@@ -48,7 +51,7 @@ export default function Sidemenu() {
                     <h3>Rayhan</h3>
                     <p>@_Rayhan66</p>
                 </div>
-                <div>
+                <div className={styles["profile-more"]}>
                     <RiMoreFill/>
                 </div>
             </div>
