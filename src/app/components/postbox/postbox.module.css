@@ -1,0 +1,96 @@
+.postbox-container{
+    color: white;
+    margin-top: 11%;
+    padding: 10px 10px;
+    display: flex;
+    border-bottom: 1px solid rgb(63,63,63);
+}
+
+.image{
+    width: 45px;
+}
+
+.image img{
+    border-radius: 50%;
+    background-color: green;
+}
+
+.right{
+    width: 100%;
+    padding: 0 5px;
+}
+
+.right textarea{
+    width: 100%;
+    word-wrap: break-word;
+    resize: none;
+    max-height: 120px;
+    font-size: 19px;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.right textarea :focus{
+    border-width: 0px;
+}
+
+.right textarea::-webkit-scrollbar{
+    width: 0px;
+}
+
+.right p{
+    color : #00B2FF;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 14px;
+    margin: 0px 7px 18px 7px;
+}
+
+.right > p > span{
+    margin-left: 5px;
+}
+
+.divider{
+    border: 1px solid rgb(63,63,63);
+    margin: 15px 0;
+}
+
+.attachment{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.attachment-left{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 22px;
+    width: 50%;
+    color: #00B2FF;
+}
+
+.attachment-right{
+    height: 100%;
+}
+
+.button{
+    width: 75px;
+    height: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+    border: none;
+}
+
+.button:disabled{
+    background-color: rgb(145, 144, 144);
+    color: black;
+}

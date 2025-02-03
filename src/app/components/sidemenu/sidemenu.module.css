@@ -11,7 +11,7 @@
 }
 
 .image{
-    width: 38px;
+    width: 32px;
     height: 5%;
     padding-left: 10px;
 }
@@ -78,8 +78,15 @@
     width: 95%;
 }
 
+.profile-left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .profile-image{
-    width: 50px;
+    width: 40px;
+    margin-right: 10px;
 }
 
 .profile-image img{
