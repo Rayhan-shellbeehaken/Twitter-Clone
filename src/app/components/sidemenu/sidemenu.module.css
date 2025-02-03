@@ -1,7 +1,7 @@
 .sidemenu{
     color: white;
     width: 100%;
-    max-width: 250px;
+    max-width: 275px;
     height: 100vh;
     padding: 17px 0;
     display: flex;
@@ -23,14 +23,14 @@
     align-items: flex-start;
     justify-content: space-around;
     list-style: none;
-    height: 80%;
+    height: 83%;
 }
 
 .menu-items > li > a{
     text-decoration: none;
     color: white;
     font-size: 28px;
-    font-weight: 400;
+    font-weight: 300;
     display: flex;
     align-items: center;
 }
@@ -50,8 +50,8 @@
 }
 
 .button{
-    width: 100%;
-    padding: 17px;
+    width: 90%;
+    padding: 15px;
     font-size: 18px;
     font-weight: bold;
     border-radius: 25px;
@@ -75,7 +75,7 @@
     align-items: start;
     position: absolute;
     bottom: 25px;
-    width: 100%;
+    width: 95%;
 }
 
 .profile-image{
@@ -135,7 +135,7 @@
 
     .button{
         border-radius: 50%;
-        width: 78%;
+        width: 50px;
         padding: 15px;
     }
 

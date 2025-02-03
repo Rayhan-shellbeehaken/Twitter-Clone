@@ -1,3 +1,18 @@
-.background{
-    background-color: blue;
+.page{
+    display: flex;
+    overflow-x: auto;
+    
+}
+
+.left{
+    width: 580px;
+    position: relative;
+    border-left: 1px solid rgb(63,63,63);
+    border-right: 1px solid rgb(63,63,63);
+}
+
+.right{
+    margin-left: 20px;
+    background-color: red;
+    width: 400px;
 }
