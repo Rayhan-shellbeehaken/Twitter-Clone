@@ -1,0 +1,1 @@
+import { connect } from "@/app/db/db.config";

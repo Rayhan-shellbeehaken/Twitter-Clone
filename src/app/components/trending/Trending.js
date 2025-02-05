@@ -32,7 +32,7 @@ export default function Trending() {
 
     return (
         <div className={styles.container}>
-            <h2>Whats happening?</h2>
+            <h2>Whats happening</h2>
             <div className={styles["trending-list"]}>
                 {
                     lists.map(list => (
