@@ -12,6 +12,7 @@
 }
 
 .image img{
+    width: 100%;
     border-radius: 50%;
     background-color: green;
 }
@@ -100,4 +101,19 @@
 .button:disabled{
     background-color: rgb(145, 144, 144);
     color: black;
+}
+
+@media screen and (max-width : 702px){
+    .attachment-left div:nth-child(4){
+        margin-right: 0px;
+        width: 0%;
+    }
+}
+
+@media screen and (max-width : 499px) {
+    .postbox-container{
+        visibility: hidden;
+        width: 0px;
+        height: 0px;
+    }
 }

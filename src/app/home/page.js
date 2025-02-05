@@ -11,7 +11,7 @@ export default async function Home() {
             <div className={styles.left}>
                 <Navbar/>
                 <PostBox/>
-                {/* <PostList/> */}
+                <PostList/>
             </div>
             {/* <div className={styles.right}>
                 <h1>This is right</h1>

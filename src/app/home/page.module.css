@@ -2,7 +2,8 @@
     display: flex;
     overflow-x: auto;
     background-color: aqua;
-    width: 50%;
+    max-width: 1000px;
+    width: 100%;
 }
 
 .left{

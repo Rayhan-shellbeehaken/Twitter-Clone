@@ -38,7 +38,7 @@ export default function PostBox() {
                         <div><IoImageOutline/></div>
                         <div><MdOutlineGifBox/></div>
                         <div><VscVscode/></div>
-                        <div><BiPoll/></div>
+                        <div><BiPoll className={styles.poll}/></div>
                         <div><MdOutlineEmojiEmotions/></div>
                         <div><RiCalendarScheduleLine/></div>
                         <div><IoLocationOutline/></div>
