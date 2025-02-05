@@ -16,4 +16,6 @@
 .right{
     margin-left: 20px;
     width: 37%;
+    padding: 0 5px;
+    padding-right: 15px;
 }

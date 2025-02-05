@@ -4,6 +4,7 @@ import Navbar from '../components/navbar/Navbar';
 import PostBox from '../components/postbox/PostBox';
 import PostList from '../components/postlist/PostList';
 import SearchBox from '../components/searchbox/SearchBox';
+import Subscribe from '../components/subscribe/Subscribe';
 
 export default async function Home() {
 
@@ -16,6 +17,7 @@ export default async function Home() {
             </div>
             <div className={styles.right}>
                 <SearchBox/>
+                <Subscribe/>
             </div>
         </div>
     )
