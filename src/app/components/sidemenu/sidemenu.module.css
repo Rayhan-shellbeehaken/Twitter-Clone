@@ -1,3 +1,9 @@
+.container{
+    width: 45%;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .sidemenu{
     color: white;
     width: 100%;
@@ -107,7 +113,12 @@
     color: rgb(133, 132, 132)
 }
 
-@media screen and (max-width : 1279px) {
+@media screen and (max-width : 900px) {
+
+    .container{
+        justify-content: flex-start;
+        width: 70px;
+    }
 
     .sidemenu{
         max-width: 70px;

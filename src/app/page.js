@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import xlogo from "../../public/images/xlogo.png";
+import xprofile from "../../public/images/xprofile.png"
 import styles from "@/app/page.module.css";
 import Divider from "@/app/components/divider/Divider";
 import { Geologica } from "next/font/google";
@@ -33,7 +33,7 @@ export default function Login() {
       <Popup />
       <div className={styles.container}>
         <div className={styles.image}>
-          <Image src={xlogo} alt="xlogo" priority layout="intrinsic" />
+          <Image src={xprofile} alt="xlogo" priority layout="intrinsic" />
         </div>
         <div className={styles["right-container"]}>
           <div className={styles.title}>

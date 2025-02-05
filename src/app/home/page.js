@@ -6,6 +6,7 @@ import PostList from '../components/postlist/PostList';
 import SearchBox from '../components/searchbox/SearchBox';
 import Subscribe from '../components/subscribe/Subscribe';
 import Trending from '../components/trending/Trending';
+import WhoToFollow from '../components/whotofollow/WhoToFollow';
 
 export default async function Home() {
 
@@ -20,6 +21,7 @@ export default async function Home() {
                 <SearchBox/>
                 <Subscribe/>
                 <Trending/>
+                <WhoToFollow/>
             </div>
         </div>
     )

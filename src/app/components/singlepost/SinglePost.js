@@ -9,7 +9,7 @@ import { CgLoadbarSound } from "react-icons/cg";
 import { PiBookmarkSimpleBold } from "react-icons/pi";
 import { RiShare2Line } from "react-icons/ri";
 import { IoIosStats } from "react-icons/io";
-import xlogo from '../../../../public/images/xlogo.png';
+import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 
 export default function SinglePost() {

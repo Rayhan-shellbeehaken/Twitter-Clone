@@ -9,7 +9,7 @@ import { BiPoll } from "react-icons/bi";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { IoLocationOutline } from "react-icons/io5";
-import xlogo from '../../../../public/images/xlogo.png';
+import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 
 export default function PostBox() {
