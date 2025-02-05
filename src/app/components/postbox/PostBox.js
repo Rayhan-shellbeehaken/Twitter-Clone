@@ -44,7 +44,7 @@ export default function PostBox() {
                         <IoLocationOutline/>
                     </div>
                     <div className={styles["attachment-right"]}>
-                        <button className={styles.button} disabled>Post</button>
+                        <button className={styles.button} disabled={!value}>Post</button>
                     </div>
                 </div>
             </form>
