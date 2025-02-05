@@ -1,7 +1,6 @@
 .page{
     display: flex;
     overflow-x: auto;
-    background-color: aqua;
     max-width: 1000px;
     width: 100%;
 }
@@ -16,6 +15,5 @@
 
 .right{
     margin-left: 20px;
-    background-color: red;
-    width: 400px;
+    width: 37%;
 }

@@ -3,6 +3,7 @@ import styles from './page.module.css'
 import Navbar from '../components/navbar/Navbar';
 import PostBox from '../components/postbox/PostBox';
 import PostList from '../components/postlist/PostList';
+import SearchBox from '../components/searchbox/SearchBox';
 
 export default async function Home() {
 
@@ -13,9 +14,9 @@ export default async function Home() {
                 <PostBox/>
                 <PostList/>
             </div>
-            {/* <div className={styles.right}>
-                <h1>This is right</h1>
-            </div> */}
+            <div className={styles.right}>
+                <SearchBox/>
+            </div>
         </div>
     )
 }
