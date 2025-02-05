@@ -45,6 +45,11 @@
     border-radius: 20px;
 }
 
+.post-image img{
+    width: 100%;
+    border-radius: 20px;
+}
+
 .elements{
     display: flex;
     justify-content: space-between;

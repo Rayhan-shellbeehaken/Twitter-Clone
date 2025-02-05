@@ -35,13 +35,13 @@ export default function PostBox() {
                 <hr className={styles.divider}/>
                 <div className={styles.attachment}>
                     <div className={styles["attachment-left"]}>
-                        <IoImageOutline/>
-                        <MdOutlineGifBox/>
-                        <VscVscode/>
-                        <BiPoll/>
-                        <MdOutlineEmojiEmotions/>
-                        <RiCalendarScheduleLine/>
-                        <IoLocationOutline/>
+                        <div><IoImageOutline/></div>
+                        <div><MdOutlineGifBox/></div>
+                        <div><VscVscode/></div>
+                        <div><BiPoll/></div>
+                        <div><MdOutlineEmojiEmotions/></div>
+                        <div><RiCalendarScheduleLine/></div>
+                        <div><IoLocationOutline/></div>
                     </div>
                     <div className={styles["attachment-right"]}>
                         <button className={styles.button} disabled={!value}>Post</button>

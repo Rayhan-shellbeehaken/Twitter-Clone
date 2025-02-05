@@ -1,9 +1,10 @@
 .postbox-container{
     color: white;
-    margin-top: 11%;
+    margin-top: 65px;
     padding: 10px 10px;
     display: flex;
     border-bottom: 1px solid rgb(63,63,63);
+    width: 100%;
 }
 
 .image{
@@ -69,10 +70,16 @@
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    font-size: 22px;
     width: 50%;
     color: #00B2FF;
+}
+
+.attachment-left > div{
+    height: 100%;
+    font-size: 22px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
 }
 
 .attachment-right{
