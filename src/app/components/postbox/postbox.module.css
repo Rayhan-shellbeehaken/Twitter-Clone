@@ -96,11 +96,13 @@
     font-weight: bold;
     outline: none;
     border: none;
+    cursor: pointer;
 }
 
 .button:disabled{
     background-color: rgb(145, 144, 144);
     color: black;
+    cursor: default;
 }
 
 @media screen and (max-width : 702px){

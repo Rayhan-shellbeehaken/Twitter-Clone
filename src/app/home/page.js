@@ -8,6 +8,7 @@ import Subscribe from '../components/subscribe/Subscribe';
 import Trending from '../components/trending/Trending';
 import WhoToFollow from '../components/whotofollow/WhoToFollow';
 import ProtectedLayout from '../layouts/protected/layout';
+import Popup from '../components/popup/Popup';
 
 export default async function Home() {
 
@@ -18,6 +19,7 @@ export default async function Home() {
                     <Navbar/>
                     <PostBox/>
                     <PostList/>
+                    <Popup/>
                 </div>
                 <div className={styles.right}>
                     <SearchBox/>

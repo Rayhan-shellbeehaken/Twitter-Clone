@@ -11,10 +11,13 @@ import { RiCalendarScheduleLine } from "react-icons/ri";
 import { IoLocationOutline } from "react-icons/io5";
 import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
+import axios from 'axios';
+import { useAppContext } from '@/app/store/store';
 
 export default function PostBox() {
     const textRef = useRef(null);
     const [value, setValue] = useState("");
+    const {toggleAlert} = useAppContext();
 
     useEffect(()=>{
         if(textRef.current){
@@ -24,13 +27,32 @@ export default function PostBox() {
         }
     },[value]);
 
+    const handleSubmit = async(event) =>{
+        event.preventDefault();
+        const data = new FormData();
+        data.append('postText',value);
+        try{
+            const response = await fetch('/api/tweets', {
+                method: 'POST',
+                body: data
+            });
+            const result = await response.json();
+            console.log(result);
+            toggleAlert("SUCCESS","Successfully posted");
+            setValue("");
+        }catch(error){
+            console.log("Error in posting tweet");
+            console.log(error);
+        }
+    }
+
     return (
         <div className={styles["postbox-container"]}>
             <div className={styles.image}>
                 <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
             </div>
-            <form className={styles.right}>
-                <textarea ref={textRef} onChange={(e)=>setValue(e.target.value)} placeholder='What is happening?!' required></textarea>
+            <form onSubmit={handleSubmit} className={styles.right}>
+                <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='What is happening?!' required></textarea>
                 <p> <FaEarthAmericas/> <span>Everyone can reply</span></p>
                 <hr className={styles.divider}/>
                 <div className={styles.attachment}>
@@ -44,7 +66,7 @@ export default function PostBox() {
                         <div><IoLocationOutline/></div>
                     </div>
                     <div className={styles["attachment-right"]}>
-                        <button className={styles.button} disabled={!value}>Post</button>
+                        <button type='submit' className={styles.button} disabled={!value}>Post</button>
                     </div>
                 </div>
             </form>
