@@ -1,8 +1,7 @@
 import "./globals.css";
 import AppWrapper from "./store/store";
 import { Geologica } from 'next/font/google';
-import { auth } from "@/auth";
-import Sidemenu from "./components/sidemenu/Sidemenu";
+import SidemenuServer from "./components/sidemenu/SidemenuServer";
 
 export const metadata = {
   title: "Create Next App",
@@ -12,13 +11,10 @@ export const metadata = {
 const geologica = Geologica({subsets : ["latin"], weight : ["100", "200", "300", "400", "500", "600"]});
 
 export default async function RootLayout({ children }) {
-  const session = await auth();
   return (
     <html lang="en">
       <body className={`${geologica.className} background`}>
-        {session?.user &&
-          <Sidemenu/>
-        }
+        <SidemenuServer/>
         <AppWrapper>
           {children}
         </AppWrapper>
