@@ -1,7 +1,6 @@
 import "./globals.css";
 import AppWrapper from "./store/store";
 import { Geologica } from 'next/font/google';
-import SidemenuServer from "./components/sidemenu/SidemenuServer";
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +13,6 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geologica.className} background`}>
-        {/* <SidemenuServer/> */}
         <AppWrapper>
           {children}
         </AppWrapper>
