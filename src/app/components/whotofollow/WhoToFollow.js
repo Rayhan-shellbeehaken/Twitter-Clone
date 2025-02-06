@@ -12,8 +12,8 @@ export default function WhoToFollow() {
         },
         {
             indx: 1,
-            username: "Elon Must",
-            accountName: "@elonmust"
+            username: "Elon Mask",
+            accountName: "@elonmusk"
         },
         {
             indx: 2,
