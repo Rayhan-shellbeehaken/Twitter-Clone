@@ -14,7 +14,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geologica.className} background`}>
-        <SidemenuServer/>
+        {/* <SidemenuServer/> */}
         <AppWrapper>
           {children}
         </AppWrapper>

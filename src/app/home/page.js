@@ -7,22 +7,26 @@ import SearchBox from '../components/searchbox/SearchBox';
 import Subscribe from '../components/subscribe/Subscribe';
 import Trending from '../components/trending/Trending';
 import WhoToFollow from '../components/whotofollow/WhoToFollow';
+import ProtectedLayout from '../layouts/protected/layout';
 
 export default async function Home() {
 
     return (
-        <div className={styles.page}>
-            <div className={styles.left}>
-                <Navbar/>
-                <PostBox/>
-                <PostList/>
+        <ProtectedLayout>
+            <div className={styles.page}>
+                <div className={styles.left}>
+                    <Navbar/>
+                    <PostBox/>
+                    <PostList/>
+                </div>
+                <div className={styles.right}>
+                    <SearchBox/>
+                    <Subscribe/>
+                    <Trending/>
+                    <WhoToFollow/>
+                </div>
             </div>
-            <div className={styles.right}>
-                <SearchBox/>
-                <Subscribe/>
-                <Trending/>
-                <WhoToFollow/>
-            </div>
-        </div>
+        </ProtectedLayout>
+        
     )
 }
