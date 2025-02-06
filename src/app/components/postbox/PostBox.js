@@ -9,6 +9,7 @@ import { BiPoll } from "react-icons/bi";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { IoLocationOutline } from "react-icons/io5";
+import { GoXCircleFill } from "react-icons/go";
 import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 import axios from 'axios';
@@ -16,8 +17,11 @@ import { useAppContext } from '@/app/store/store';
 
 export default function PostBox() {
     const textRef = useRef(null);
+    const fileRef = useRef(null);
     const [value, setValue] = useState("");
+    const [file, setFile] = useState("");
     const {toggleAlert} = useAppContext();
+    const [imagePreview, setImagePreview] = useState(null);
 
     useEffect(()=>{
         if(textRef.current){
@@ -27,23 +31,38 @@ export default function PostBox() {
         }
     },[value]);
 
+    useEffect(()=>{
+        if(file){
+            const reader = new FileReader();
+            reader.onloadend = () =>{
+                setImagePreview(reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    },[file]);
+
     const handleSubmit = async(event) =>{
         event.preventDefault();
         const data = new FormData();
         data.append('postText',value);
         try{
-            const response = await fetch('/api/tweets', {
-                method: 'POST',
-                body: data
+            const response = await axios.post('/api/tweets', data, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
             });
-            const result = await response.json();
-            console.log(result);
-            toggleAlert("SUCCESS","Successfully posted");
-            setValue("");
+            console.log(response.data);
+            toggleAlert("success","Successfully posted");
         }catch(error){
             console.log("Error in posting tweet");
+            toggleAlert("error","Successfully posted");
             console.log(error);
         }
+    }
+
+    const minimize = () =>{
+        setFile("");
+        setImagePreview(null);
     }
 
     return (
@@ -53,11 +72,20 @@ export default function PostBox() {
             </div>
             <form onSubmit={handleSubmit} className={styles.right}>
                 <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='What is happening?!' required></textarea>
+                <input type='file' ref={fileRef} onChange={(e)=>setFile(e.target.files[0])}></input>
+                {imagePreview &&
+                    <div className={styles["preview-image-container"]}>
+                        <div className={styles.cross} onClick={minimize}>
+                            <GoXCircleFill/>
+                        </div>
+                        <img src={imagePreview} className={styles["preview-image"]}></img>
+                    </div>
+                }
                 <p> <FaEarthAmericas/> <span>Everyone can reply</span></p>
                 <hr className={styles.divider}/>
                 <div className={styles.attachment}>
                     <div className={styles["attachment-left"]}>
-                        <div><IoImageOutline/></div>
+                        <div onClick={() => fileRef.current.click()}><IoImageOutline/></div>
                         <div><MdOutlineGifBox/></div>
                         <div><VscVscode/></div>
                         <div><BiPoll className={styles.poll}/></div>
@@ -66,7 +94,7 @@ export default function PostBox() {
                         <div><IoLocationOutline/></div>
                     </div>
                     <div className={styles["attachment-right"]}>
-                        <button type='submit' className={styles.button} disabled={!value}>Post</button>
+                        <button type='submit' className={styles.button} disabled={!value && !file}>Post</button>
                     </div>
                 </div>
             </form>
