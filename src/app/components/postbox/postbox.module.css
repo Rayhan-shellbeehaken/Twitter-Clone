@@ -1,8 +1,9 @@
 .postbox-container{
     color: white;
-    margin-top: 65px;
-    padding: 10px 10px;
+    padding: 10px 16px;
     display: flex;
+    border-left: 1px solid rgb(63,63,63);
+    border-right: 1px solid rgb(63,63,63);
     border-bottom: 1px solid rgb(63,63,63);
     width: 100%;
 }
@@ -139,5 +140,7 @@
         visibility: hidden;
         width: 0px;
         height: 0px;
+        margin: 0px;
+        padding: 0px;
     }
 }

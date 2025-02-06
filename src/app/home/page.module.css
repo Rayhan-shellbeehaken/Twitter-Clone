@@ -10,8 +10,8 @@
     width: 100%;
     max-width: 600px;
     position: relative;
-    border-left: 1px solid rgb(63,63,63);
-    border-right: 1px solid rgb(63,63,63);
+    /* border-left: 1px solid rgb(63,63,63);
+    border-right: 1px solid rgb(63,63,63); */
 }
 
 .right{

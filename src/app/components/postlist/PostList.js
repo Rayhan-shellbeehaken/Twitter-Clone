@@ -7,6 +7,7 @@ export default function PostList() {
     return (
         <div>
             <SinglePost/>
+            <SinglePost/>
         </div>
     )
 }
