@@ -45,6 +45,9 @@ export default function PostBox() {
         event.preventDefault();
         const data = new FormData();
         data.append('postText',value);
+        if(file){
+            data.append('postImage',file);
+        }
         try{
             const response = await axios.post('/api/tweets', data, {
                 headers: {
@@ -53,6 +56,8 @@ export default function PostBox() {
             });
             console.log(response.data);
             toggleAlert("success","Successfully posted");
+            setValue("");
+            minimize();
         }catch(error){
             console.log("Error in posting tweet");
             toggleAlert("error","Successfully posted");
@@ -71,7 +76,7 @@ export default function PostBox() {
                 <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
             </div>
             <form onSubmit={handleSubmit} className={styles.right}>
-                <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='What is happening?!' required></textarea>
+                <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='What is happening?!'></textarea>
                 <input type='file' ref={fileRef} onChange={(e)=>setFile(e.target.files[0])}></input>
                 {imagePreview &&
                     <div className={styles["preview-image-container"]}>

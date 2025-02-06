@@ -12,6 +12,8 @@ export async function addTweet(user,reqBody) {
         const tweet = await addNewTweet(postText,base64,user);
         return tweet;
     }
-    const tweet = await addNewTweet(postText, null, user);
-    return tweet;
+    else{
+        const tweet = await addNewTweet(postText, null, user);
+        return tweet;
+    }
 }
