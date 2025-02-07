@@ -9,6 +9,7 @@ import Trending from '../components/trending/Trending';
 import WhoToFollow from '../components/whotofollow/WhoToFollow';
 import ProtectedLayout from '../layouts/protected/layout';
 import Popup from '../components/popup/Popup';
+import TermsAndCondition from '../components/termsandcondition/TermsAndCondition';
 
 export default async function Home() {
 
@@ -26,6 +27,7 @@ export default async function Home() {
                     <Subscribe/>
                     <Trending/>
                     <WhoToFollow/>
+                    <TermsAndCondition/>
                 </div>
             </div>
         </ProtectedLayout>
