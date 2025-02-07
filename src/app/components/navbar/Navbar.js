@@ -1,9 +1,11 @@
 "use client"
 import React, { useState } from 'react'
 import styles from './navbar.module.css';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
     const [active, setActive] = useState(1);
+    const router = useRouter();
 
     const handleButtonClick = (event,value) =>{
         event.preventDefault();

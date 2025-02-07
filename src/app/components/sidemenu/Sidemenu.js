@@ -12,11 +12,12 @@ import { PiXLogoBold } from "react-icons/pi";
 import { GiElectric } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa6";
 import { CiCircleMore } from "react-icons/ci";
-import { RiMoreFill } from "react-icons/ri";
 import { BsFeather } from "react-icons/bs";
 
 import Image from 'next/image';
 import Link from 'next/link';
+import SideBarPopUp from '../sidebarpopup/SideBarPopUp';
+import SideBarProfile from '../sidebarprofile/SideBarProfile';
 
 export default function Sidemenu() {
 
@@ -43,22 +44,7 @@ export default function Sidemenu() {
                         <span>Post</span>
                     </button>
                 </ul>
-            
-                <div className={styles.profile}>
-                    <div className={styles["profile-left"]}>
-                        <div className={styles["profile-image"]}>
-                            <Image src={xlogo} alt='xlogo' priority layout='intrinsic'></Image>
-                        </div>
-                        <div className={styles["profile-info"]}>
-                            <h3>Rayhan</h3>
-                            <p>@_Rayhan66</p>
-                        </div>
-                    </div>
-                    
-                    <div className={styles["profile-more"]}>
-                        <RiMoreFill/>
-                    </div>
-                </div>
+                <SideBarProfile/>
             </div>
         </div>
         
