@@ -25,6 +25,7 @@
     width: 100%;
     text-align: left;
     padding: 15px 10px;
+    cursor: pointer;
 }
 
 .container button:hover{

@@ -1,11 +1,12 @@
 import React from 'react'
 import styles from './sidebarpopup.module.css';
+import { doLogout } from '@/app/helpers/authentication';
 
 export default function SideBarPopUp() {
     return (
-        <div className={styles.container}>
+        <form action={doLogout} className={styles.container}>
             <button>Add an existing account</button>
-            <button>Log out</button>
-        </div>
+            <button type='submit'>Log out</button>
+        </form>
     )
 }
