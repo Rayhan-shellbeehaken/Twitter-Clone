@@ -11,8 +11,9 @@ import ProtectedLayout from '../layouts/protected/layout';
 import Popup from '../components/popup/Popup';
 import TermsAndCondition from '../components/termsandcondition/TermsAndCondition';
 
-export default async function Home() {
-
+export default async function Home({searchParams}) {
+    const params = (await searchParams).feed || 'foryou';
+    console.log(params);
     return (
         <ProtectedLayout>
             <div className={styles.page}>

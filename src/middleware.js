@@ -15,7 +15,7 @@ export async function middleware(request) {
             if(token.isNewUser){
                 return NextResponse.redirect(new URL("/dateofbirth", request.url));
             }else{
-                return NextResponse.redirect(new URL("/home", request.url));
+                return NextResponse.redirect(new URL(`/home?feed=foryou`, request.url));
             }
         }
         else if(!token && privatePaths.includes(currentPath)){

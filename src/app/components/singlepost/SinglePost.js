@@ -12,7 +12,7 @@ import { IoIosStats } from "react-icons/io";
 import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 
-export default function SinglePost() {
+export default function SinglePost({title,imageUrl}) {
 
     return (
         <div className={styles.container}>
@@ -24,9 +24,15 @@ export default function SinglePost() {
                     <p>Shafikul Rahman<span> @_Rayhan66</span></p>
                     <RiMoreFill/>
                 </div>
-                <div className={styles["post-image"]}>
-                    <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
+                <div className={styles.text}>
+                    <p>{title}</p>
                 </div>
+                {imageUrl &&
+                    <div className={styles["post-image"]}>
+                        <Image src={imageUrl} width={100} height={100} alt="xlogo" priority layout="intrinsic"/>
+                    </div>
+                }
+                
                 <div className={styles.elements}>
                     <p><LiaCommentAlt/> <span>33K</span></p>
                     <p><BiRepost/> <span>60K</span></p>

@@ -10,6 +10,7 @@ export default function Navbar() {
     const handleButtonClick = (event,value) =>{
         event.preventDefault();
         setActive(value);
+        value===1 ? router.push(`?feed=foryou`) : router.push(`?feed=following`);
     }
 
     return (

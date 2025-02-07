@@ -14,6 +14,7 @@ import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
+import { useRouter } from 'next/navigation';
 
 export default function PostBox() {
     const textRef = useRef(null);
@@ -22,6 +23,7 @@ export default function PostBox() {
     const [file, setFile] = useState("");
     const {toggleAlert} = useAppContext();
     const [imagePreview, setImagePreview] = useState(null);
+    const router = useRouter();
 
     useEffect(()=>{
         if(textRef.current){
@@ -56,6 +58,7 @@ export default function PostBox() {
             });
             console.log(response.data);
             toggleAlert("success","Successfully posted");
+            router.refresh();
             setValue("");
             minimize();
         }catch(error){

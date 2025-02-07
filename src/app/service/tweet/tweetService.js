@@ -1,4 +1,4 @@
-import { addNewTweet } from "@/app/repository/tweet/tweetRepository";
+import { addNewTweet, getAllTweet } from "@/app/repository/tweet/tweetRepository";
 
 export async function addTweet(user,reqBody) {
     const formData = await reqBody.formData();
@@ -16,4 +16,10 @@ export async function addTweet(user,reqBody) {
         const tweet = await addNewTweet(postText, null, user);
         return tweet;
     }
+}
+
+export async function getTweets() {
+    const tweets = await getAllTweet();
+    const reversedTweets = tweets.reverse();
+    return reversedTweets;
 }

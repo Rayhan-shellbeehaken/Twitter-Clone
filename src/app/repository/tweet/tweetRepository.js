@@ -10,3 +10,8 @@ export async function addNewTweet(postText, base64, user) {
     const saveTweet = await newTweet.save();
     return saveTweet;
 }
+
+export async function getAllTweet() {
+    const tweets = await Tweet.find({});
+    return tweets;
+}
