@@ -1,7 +1,7 @@
 import { connect } from "@/app/db/db.config";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { addTweet, getTweets } from "@/app/service/tweet/tweetService";
+import { addTweet, getTweets, updateTweet } from "@/app/service/tweet/tweetService";
 
 connect();
 
@@ -27,5 +27,20 @@ export async function GET(request) {
         return NextResponse.json({message : "Successfully get all tweet",tweets},{status : 200});
     }catch(error){
         return NextResponse.json({error : error.message},{status : 500});
+    }
+}
+
+export async function PATCH(request) {
+    try{
+        const session = await auth();
+        if(!session?.user){
+            return NextResponse.json({message : 'Login first'},{status : 400});
+        }
+        const url = new URL(request.url);
+        const tweetId = url.searchParams.get('id') || "";
+        const tweet = await updateTweet(tweetId,request);
+        return NextResponse.json({message : 'Tweet update successfull',tweet},{status : 200});
+    }catch(error){
+        return NextResponse.json({message : error.message},{status : 500});
     }
 }

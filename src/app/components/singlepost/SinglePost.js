@@ -8,7 +8,7 @@ import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 import PostAction from '../postactions/PostAction';
 
-export default function SinglePost({title,imageUrl}) {
+export default function SinglePost({id,title,imageUrl,totalReact}) {
 
     return (
         <div className={styles.container}>
@@ -30,7 +30,7 @@ export default function SinglePost({title,imageUrl}) {
                 }
                 
                 <div className={styles.elements}>
-                    <PostAction/>
+                    <PostAction totalReact={totalReact} id={id}/>
                     <p><IoIosStats/> <span>10M</span></p>
                     <div>
                         <PiBookmarkSimpleBold/>

@@ -23,7 +23,7 @@ export default async function PostList({page}) {
                         imageUrl = `data:${mimeType};base64,${base64Image}`;
                     }
                     
-                    return <SinglePost key={tweet._id} title={tweet.postText} imageUrl={imageUrl}/>
+                    return <SinglePost key={tweet._id} id={tweet._id} title={tweet.postText} imageUrl={imageUrl} totalReact={tweet.totalReact}/>
                 })
             }
             <Suspense fallback={<Loader/>}>

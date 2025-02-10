@@ -66,6 +66,7 @@
 .elements > p{
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .elements > p > span{

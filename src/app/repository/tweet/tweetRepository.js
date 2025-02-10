@@ -17,3 +17,11 @@ export async function getAllTweet(page) {
     const tweets = await Tweet.find({}).sort({createdAt : -1}).skip(offset).limit(limit);
     return tweets;
 }
+
+export async function updateATweet(tweetId,data) {
+    const tweet = await Tweet.findByIdAndUpdate(tweetId, data, {
+        new : true,
+        runValidators : true
+    })
+    return tweet;
+}

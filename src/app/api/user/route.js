@@ -1,8 +1,6 @@
 import { connect } from "@/app/db/db.config";
-import User from "@/app/models/user.model";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { getToken } from 'next-auth/jwt'
 import { updateUser } from "@/app/service/user/userService";
 
 connect();
