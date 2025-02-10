@@ -29,6 +29,7 @@ export async function updateTweet(tweetId,request) {
     formData.forEach((value, key) => {
         data[key] = value;
     });
+    if(data.reacters === '') data.reacters = [];
     const tweet = await updateATweet(tweetId,data);
     return tweet;
 }

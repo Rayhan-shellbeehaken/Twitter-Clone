@@ -24,7 +24,7 @@ export default function Login() {
 
   return (
     <div
-      className={`${styles.page} ${geologica.className} ${
+      className={`${styles.page} ${
         popUp || signUpPop ? styles["background-color"] : ""
       }`}
     >

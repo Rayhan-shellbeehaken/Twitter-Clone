@@ -19,9 +19,10 @@ export async function getAllTweet(page) {
 }
 
 export async function updateATweet(tweetId,data) {
-    const tweet = await Tweet.findByIdAndUpdate(tweetId, data, {
-        new : true,
-        runValidators : true
-    })
+    console.log("DATA :: ");
+    console.log(data);
+    const tweet = await Tweet.findByIdAndUpdate(tweetId, 
+        { $set : data},
+        { new : true, runValidators : true});
     return tweet;
 }

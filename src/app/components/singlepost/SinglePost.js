@@ -7,8 +7,9 @@ import { IoIosStats } from "react-icons/io";
 import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 import PostAction from '../postactions/PostAction';
+import { SessionProvider } from 'next-auth/react';
 
-export default function SinglePost({id,title,imageUrl,totalReact}) {
+export default function SinglePost({id,title,imageUrl,reacters}) {
 
     return (
         <div className={styles.container}>
@@ -30,12 +31,13 @@ export default function SinglePost({id,title,imageUrl,totalReact}) {
                 }
                 
                 <div className={styles.elements}>
-                    <PostAction totalReact={totalReact} id={id}/>
+                    <PostAction reacters={reacters} id={id}/>
                     <p><IoIosStats/> <span>10M</span></p>
                     <div>
                         <PiBookmarkSimpleBold/>
                         <RiShare2Line/>
                     </div>
+                    
                 </div>
             </div>
         </div>

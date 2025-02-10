@@ -13,10 +13,12 @@ const tweetSchema = new mongoose.Schema({
         type : Date,
         default : Date.now
     },
-    totalReact : {
-        type : Number,
-        default : 0
-    },
+    reacters : [{
+        type : mongoose.Types.ObjectId,
+        ref : "users",
+        required: false,  // Makes it optional
+        default: [""],
+    }],
     user : {
         type : mongoose.Types.ObjectId,
         ref : "users"

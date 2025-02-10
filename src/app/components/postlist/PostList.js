@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './postlist.module.css';
 import SinglePost from '../singlepost/SinglePost';
-import fetchTweet from '@/app/helpers/fetchTweets';
+import {fetchTweet} from '@/app/helpers/tweetoperation';
 import { Suspense } from 'react';
 import Loader from '../loader/Loader';
 
@@ -23,7 +23,7 @@ export default async function PostList({page}) {
                         imageUrl = `data:${mimeType};base64,${base64Image}`;
                     }
                     
-                    return <SinglePost key={tweet._id} id={tweet._id} title={tweet.postText} imageUrl={imageUrl} totalReact={tweet.totalReact}/>
+                    return <SinglePost key={tweet._id} id={tweet._id} title={tweet.postText} imageUrl={imageUrl} reacters={tweet.reacters}/>
                 })
             }
             <Suspense fallback={<Loader/>}>

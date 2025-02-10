@@ -1,6 +1,7 @@
 import "./globals.css";
 import AppWrapper from "./store/store";
 import { Geologica } from 'next/font/google';
+import { SessionProvider } from "next-auth/react";
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +15,9 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geologica.className} background`}>
         <AppWrapper>
-          {children}
+          <SessionProvider>
+            {children}
+          </SessionProvider>
         </AppWrapper>
       </body>
     </html>
