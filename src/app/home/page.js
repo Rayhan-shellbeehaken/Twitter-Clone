@@ -10,6 +10,7 @@ import WhoToFollow from '../components/whotofollow/WhoToFollow';
 import ProtectedLayout from '../layouts/protected/layout';
 import Popup from '../components/popup/Popup';
 import TermsAndCondition from '../components/termsandcondition/TermsAndCondition';
+import { Suspense } from 'react';
 
 export default async function Home({searchParams}) {
     const params = (await searchParams).feed || 'foryou';
@@ -20,7 +21,9 @@ export default async function Home({searchParams}) {
                 <div className={styles.left}>
                     <Navbar/>
                     <PostBox/>
-                    <PostList/>
+                    <Suspense fallback={<p>Loading tweets...</p>}>
+                        <PostList page={1}/>
+                    </Suspense>
                     <Popup/>
                 </div>
                 <div className={styles.right}>
