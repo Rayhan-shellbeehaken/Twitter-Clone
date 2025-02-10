@@ -6,12 +6,16 @@ const tweetSchema = new mongoose.Schema({
         required : false
     },
     postImage: {
-        type: Buffer,
-        required: false,
+        type : Buffer,
+        required : false,
     },
     createdAt : {
         type : Date,
         default : Date.now
+    },
+    totalReact : {
+        type : Number,
+        default : 0
     },
     user : {
         type : mongoose.Types.ObjectId,

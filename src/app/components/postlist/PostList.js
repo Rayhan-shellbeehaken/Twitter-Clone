@@ -8,8 +8,7 @@ import Loader from '../loader/Loader';
 export default async function PostList({page}) {
     const result = await fetchTweet(page);
     const tweets = result.tweets;
-    await new Promise(resolve => setTimeout(resolve,2000));
-    if(tweets.length === 0) return null;
+    if(tweets.length === 0) return <div className={styles.end}>No more post available</div>;
 
     return (
         <div>

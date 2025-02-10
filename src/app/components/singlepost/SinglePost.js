@@ -1,16 +1,12 @@
 import React from 'react'
 import styles from './singlepost.module.css'
 import { RiMoreFill } from "react-icons/ri";
-import { LiaCommentAlt } from "react-icons/lia";
-
-import { BiRepost } from "react-icons/bi";
-import { CiHeart } from "react-icons/ci";
-import { CgLoadbarSound } from "react-icons/cg";
 import { PiBookmarkSimpleBold } from "react-icons/pi";
 import { RiShare2Line } from "react-icons/ri";
 import { IoIosStats } from "react-icons/io";
 import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
+import PostAction from '../postactions/PostAction';
 
 export default function SinglePost({title,imageUrl}) {
 
@@ -34,9 +30,7 @@ export default function SinglePost({title,imageUrl}) {
                 }
                 
                 <div className={styles.elements}>
-                    <p><LiaCommentAlt/> <span>33K</span></p>
-                    <p><BiRepost/> <span>60K</span></p>
-                    <p><CiHeart/> <span>1.5M</span></p>
+                    <PostAction/>
                     <p><IoIosStats/> <span>10M</span></p>
                     <div>
                         <PiBookmarkSimpleBold/>
