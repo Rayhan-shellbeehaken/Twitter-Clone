@@ -11,6 +11,7 @@ import ProtectedLayout from '../layouts/protected/layout';
 import Popup from '../components/popup/Popup';
 import TermsAndCondition from '../components/termsandcondition/TermsAndCondition';
 import { Suspense } from 'react';
+import Loader from '../components/loader/Loader';
 
 export default async function Home({searchParams}) {
     const params = (await searchParams).feed || 'foryou';
@@ -21,7 +22,7 @@ export default async function Home({searchParams}) {
                 <div className={styles.left}>
                     <Navbar/>
                     <PostBox/>
-                    <Suspense fallback={<p>Loading tweets...</p>}>
+                    <Suspense fallback={<Loader/>}>
                         <PostList page={1}/>
                     </Suspense>
                     <Popup/>
