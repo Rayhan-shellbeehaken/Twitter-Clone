@@ -9,10 +9,15 @@ const tweetSchema = new mongoose.Schema({
         type: Buffer,
         required: false,
     },
+    createdAt : {
+        type : Date,
+        default : Date.now
+    },
     user : {
         type : mongoose.Types.ObjectId,
         ref : "users"
-    }
+    },
+    
 })
 
 const Tweet = mongoose.models.tweets || mongoose.model("tweets",tweetSchema);

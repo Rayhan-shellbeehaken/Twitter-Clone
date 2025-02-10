@@ -18,8 +18,7 @@ export async function addTweet(user,reqBody) {
     }
 }
 
-export async function getTweets() {
-    const tweets = await getAllTweet();
-    const reversedTweets = tweets.reverse();
-    return reversedTweets;
+export async function getTweets(page) {
+    const tweets = await getAllTweet(page);
+    return tweets;
 }

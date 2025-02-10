@@ -11,7 +11,9 @@ export async function addNewTweet(postText, base64, user) {
     return saveTweet;
 }
 
-export async function getAllTweet() {
-    const tweets = await Tweet.find({});
+export async function getAllTweet(page) {
+    const limit = 7;
+    const offset = (page - 1) * limit;
+    const tweets = await Tweet.find({}).sort({createdAt : -1}).skip(offset).limit(limit);
     return tweets;
 }
