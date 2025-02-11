@@ -16,8 +16,11 @@ const tweetSchema = new mongoose.Schema({
     reacters : [{
         type : mongoose.Types.ObjectId,
         ref : "users",
-        required: false,  // Makes it optional
-        default: [""],
+        required: false,
+    }],
+    commenters : [{
+        type : mongoose.Types.ObjectId,
+        ref : "comments"
     }],
     user : {
         type : mongoose.Types.ObjectId,
