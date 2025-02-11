@@ -9,11 +9,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
+import CommentPopUp from '../commentpopup/CommentPopUp';
 
 export default function PostAction({id,reacters}) {
     const [reacted,setReacted] = useState(false);
     const router = useRouter();
     const { data: session } = useSession();
+
+    const [show,setShow] = useState(false);
 
     useEffect(()=>{
         setReacted(reacters.includes(session?.user?._id));
@@ -40,9 +43,14 @@ export default function PostAction({id,reacters}) {
         }   
     }
 
+    const onComment = async() => {
+        setShow(!show);
+    }
+
     return (
         <>
-            <p><LiaCommentAlt/><span>33K</span></p>
+            {show && <CommentPopUp setShow={setShow}/>}
+            <p onClick={onComment}><LiaCommentAlt/><span>33K</span></p>
             <p><BiRepost/><span>60K</span></p>
 
             <p className={`${reacted ? styles.react : ''}`} onClick={onReact}>
