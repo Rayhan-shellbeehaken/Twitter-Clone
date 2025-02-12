@@ -12,6 +12,7 @@ import { BiPoll } from "react-icons/bi";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { IoLocationOutline } from "react-icons/io5";
+import { GoArrowLeft } from "react-icons/go";
 
 export default function CommentPopUp({setShow}) {
     const textRef = useRef(null);
@@ -29,8 +30,15 @@ export default function CommentPopUp({setShow}) {
         <div className={styles.container}>
             <div className={styles.popup}>
                 <div className={styles.cross}>
-                    <FiX className={styles["cross-icon"]} onClick={()=>setShow(false)}/>
-                    <p>Drafts</p>
+                    <div>
+                        <FiX className={styles["cross-icon"]} onClick={()=>setShow(false)}/>
+                        <GoArrowLeft className={styles["back-icon"]} onClick={()=>setShow(false)}/>
+                    </div>
+                    
+                    <div className={styles["cross-right"]}>
+                        <p>Drafts</p>
+                        <button className={`${styles.button} ${styles["top-button"]}`} disabled={!postText}>Reply</button>
+                    </div>
                 </div>
 
                 <div className={styles.details}>
@@ -63,7 +71,7 @@ export default function CommentPopUp({setShow}) {
                             <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
                         </div>
                         <div className={styles["postbox-first-right"]}>
-                            <textarea ref={textRef} value={postText} onChange={(e)=>setPostText(e.target.value)}/>
+                            <textarea placeholder='Post your reply' ref={textRef} value={postText} onChange={(e)=>setPostText(e.target.value)}/>
                         </div>
                     </div>
                     <div className={styles["postbox-second"]}>
@@ -77,7 +85,7 @@ export default function CommentPopUp({setShow}) {
                             <div><IoLocationOutline/></div>
                         </div>
                         <div className={styles["postbox-second-right"]}>
-                            <button className={styles.button} disabled={!postText}>Reply</button>
+                            <button className={`${styles.button} ${styles["bottom-button"]}`} disabled={!postText}>Reply</button>
                         </div>
                     </div>
                     

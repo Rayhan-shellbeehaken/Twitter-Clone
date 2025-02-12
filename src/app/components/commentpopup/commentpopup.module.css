@@ -28,6 +28,11 @@
     color: white;
 }
 
+.cross-right{
+    display: flex;
+    align-items: center;
+}
+
 .cross-icon{
     width: 24px;
     height: 24px;
@@ -37,11 +42,20 @@
     cursor: pointer;
 }
 
-.cross-icon:hover{
+.back-icon{
+    width: 0;
+    height: 0;
+    font-size: 22px;
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.cross-icon:hover,.back-icon:hover{
     background-color: rgb(41, 41, 41);
 }
 
-.cross > p{
+.cross > div > p{
     font-size: 16px;
     padding: 4px 12px;
     color: #00B2FF;
@@ -49,7 +63,7 @@
     cursor: pointer;
 }
 
-.cross > p:hover{
+.cross > div> p:hover{
     background-color: #1b2a30;
 }
 
@@ -189,16 +203,17 @@
 }
 
 .postbox-first-left{
-    width: 10%;
+    width: 50px;
     padding: 5px;
     
 }
 
 .postbox-first-left img{
-    width: 100%;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     background-color: red;
-    padding: 2px;
+    padding: 1px;
     border-width: 0px;
 }
 
@@ -211,7 +226,7 @@
     word-wrap: break-word;
     resize: none;
     font-size: 19px;
-    padding: 5px;
+    padding: 10px 5px;
     background-color: transparent;
     border: none;
     outline: none;
@@ -263,6 +278,11 @@
     background-color: rgb(201, 201, 201);
 }
 
+.top-button{
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+}
 
 @media screen and (max-width : 635px) {
     .container{
@@ -275,5 +295,23 @@
     }
     .first{
         margin-top: 20px;
+    }
+    .top-button{
+        visibility: visible;
+        width: 75px;
+        height: 100%;
+    }
+    .bottom-button{
+        visibility: hidden;
+        width: 0px;
+        height: 0px;
+    }
+    .cross-icon{
+        width: 0px;
+        height: 0px;
+    }
+    .back-icon{
+        width: 24px;
+        height: 24px;
     }
 }

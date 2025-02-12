@@ -16,7 +16,7 @@ export default function PostAction({id,reacters}) {
     const router = useRouter();
     const { data: session } = useSession();
 
-    const [show,setShow] = useState(true);
+    const [show,setShow] = useState(false);
 
     useEffect(()=>{
         setReacted(reacters.includes(session?.user?._id));
