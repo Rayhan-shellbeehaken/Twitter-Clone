@@ -14,16 +14,17 @@ export default async function PostList({page}) {
         <div>
             {
                 tweets.map(tweet => {
-                    // let imageUrl = "";
-                    // if(tweet.postImage !== null){
-                    //     const buffer = tweet.postImage.data;
-                    //     const base64Image = Buffer.from(buffer).toString('base64');
-                    //     const mimeType = 'image/png'; 
-
-                    //     imageUrl = `data:${mimeType};base64,${base64Image}`;
-                    // }
-                    
-                    return <SinglePost key={tweet._id} id={tweet._id} title={tweet.postText} imageUrl={tweet.postImage} reacters={tweet.reacters}/>
+                    return (
+                        <SinglePost 
+                            key={tweet._id} 
+                            id={tweet._id} 
+                            title={tweet.postText} 
+                            imageUrl={tweet.postImage} 
+                            reacters={tweet.reacters}
+                            userDetails={tweet.user_details}
+                            commenters={tweet.commenters}
+                        />
+                    )
                 })
             }
             <Suspense fallback={<Loader/>}>

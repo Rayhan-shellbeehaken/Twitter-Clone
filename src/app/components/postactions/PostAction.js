@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import CommentPopUp from '../commentpopup/CommentPopUp';
 
-export default function PostAction({id,reacters}) {
+export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters}) {
     const [reacted,setReacted] = useState(false);
     const router = useRouter();
     const { data: session } = useSession();
@@ -46,8 +46,18 @@ export default function PostAction({id,reacters}) {
 
     return (
         <>
-            {show && <CommentPopUp setShow={setShow}/>}
-            <p onClick={onComment}><LiaCommentAlt/><span>33K</span></p>
+            {show && 
+                <CommentPopUp
+                    id={id} 
+                    title={title} 
+                    setShow={setShow} 
+                    imageUrl={imageUrl} 
+                    userDetails={userDetails}
+                    commenters={commenters}
+                    userId={session?.user?._id}
+                />
+            }
+            <p onClick={onComment}><LiaCommentAlt/><span>{commenters.length}</span></p>
             <p><BiRepost/><span>60K</span></p>
 
             <p className={`${reacted ? styles.react : ''}`} onClick={onReact}>

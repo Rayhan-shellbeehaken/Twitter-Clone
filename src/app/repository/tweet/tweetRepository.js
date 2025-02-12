@@ -14,7 +14,35 @@ export async function addNewTweet(postText, postImage, user) {
 export async function getAllTweet(page) {
     const limit = 7;
     const offset = (page - 1) * limit;
-    const tweets = await Tweet.find({}).sort({createdAt : -1}).skip(offset).limit(limit);
+    const tweets = await Tweet.aggregate([
+        {
+          $lookup: {
+            from: "users",
+            localField: "user",
+            foreignField: "_id",
+            as: "user_details"
+          }
+        },
+        {
+          $addFields: {
+            user_details: {
+              $arrayElemAt : ["$user_details",0]
+            }
+          }
+          },
+        {
+          $project: {
+            createdAt : 0,
+            __v : 0,
+            user : 0,
+            "user_details.email" : 0,
+            "user_details.__v" : 0,
+            "user_details.dateofBirth" : 0,
+            "user_details.isVerified" : 0
+          }
+        }
+    ]).sort({createdAt : -1}).skip(offset).limit(limit);
+    
     return tweets;
 }
 

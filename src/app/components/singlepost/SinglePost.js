@@ -9,7 +9,7 @@ import Image from 'next/image';
 import PostAction from '../postactions/PostAction';
 import { SessionProvider } from 'next-auth/react';
 
-export default function SinglePost({id,title,imageUrl,reacters}) {
+export default function SinglePost({id,title,imageUrl,reacters,userDetails,commenters}) {
 
     return (
         <div className={styles.container}>
@@ -18,7 +18,7 @@ export default function SinglePost({id,title,imageUrl,reacters}) {
             </div>
             <div className={styles.right}>
                 <div className={styles.user}>
-                    <p>Shafikul Rahman<span> @_Rayhan66</span></p>
+                    <p>{userDetails.username}<span> @_{userDetails.username}</span></p>
                     <RiMoreFill/>
                 </div>
                 <div className={styles.text}>
@@ -31,7 +31,14 @@ export default function SinglePost({id,title,imageUrl,reacters}) {
                 }
                 
                 <div className={styles.elements}>
-                    <PostAction reacters={reacters} id={id}/>
+                    <PostAction 
+                        reacters={reacters} 
+                        id={id} 
+                        title={title} 
+                        imageUrl={imageUrl}
+                        userDetails={userDetails}
+                        commenters={commenters}
+                        />
                     <p><IoIosStats/> <span>10M</span></p>
                     <div>
                         <PiBookmarkSimpleBold/>

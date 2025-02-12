@@ -13,18 +13,40 @@ import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { IoLocationOutline } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
-export default function CommentPopUp({setShow}) {
+export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId}) {
     const textRef = useRef(null);
-    const [postText, setPostText] = useState("");
+    const [commentText, setCommentText] = useState("");
+    const router = useRouter();
 
     useEffect(()=>{
         if(textRef.current){
-            // console.log("HEIGHT :: "+textRef.current.scrollHeight);
             textRef.current.style.height = "45px";
             textRef.current.style.height = `${textRef.current.scrollHeight}px`;
         }
-    },[postText]);
+    },[commentText]);
+
+    const onComment = async(event) =>{
+        event.preventDefault();
+        const newComment = {
+            commentText : commentText,
+            userId : userId
+        }
+        commenters.push(newComment);
+        const data = {
+            commenters : commenters
+        }
+        try{
+            const result = axios.patch(`/api/tweets?id=${id}`,data);
+            console.log(result);
+            setShow(false);
+            router.refresh();
+        }catch(error){
+            console.log(error);
+        }
+    }
 
     return (
         <div className={styles.container}>
@@ -37,7 +59,7 @@ export default function CommentPopUp({setShow}) {
                     
                     <div className={styles["cross-right"]}>
                         <p>Drafts</p>
-                        <button className={`${styles.button} ${styles["top-button"]}`} disabled={!postText}>Reply</button>
+                        <button className={`${styles.button} ${styles["top-button"]}`} disabled={!commentText}>Reply</button>
                     </div>
                 </div>
 
@@ -50,8 +72,11 @@ export default function CommentPopUp({setShow}) {
                             <div className={styles["first-left-line"]}><hr/></div>
                         </div>
                         <div className={styles["first-right"]}>
-                            <p className={styles["first-account"]}><span>Shafikul Rahman</span> @_Rayhan66 . 10h</p>
-                            <p className={styles["post-text"]}>Delighted to meet my friend, President Macron in Paris. @EmmanuelMacron https://pic.x.com/ZxyziqUHGnhttps://pic.x.com/ZxyziqUHGn </p>
+                            <p className={styles["first-account"]}><span>{userDetails.username}</span> @_{userDetails.username}</p>
+                            <p className={styles["post-text"]}>{title}</p>
+                            <p className={styles["post-text"]}>
+                                {imageUrl ? 'www.image.com' : ''}
+                            </p>
                         </div>
                     </div>
                     
@@ -65,13 +90,13 @@ export default function CommentPopUp({setShow}) {
                     </div>
                 </div>
 
-                <form className={styles.postbox}>
+                <form onSubmit={onComment} className={styles.postbox}>
                     <div className={styles["postbox-first"]}>
                         <div className={styles["postbox-first-left"]}>
                             <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
                         </div>
                         <div className={styles["postbox-first-right"]}>
-                            <textarea placeholder='Post your reply' ref={textRef} value={postText} onChange={(e)=>setPostText(e.target.value)}/>
+                            <textarea placeholder='Post your reply' ref={textRef} value={commentText} onChange={(e)=>setCommentText(e.target.value)}/>
                         </div>
                     </div>
                     <div className={styles["postbox-second"]}>
@@ -85,10 +110,9 @@ export default function CommentPopUp({setShow}) {
                             <div><IoLocationOutline/></div>
                         </div>
                         <div className={styles["postbox-second-right"]}>
-                            <button className={`${styles.button} ${styles["bottom-button"]}`} disabled={!postText}>Reply</button>
+                            <button type='submit' className={`${styles.button} ${styles["bottom-button"]}`} disabled={!commentText}>Reply</button>
                         </div>
                     </div>
-                    
                 </form>
             </div>
         </div>

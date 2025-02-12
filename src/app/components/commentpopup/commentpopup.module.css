@@ -226,6 +226,7 @@
     word-wrap: break-word;
     resize: none;
     font-size: 19px;
+    max-height: 200px;
     padding: 10px 5px;
     background-color: transparent;
     border: none;
