@@ -1,21 +1,10 @@
 import { addNewTweet, getAllTweet, updateATweet } from "@/app/repository/tweet/tweetRepository";
 
 export async function addTweet(user,request) {
-    const formData = await request.formData();
-    const postImage = formData.get('postImage') || "";
-    const postText = formData.get('postText') || "";
-    
-    if(postImage){
-        const bufferData = await postImage.arrayBuffer();
-        const base64 = Buffer.from(bufferData);
-
-        const tweet = await addNewTweet(postText,base64,user);
-        return tweet;
-    }
-    else{
-        const tweet = await addNewTweet(postText, null, user);
-        return tweet;
-    }
+    const requestBody = await request.json();
+    const {postText, postImage} = requestBody;
+    const tweet = await addNewTweet(postText, postImage, user);
+    return tweet;
 }
 
 export async function getTweets(page) {

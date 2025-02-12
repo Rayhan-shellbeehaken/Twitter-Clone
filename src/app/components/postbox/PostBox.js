@@ -43,19 +43,25 @@ export default function PostBox() {
         }
     },[file]);
 
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result); // Returns the Base64 string
+            reader.onerror = (error) => reject(error);
+        });
+    };
+
     const handleSubmit = async(event) =>{
         event.preventDefault();
-        const data = new FormData();
-        data.append('postText',value);
-        if(file){
-            data.append('postImage',file);
+        let postImage = null;
+        if(file) postImage = await convertToBase64(file);
+        const data = {
+            postText : value,
+            postImage
         }
         try{
-            const response = await axios.post('/api/tweets', data, {
-                headers: {
-                  'Content-Type': 'multipart/form-data',
-                },
-            });
+            const response = await axios.post('/api/tweets', data);
             console.log(response.data);
             toggleAlert("success","Successfully posted");
             router.refresh();

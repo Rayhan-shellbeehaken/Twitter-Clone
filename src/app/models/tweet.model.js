@@ -6,7 +6,7 @@ const tweetSchema = new mongoose.Schema({
         required : false
     },
     postImage: {
-        type : Buffer,
+        type : String,
         required : false,
     },
     createdAt : {
