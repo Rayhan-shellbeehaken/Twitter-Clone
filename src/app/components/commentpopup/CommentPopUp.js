@@ -26,13 +26,13 @@ export default function CommentPopUp({setShow}) {
                             <p className={styles["post-text"]}>Delighted to meet my friend, President Macron in Paris. @EmmanuelMacron https://pic.x.com/ZxyziqUHGnhttps://pic.x.com/ZxyziqUHGn </p>
                         </div>
                     </div>
-
-                    <div>
-                        <div>
-                            Straight line
+                    
+                    <div className={styles.second}>
+                        <div className={styles["second-left"]}>
+                            <hr/>
                         </div>
-                        <div>
-                            <p>Replying to...</p>
+                        <div className={styles["second-right"]}>
+                            <p>Replying to <span>@_Rayhan66</span></p>
                         </div>
                     </div>
                 </div>
