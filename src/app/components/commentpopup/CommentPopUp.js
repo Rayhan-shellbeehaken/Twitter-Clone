@@ -13,12 +13,16 @@ import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { IoLocationOutline } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
+import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId}) {
     const textRef = useRef(null);
+    const fileRef = useRef(null);
     const [commentText, setCommentText] = useState("");
+    const [file,setFile] = useState("");
+    const [commentImage,setCommentImage] = useState(null);
     const router = useRouter();
 
     useEffect(()=>{
@@ -28,10 +32,22 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
         }
     },[commentText]);
 
+    useEffect(()=>{
+        if(file){
+            const reader = new FileReader();
+            reader.onloadend = () =>{
+                setCommentImage(reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    },[file]);
+
     const onComment = async(event) =>{
         event.preventDefault();
+        
         const newComment = {
             commentText : commentText,
+            commentImage : commentImage,
             userId : userId
         }
         commenters.push(newComment);
@@ -46,6 +62,11 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
         }catch(error){
             console.log(error);
         }
+    }
+
+    const minimize = () =>{
+        setFile("");
+        setCommentImage(null);
     }
 
     return (
@@ -97,11 +118,20 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
                         </div>
                         <div className={styles["postbox-first-right"]}>
                             <textarea placeholder='Post your reply' ref={textRef} value={commentText} onChange={(e)=>setCommentText(e.target.value)}/>
+                            <input className={styles.input} type='file' ref={fileRef} onChange={(e)=>setFile(e.target.files[0])}></input>
+                            {commentImage &&
+                                <div className={styles["preview-image-container"]}>
+                                    <div onClick={minimize} className={styles.minimize}>
+                                        <GoXCircleFill/>
+                                    </div>
+                                    <img src={commentImage} className={styles["preview-image"]}></img>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={styles["postbox-second"]}>
                         <div className={styles["postbox-second-left"]}>
-                            <div><IoImageOutline/></div>
+                            <div onClick={()=>fileRef.current.click()}><IoImageOutline/></div>
                             <div><MdOutlineGifBox/></div>
                             <div><VscVscode/></div>
                             <div><BiPoll/></div>

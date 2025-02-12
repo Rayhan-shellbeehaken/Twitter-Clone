@@ -32,7 +32,6 @@ export async function getAllTweet(page) {
           },
         {
           $project: {
-            createdAt : 0,
             __v : 0,
             user : 0,
             "user_details.email" : 0,

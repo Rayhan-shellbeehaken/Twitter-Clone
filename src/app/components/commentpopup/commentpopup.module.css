@@ -221,6 +221,10 @@
     width: 90%;
 }
 
+.input{
+    visibility: hidden;
+}
+
 .postbox-first-right textarea{
     width: 100%;
     word-wrap: break-word;
@@ -283,6 +287,23 @@
     visibility: hidden;
     width: 0px;
     height: 0px;
+}
+
+.preview-image-container{
+    width: 200px;
+    position: relative;
+}
+
+.preview-image{
+    width: 100%;
+}
+
+.minimize{
+    font-size: 22px;
+    color: rgb(145, 144, 144);
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
 }
 
 @media screen and (max-width : 635px) {
