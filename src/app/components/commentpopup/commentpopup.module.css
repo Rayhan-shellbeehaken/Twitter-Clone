@@ -8,12 +8,12 @@
     padding-top: 70px;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
 }
 
 .popup{
     background-color: black;
     width: 620px;
-    height: 300px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -53,11 +53,6 @@
 }
 
 .details{
-    width: 100%;
-}
-
-.postbox{
-    background-color: green;
     width: 100%;
 }
 
@@ -137,7 +132,6 @@
 
 .second-left{
     width: 10%;
-    background-color: black;
     display: flex;
     justify-content: center;
 
@@ -150,11 +144,98 @@
 .second-right{
     width: 90%;
     font-size: 15px;
-
 }
 
 .second-right span{
     color: #00B2FF;
     font-size: 16px;
     font-weight: 200;
+}
+
+.postbox{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.postbox-first{
+    width: 100%;
+    min-height: 150px;
+    display: flex;
+}
+
+.postbox-first-left{
+    width: 10%;
+    padding: 5px;
+    
+}
+
+.postbox-first-left img{
+    width: 100%;
+    border-radius: 50%;
+    background-color: red;
+    padding: 2px;
+    border-width: 0px;
+}
+
+.postbox-first-right{
+    width: 90%;
+}
+
+.postbox-first-right textarea{
+    width: 100%;
+    word-wrap: break-word;
+    resize: none;
+    font-size: 19px;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+
+.postbox-second{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.postbox-second-left{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    color: #00B2FF;
+}
+
+.postbox-second-left > div{
+    height: 100%;
+    font-size: 22px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.button{
+    width: 75px;
+    height: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.button:disabled{
+    background-color: rgb(145, 144, 144);
+    color: black;
+    cursor: default;
+}
+
+.button:not(:disabled):hover{
+    background-color: rgb(201, 201, 201);
 }
