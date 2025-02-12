@@ -15,7 +15,6 @@ import { IoLocationOutline } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
 import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
-import { useRouter } from 'next/navigation';
 
 export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId}) {
     const textRef = useRef(null);
@@ -23,7 +22,6 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
     const [commentText, setCommentText] = useState("");
     const [file,setFile] = useState("");
     const [commentImage,setCommentImage] = useState(null);
-    const router = useRouter();
 
     useEffect(()=>{
         if(textRef.current){
@@ -58,7 +56,6 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
             const result = axios.patch(`/api/tweets?id=${id}`,data);
             console.log(result);
             setShow(false);
-            router.refresh();
         }catch(error){
             console.log(error);
         }
@@ -80,7 +77,7 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
                     
                     <div className={styles["cross-right"]}>
                         <p>Drafts</p>
-                        <button className={`${styles.button} ${styles["top-button"]}`} disabled={!commentText}>Reply</button>
+                        <button onClick={onComment} className={`${styles.button} ${styles["top-button"]}`} disabled={!commentText && !file}>Reply</button>
                     </div>
                 </div>
 
@@ -140,7 +137,7 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
                             <div><IoLocationOutline/></div>
                         </div>
                         <div className={styles["postbox-second-right"]}>
-                            <button type='submit' className={`${styles.button} ${styles["bottom-button"]}`} disabled={!commentText}>Reply</button>
+                            <button type='submit' className={`${styles.button} ${styles["bottom-button"]}`} disabled={!commentText && !file}>Reply</button>
                         </div>
                     </div>
                 </form>

@@ -20,7 +20,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
 
     useEffect(()=>{
         setReacted(reacters.includes(session?.user?._id));
-    },[reacters,session]);
+    },[reacters,session,commenters]);
 
     const onReact = async() => {
         reacted ? 
