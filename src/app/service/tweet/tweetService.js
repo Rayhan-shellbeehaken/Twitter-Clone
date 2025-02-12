@@ -13,12 +13,13 @@ export async function getTweets(page) {
 }
 
 export async function updateTweet(tweetId,request) {
-    const formData = await request.formData();
-    let data = {};
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-    if(data.reacters === '') data.reacters = [];
+    const data = await request.json();
+    // const formData = await request.formData();
+    // let data = {};
+    // formData.forEach((value, key) => {
+    //     data[key] = value;
+    // });
+    // if(data.reacters === '') data.reacters = [];
     const tweet = await updateATweet(tweetId,data);
     return tweet;
 }

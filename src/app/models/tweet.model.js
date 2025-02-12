@@ -19,8 +19,9 @@ const tweetSchema = new mongoose.Schema({
         required: false,
     }],
     commenters : [{
-        type : mongoose.Types.ObjectId,
-        ref : "comments"
+        commentText : String,
+        commentImage : String,
+        userId : mongoose.Types.ObjectId
     }],
     user : {
         type : mongoose.Types.ObjectId,

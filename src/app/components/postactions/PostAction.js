@@ -27,15 +27,12 @@ export default function PostAction({id,reacters}) {
         reacters = reacters.filter(userId => userId !== session?.user?._id) :
         reacters.push(session?.user?._id); 
 
-        const data = new FormData();
-        data.append('reacters',reacters);
+        const data = {
+            reacters : reacters
+        }
 
         try{
-            const tweet = await axios.patch(`/api/tweets?id=${id}`,data,{
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
+            const tweet = await axios.patch(`/api/tweets?id=${id}`,data)
             console.log(tweet);
             router.refresh();
         }catch(error){
