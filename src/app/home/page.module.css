@@ -17,6 +17,8 @@
     width: 350px;
     padding: 0 5px;
     padding-right: 15px;
+    position: sticky;
+    top: -190px;
 }
 
 @media screen and (max-width : 1035px) {
