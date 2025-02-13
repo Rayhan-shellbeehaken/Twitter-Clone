@@ -7,8 +7,12 @@ import TermsAndCondition from '@/app/components/termsandcondition/TermsAndCondit
 import ReleventPeople from '@/app/components/releventpeople/ReleventPeople'
 import { GoArrowLeft } from "react-icons/go";
 import Link from 'next/link'
+import SinglePost from '@/app/components/singlepost/SinglePost'
+import { fetchATweet } from '@/app/helpers/tweetoperation'
 
-export default function page() {
+export default async function page({params}) {
+    const {tweetId} = await params;
+    const tweet = await fetchATweet(tweetId);
     return (
         <ProtectedLayout>
             <div className={styles.page}>
@@ -19,6 +23,7 @@ export default function page() {
                         </Link>
                         <div>Post</div>
                     </div>
+                    {/* <SinglePost/> */}
                 </div>
                 <div className={styles.right}>
                     <SearchBox/>

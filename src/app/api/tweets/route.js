@@ -2,6 +2,7 @@ import { connect } from "@/app/db/db.config";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { addTweet, getTweets, updateTweet } from "@/app/service/tweet/tweetService";
+import { getATweet } from "@/app/repository/tweet/tweetRepository";
 
 connect();
 
@@ -23,8 +24,15 @@ export async function GET(request) {
     try{
         const url = new URL(request.url);
         const page = url.searchParams.get('page') || 1;
-        const tweets = await getTweets(page);
-        return NextResponse.json({message : "Successfully get all tweet",tweets},{status : 200});
+        const tweetId = url.searchParams.get('tweetId') || null;
+        let result;
+        if(tweetId){
+            result = await getATweet(tweetId);
+        }else if(page){
+            result = await getTweets(page);
+        }
+        if(!result) return NextResponse.json({message : 'Not found'},{status : 400});
+        return NextResponse.json({message : "Successfully get result",result},{status : 200});
     }catch(error){
         return NextResponse.json({error : error.message},{status : 500});
     }

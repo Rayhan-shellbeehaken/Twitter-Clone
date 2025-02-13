@@ -1,4 +1,4 @@
-import { addNewTweet, getAllTweet, updateATweet } from "@/app/repository/tweet/tweetRepository";
+import { addNewTweet, getAllTweet, getATweet, updateATweet } from "@/app/repository/tweet/tweetRepository";
 
 export async function addTweet(user,request) {
     const requestBody = await request.json();
@@ -12,14 +12,13 @@ export async function getTweets(page) {
     return tweets;
 }
 
+export async function getTweet(tweetId) {
+    const tweet = await getATweet(tweetId);
+    return tweet;
+}
+
 export async function updateTweet(tweetId,request) {
     const data = await request.json();
-    // const formData = await request.formData();
-    // let data = {};
-    // formData.forEach((value, key) => {
-    //     data[key] = value;
-    // });
-    // if(data.reacters === '') data.reacters = [];
     const tweet = await updateATweet(tweetId,data);
     return tweet;
 }

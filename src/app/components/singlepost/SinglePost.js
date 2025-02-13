@@ -10,7 +10,8 @@ import PostAction from '../postactions/PostAction';
 import Link from 'next/link';
 
 export default function SinglePost({id,title,imageUrl,reacters,userDetails,commenters}) {
-    const route = `${userDetails.username}/status/${id}`;
+    let route;
+    userDetails ? route = `${userDetails.username}/status/${id}` : "";
     return (
         <div className={styles.container}>
             <div className={styles.left}>
