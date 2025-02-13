@@ -12,7 +12,9 @@ import { fetchATweet } from '@/app/helpers/tweetoperation'
 
 export default async function page({params}) {
     const {tweetId} = await params;
-    const tweet = await fetchATweet(tweetId);
+    const result = await fetchATweet(tweetId);
+    const tweet = result.result[0];
+    console.log(tweet);
     return (
         <ProtectedLayout>
             <div className={styles.page}>
@@ -23,7 +25,15 @@ export default async function page({params}) {
                         </Link>
                         <div>Post</div>
                     </div>
-                    {/* <SinglePost/> */}
+                    <SinglePost 
+                        id={tweet._id} 
+                        title={tweet.postText} 
+                        imageUrl={tweet.postImage}
+                        reacters={tweet.reacters}
+                        userDetails={tweet.user_details}
+                        commenters={tweet.commenters}
+                        notclickable={true}
+                    />
                 </div>
                 <div className={styles.right}>
                     <SearchBox/>

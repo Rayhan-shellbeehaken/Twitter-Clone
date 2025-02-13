@@ -9,9 +9,9 @@ import Image from 'next/image';
 import PostAction from '../postactions/PostAction';
 import Link from 'next/link';
 
-export default function SinglePost({id,title,imageUrl,reacters,userDetails,commenters}) {
-    let route;
-    userDetails ? route = `${userDetails.username}/status/${id}` : "";
+export default function SinglePost({id,title,imageUrl,reacters,userDetails,commenters,notclickable}) {
+    const route = !notclickable ? `${userDetails.username}/status/${id}` : undefined;
+    const Content = notclickable ? 'div': Link;
     return (
         <div className={styles.container}>
             <div className={styles.left}>
@@ -22,7 +22,7 @@ export default function SinglePost({id,title,imageUrl,reacters,userDetails,comme
                     <p>{userDetails.username}<span> @_{userDetails.username}</span></p>
                     <RiMoreFill/>
                 </div>
-                <Link href={route}>
+                <Content href={route}>
                     <div className={styles.text}>
                         <p>{title}</p>
                     </div>
@@ -31,7 +31,7 @@ export default function SinglePost({id,title,imageUrl,reacters,userDetails,comme
                             <Image src={imageUrl} width={100} height={100} alt="xlogo" priority layout="intrinsic"/>
                         </div>
                     }
-                </Link>
+                </Content>
                 <div className={styles.elements}>
                     <PostAction 
                         reacters={reacters} 
