@@ -13,6 +13,9 @@ const commentSchema = new mongoose.Schema({
         type : mongoose.Types.ObjectId,
         ref : "users",
         required : true
+    },
+    replies : {
+        type : [this]
     }
 });
 
