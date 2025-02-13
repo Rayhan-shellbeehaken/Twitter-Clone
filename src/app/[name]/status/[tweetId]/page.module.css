@@ -1,0 +1,20 @@
+.page{
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    position: relative;
+    width: 100%;
+}
+
+.left{
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+}
+
+.right{
+    margin-left: 20px;
+    width: 350px;
+    padding: 0 5px;
+    padding-right: 15px;
+}

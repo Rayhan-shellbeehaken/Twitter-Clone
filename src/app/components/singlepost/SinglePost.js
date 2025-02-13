@@ -7,10 +7,10 @@ import { IoIosStats } from "react-icons/io";
 import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 import PostAction from '../postactions/PostAction';
-import { SessionProvider } from 'next-auth/react';
+import Link from 'next/link';
 
 export default function SinglePost({id,title,imageUrl,reacters,userDetails,commenters}) {
-
+    const route = `${userDetails.username}/status/${id}`;
     return (
         <div className={styles.container}>
             <div className={styles.left}>
@@ -21,15 +21,16 @@ export default function SinglePost({id,title,imageUrl,reacters,userDetails,comme
                     <p>{userDetails.username}<span> @_{userDetails.username}</span></p>
                     <RiMoreFill/>
                 </div>
-                <div className={styles.text}>
-                    <p>{title}</p>
-                </div>
-                {imageUrl &&
-                    <div className={styles["post-image"]}>
-                        <Image src={imageUrl} width={100} height={100} alt="xlogo" priority layout="intrinsic"/>
+                <Link href={route}>
+                    <div className={styles.text}>
+                        <p>{title}</p>
                     </div>
-                }
-                
+                    {imageUrl &&
+                        <div className={styles["post-image"]}>
+                            <Image src={imageUrl} width={100} height={100} alt="xlogo" priority layout="intrinsic"/>
+                        </div>
+                    }
+                </Link>
                 <div className={styles.elements}>
                     <PostAction 
                         reacters={reacters} 
