@@ -10,16 +10,18 @@ import Link from 'next/link'
 import SinglePost from '@/app/components/singlepost/SinglePost'
 import { fetchATweet } from '@/app/helpers/tweetoperation'
 import CommentBox from '@/app/components/commentbox/CommentBox'
+import Popup from '@/app/components/popup/Popup'
 
 export default async function page({params}) {
     const {tweetId} = await params;
     const result = await fetchATweet(tweetId);
     const tweet = result.result[0];
-    
+
     return (
         <ProtectedLayout>
-            <div className={styles.page}>
+            <div className={styles.page}>    
                 <div className={styles.left}>
+                    <Popup/>
                     <div className={styles.head}>
                         <Link href="/home" className={styles.back}>
                             <GoArrowLeft/>
@@ -35,9 +37,10 @@ export default async function page({params}) {
                         commenters={tweet.commenters}
                         notclickable={true}
                     />
-                    <CommentBox/>
-
-
+                    <div className={styles["replying-to"]}>
+                        <p>Replying to <span>@_{tweet.user_details.username}</span></p>
+                    </div>
+                    <CommentBox tweet={tweet}/>
 
                 </div>
                 <div className={styles.right}>

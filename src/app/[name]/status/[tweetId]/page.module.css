@@ -12,6 +12,18 @@
     position: relative;
 }
 
+.replying-to{
+    width: 100%;
+    border-left: 1px solid rgb(63,63,63);
+    border-right: 1px solid rgb(63,63,63);
+    padding: 20px 0px 15px 45px;
+    color: rgb(115, 115, 115);
+}
+
+.replying-to > p > span{
+    color: #00B2FF;
+}
+
 .right{
     margin-left: 20px;
     width: 350px;

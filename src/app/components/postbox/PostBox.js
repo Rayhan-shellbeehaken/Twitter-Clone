@@ -62,14 +62,12 @@ export default function PostBox() {
         }
         try{
             const response = await axios.post('/api/tweets', data);
-            console.log(response.data);
             toggleAlert("success","Successfully posted");
             router.refresh();
             setValue("");
             minimize();
         }catch(error){
-            console.log("Error in posting tweet");
-            toggleAlert("error","Successfully posted");
+            toggleAlert("error","Failed to post");
             console.log(error);
         }
     }

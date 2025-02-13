@@ -30,10 +30,8 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
         const data = {
             reacters : reacters
         }
-
         try{
             const tweet = await axios.patch(`/api/tweets?id=${id}`,data)
-            console.log(tweet);
             router.refresh();
         }catch(error){
             console.log(error);

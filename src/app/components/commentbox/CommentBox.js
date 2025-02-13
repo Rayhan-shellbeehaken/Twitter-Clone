@@ -10,13 +10,25 @@ import { GoXCircleFill } from "react-icons/go";
 import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import axios from 'axios';
+import { useAppContext } from '@/app/store/store';
 
-export default function CommentBox() {
+export default function CommentBox({tweet}) {
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const [value, setValue] = useState("");
     const [file, setFile] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const {toggleAlert} = useAppContext();
+
+    const {data:session} = useSession();
+    
+
+    useEffect(()=>{
+        setUserId(session?.user?._id);
+    },[session?.user])
 
     useEffect(()=>{
         if(textRef.current){
@@ -40,12 +52,35 @@ export default function CommentBox() {
         setImagePreview(null);
     }
 
+    const onComment = async(event) =>{
+        event.preventDefault();
+        const commenters = tweet.commenters;
+        const newComment = {
+            commentText : value,
+            commentImage : imagePreview,
+            userId : userId
+        }
+        commenters.push(newComment);
+        const data = {
+            commenters : commenters
+        }
+        try{
+            const result = axios.patch(`/api/tweets?id=${tweet._id}`,data);
+            toggleAlert("success","Comment successfully");
+            setValue("");
+            minimize();
+        }catch(error){
+            toggleAlert("error","Failed to comment");
+            console.log(error);
+        }
+    }
+
     return (
         <div className={styles.commentbox}>
             <div className={styles.image}>
                 <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
             </div>
-            <form className={styles.right}>
+            <form onSubmit={onComment} className={styles.right}>
                 <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='What is happening?!'></textarea>
                 <input type='file' ref={fileRef} onChange={(e)=>setFile(e.target.files[0])}></input>
                 {imagePreview &&
