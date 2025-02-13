@@ -9,12 +9,13 @@ import { GoArrowLeft } from "react-icons/go";
 import Link from 'next/link'
 import SinglePost from '@/app/components/singlepost/SinglePost'
 import { fetchATweet } from '@/app/helpers/tweetoperation'
+import CommentBox from '@/app/components/commentbox/CommentBox'
 
 export default async function page({params}) {
     const {tweetId} = await params;
     const result = await fetchATweet(tweetId);
     const tweet = result.result[0];
-    console.log(tweet);
+    
     return (
         <ProtectedLayout>
             <div className={styles.page}>
@@ -34,6 +35,10 @@ export default async function page({params}) {
                         commenters={tweet.commenters}
                         notclickable={true}
                     />
+                    <CommentBox/>
+
+
+
                 </div>
                 <div className={styles.right}>
                     <SearchBox/>
