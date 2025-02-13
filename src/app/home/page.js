@@ -15,7 +15,6 @@ import Loader from '../components/loader/Loader';
 
 export default async function Home({searchParams}) {
     const params = (await searchParams).feed || 'foryou';
-    console.log(params);
     return (
         <ProtectedLayout>
             <div className={styles.page}>
