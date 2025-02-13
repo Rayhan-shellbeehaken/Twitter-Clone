@@ -54,7 +54,6 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
         }
         try{
             const result = axios.patch(`/api/tweets?id=${id}`,data);
-            console.log(result);
             setShow(false);
         }catch(error){
             console.log(error);
