@@ -15,12 +15,11 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
     const [reacted,setReacted] = useState(false);
     const router = useRouter();
     const { data: session } = useSession();
-
     const [show,setShow] = useState(false);
 
     useEffect(()=>{
         setReacted(reacters.includes(session?.user?._id));
-    },[reacters,session,commenters]);
+    },[reacters,session]);
 
     const onReact = async() => {
         reacted ? 
@@ -32,7 +31,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
         }
         try{
             const tweet = await axios.patch(`/api/tweets?id=${id}`,data)
-            // router.refresh();
+            router.refresh();
         }catch(error){
             console.log(error);
         }   

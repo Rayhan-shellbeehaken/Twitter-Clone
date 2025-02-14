@@ -12,6 +12,8 @@ import Link from 'next/link';
 export default function SinglePost({id,title,imageUrl,reacters,userDetails,commenters,notclickable}) {
     const route = !notclickable ? `/${userDetails.username}/status/${id}` : undefined;
     const Content = notclickable ? 'div': Link;
+    console.log("COMMENTERS");
+    console.log(commenters);
     return (
         <div className={styles.container}>
             <div className={styles.left}>
@@ -40,7 +42,7 @@ export default function SinglePost({id,title,imageUrl,reacters,userDetails,comme
                         imageUrl={imageUrl}
                         userDetails={userDetails}
                         commenters={commenters}
-                        />
+                    />
                     <p><IoIosStats/> <span>10M</span></p>
                     <div>
                         <PiBookmarkSimpleBold/>

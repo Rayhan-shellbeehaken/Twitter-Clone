@@ -14,6 +14,7 @@ export default async function PostList({page}) {
         <div>
             {
                 tweets.map(tweet => {
+                    console.log(tweet);
                     return (
                         <SinglePost 
                             key={tweet._id} 

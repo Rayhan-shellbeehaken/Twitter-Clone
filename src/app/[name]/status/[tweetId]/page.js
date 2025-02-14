@@ -14,13 +14,17 @@ import Popup from '@/app/components/popup/Popup'
 
 export default async function page({params}) {
     const {tweetId} = await params;
-
     const result = await fetchATweet(tweetId);
     const tweet = result.result[0];
 
+    let backUrl = "/home?feed=foryou";
+    if(tweet.parent !== null){
+        const parentTweetResult = await fetchATweet(tweet.parent);
+        const parentTweetUser = parentTweetResult.result[0].user_details.username;
+        backUrl = `/${parentTweetUser}/status/${tweet.parent}`;
+    }
     const commentResult = await fetchTweet(1,tweetId);
     const comments = commentResult.result;
-    console.log(comments);
     
     return (
         <ProtectedLayout>
@@ -28,7 +32,7 @@ export default async function page({params}) {
                 <div className={styles.left}>
                     <Popup/>
                     <div className={styles.head}>
-                        <Link href="/home?feed=foryou" className={styles.back}>
+                        <Link href={backUrl} className={styles.back}>
                             <GoArrowLeft/>
                         </Link>
                         <div>Post</div>
@@ -50,6 +54,7 @@ export default async function page({params}) {
                     {
                         comments.map(comment => (
                             <SinglePost
+                                key={comment._id}
                                 id={comment._id} 
                                 title={comment.postText} 
                                 imageUrl={comment.postImage}

@@ -2,7 +2,7 @@ import { connect } from "@/app/db/db.config";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { addTweet, getTweets, updateTweet } from "@/app/service/tweet/tweetService";
-import { getATweet } from "@/app/repository/tweet/tweetRepository";
+import { getTweet } from "@/app/service/tweet/tweetService";
 
 connect();
 
@@ -28,7 +28,7 @@ export async function GET(request) {
         const parent = url.searchParams.get('parent') || null;
         let result;
         if(tweetId){
-            result = await getATweet(tweetId);
+            result = await getTweet(tweetId);
         }else if(page){
             result = await getTweets(page,parent);
         }
