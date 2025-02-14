@@ -1,8 +1,9 @@
 import Tweet from "@/app/models/tweet.model";
 import mongoose from "mongoose";
 
-export async function addNewTweet(postText, postImage, user) {
+export async function addNewTweet(parent,postText, postImage, user) {
     const newTweet = new Tweet({
+        parent,
         postText,
         postImage,
         user
@@ -12,10 +13,19 @@ export async function addNewTweet(postText, postImage, user) {
     return saveTweet;
 }
 
-export async function getAllTweet(page) {
+export async function getAllTweet(page,parent) {
   const limit = 7;
   const offset = (page - 1) * limit;
+  const filterValue = parent && parent !== "null" 
+  ? new mongoose.Types.ObjectId(parent) 
+  : null;
+
   const tweets = await Tweet.aggregate([
+      { 
+        $match: filterValue !== null 
+          ? { parent: filterValue }
+          : { parent: null } 
+      },
       {
         $lookup: {
           from: "users",
@@ -77,8 +87,16 @@ export async function getATweet(tweetId) {
 }
 
 export async function updateATweet(tweetId,data) {
-    const tweet = await Tweet.findByIdAndUpdate(tweetId, 
-        { $set : data},
-        { new : true, runValidators : true});
+  if(data.commentId){
+    const tweet = await Tweet.findByIdAndUpdate(tweetId,
+      {$push : {commenters : data.commentId}},
+      {new : true, runValidators : true}
+    )
     return tweet;
+  }else{
+    const tweet = await Tweet.findByIdAndUpdate(tweetId, 
+      { $set : data},
+      { new : true, runValidators : true});
+      return tweet;
+  }
 }

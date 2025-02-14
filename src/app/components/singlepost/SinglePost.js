@@ -10,7 +10,7 @@ import PostAction from '../postactions/PostAction';
 import Link from 'next/link';
 
 export default function SinglePost({id,title,imageUrl,reacters,userDetails,commenters,notclickable}) {
-    const route = !notclickable ? `${userDetails.username}/status/${id}` : undefined;
+    const route = !notclickable ? `/${userDetails.username}/status/${id}` : undefined;
     const Content = notclickable ? 'div': Link;
     return (
         <div className={styles.container}>

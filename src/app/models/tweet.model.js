@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
-import commentSchema from "./schemas/comment.schema";
 
 const tweetSchema = new mongoose.Schema({
+    parent : {
+        type : mongoose.Types.ObjectId,
+        default : null
+    },
     postText : {
         type : String,
         required : false
@@ -19,7 +22,13 @@ const tweetSchema = new mongoose.Schema({
         ref : "users",
         required: false,
     }],
-    commenters : [commentSchema],
+    commenters : [
+        {
+            type : mongoose.Types.ObjectId,
+            ref : "users",
+            required : false
+        }
+    ],
     user : {
         type : mongoose.Types.ObjectId,
         ref : "users"

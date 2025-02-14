@@ -13,6 +13,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
+import { useRouter } from 'next/navigation';
 
 export default function CommentBox({tweet}) {
     const textRef = useRef(null);
@@ -22,6 +23,7 @@ export default function CommentBox({tweet}) {
     const [imagePreview, setImagePreview] = useState(null);
     const [userId, setUserId] = useState(null);
     const {toggleAlert} = useAppContext();
+    const router = useRouter();
 
     const {data:session} = useSession();
     
@@ -54,18 +56,16 @@ export default function CommentBox({tweet}) {
 
     const onComment = async(event) =>{
         event.preventDefault();
-        const commenters = tweet.commenters;
-        const newComment = {
-            commentText : value,
-            commentImage : imagePreview,
-            userId : userId
-        }
-        commenters.push(newComment);
         const data = {
-            commenters : commenters
+            comment : {
+                commentText : value,
+                commentImage : imagePreview,
+                userId : userId
+            }
         }
         try{
             const result = axios.patch(`/api/tweets?id=${tweet._id}`,data);
+            router.refresh();
             toggleAlert("success","Comment successfully");
             setValue("");
             minimize();

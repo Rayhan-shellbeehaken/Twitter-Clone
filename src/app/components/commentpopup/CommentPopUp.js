@@ -15,6 +15,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
 import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId}) {
     const textRef = useRef(null);
@@ -22,6 +23,7 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
     const [commentText, setCommentText] = useState("");
     const [file,setFile] = useState("");
     const [commentImage,setCommentImage] = useState(null);
+    const router = useRouter();
 
     useEffect(()=>{
         if(textRef.current){
@@ -42,18 +44,16 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
 
     const onComment = async(event) =>{
         event.preventDefault();
-        
-        const newComment = {
-            commentText : commentText,
-            commentImage : commentImage,
-            userId : userId
-        }
-        commenters.push(newComment);
         const data = {
-            commenters : commenters
+            comment : {
+                commentText,
+                commentImage,
+                userId
+            }
         }
         try{
             const result = axios.patch(`/api/tweets?id=${id}`,data);
+            router.refresh();
             setShow(false);
         }catch(error){
             console.log(error);

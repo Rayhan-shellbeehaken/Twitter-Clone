@@ -8,22 +8,27 @@ import ReleventPeople from '@/app/components/releventpeople/ReleventPeople'
 import { GoArrowLeft } from "react-icons/go";
 import Link from 'next/link'
 import SinglePost from '@/app/components/singlepost/SinglePost'
-import { fetchATweet } from '@/app/helpers/tweetoperation'
+import { fetchATweet, fetchTweet } from '@/app/helpers/tweetoperation'
 import CommentBox from '@/app/components/commentbox/CommentBox'
 import Popup from '@/app/components/popup/Popup'
 
 export default async function page({params}) {
     const {tweetId} = await params;
+
     const result = await fetchATweet(tweetId);
     const tweet = result.result[0];
 
+    const commentResult = await fetchTweet(1,tweetId);
+    const comments = commentResult.result;
+    console.log(comments);
+    
     return (
         <ProtectedLayout>
             <div className={styles.page}>    
                 <div className={styles.left}>
                     <Popup/>
                     <div className={styles.head}>
-                        <Link href="/home" className={styles.back}>
+                        <Link href="/home?feed=foryou" className={styles.back}>
                             <GoArrowLeft/>
                         </Link>
                         <div>Post</div>
@@ -42,6 +47,19 @@ export default async function page({params}) {
                     </div>
                     <CommentBox tweet={tweet}/>
 
+                    {
+                        comments.map(comment => (
+                            <SinglePost
+                                id={comment._id} 
+                                title={comment.postText} 
+                                imageUrl={comment.postImage}
+                                reacters={comment.reacters}
+                                userDetails={comment.user_details}
+                                commenters={comment.commenters}
+                                notclickable={false}
+                            />
+                        ))
+                    }
                 </div>
                 <div className={styles.right}>
                     <SearchBox/>

@@ -25,11 +25,12 @@ export async function GET(request) {
         const url = new URL(request.url);
         const page = url.searchParams.get('page') || 1;
         const tweetId = url.searchParams.get('tweetId') || null;
+        const parent = url.searchParams.get('parent') || null;
         let result;
         if(tweetId){
             result = await getATweet(tweetId);
         }else if(page){
-            result = await getTweets(page);
+            result = await getTweets(page,parent);
         }
         if(!result) return NextResponse.json({message : 'Not found'},{status : 400});
         return NextResponse.json({message : "Successfully get result",result},{status : 200});

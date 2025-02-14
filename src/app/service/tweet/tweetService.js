@@ -3,12 +3,12 @@ import { addNewTweet, getAllTweet, getATweet, updateATweet } from "@/app/reposit
 export async function addTweet(user,request) {
     const requestBody = await request.json();
     const {postText, postImage} = requestBody;
-    const tweet = await addNewTweet(postText, postImage, user);
+    const tweet = await addNewTweet(null,postText, postImage, user);
     return tweet;
 }
 
-export async function getTweets(page) {
-    const tweets = await getAllTweet(page);
+export async function getTweets(page,parent) {
+    const tweets = await getAllTweet(page,parent);
     return tweets;
 }
 
@@ -18,7 +18,13 @@ export async function getTweet(tweetId) {
 }
 
 export async function updateTweet(tweetId,request) {
-    const data = await request.json();
+    let data = await request.json();
+    if (data.hasOwnProperty('comment')) {
+        const tweet = await addNewTweet(tweetId,data.comment.commentText,data.comment.commentImage,data.comment.userId);
+        data = {
+            commentId : tweet._id
+        }
+    }
     const tweet = await updateATweet(tweetId,data);
     return tweet;
 }
