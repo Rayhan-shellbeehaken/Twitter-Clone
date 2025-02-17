@@ -26,31 +26,74 @@ export async function getAllTweet(page,parent) {
           ? { parent: filterValue }
           : { parent: null } 
       },
-      {
-        $lookup: {
-          from: "users",
-          localField: "user",
-          foreignField: "_id",
-          as: "user_details"
-        }
-      },
-      {
-        $addFields: {
-          user_details: {
-            $arrayElemAt : ["$user_details",0]
+      [
+        {
+          $lookup: {
+            from: "tweets",
+            localField: "repostedTweet",
+            foreignField: "_id",
+            as: "reposted_details"
+          }
+        },
+        {
+          $addFields: {
+            reposted_details: {
+              $arrayElemAt : ["$reposted_details",0]
+            }
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "user",
+            foreignField: "_id",
+            as: "user_details"
+          }
+        },
+        {
+          $addFields: {
+            user_details: {
+              $arrayElemAt : ["$user_details",0]
+            }
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "reposted_details.user",
+            foreignField: "_id",
+            as: "reposted_user_details"
+          }
+        },
+        {
+          $addFields: {
+            "reposted_details.user_details": { 
+              $arrayElemAt: ["$reposted_user_details", 0] }
+          }
+        },
+        {
+          $project: {
+            __v : 0,
+            user : 0,
+            "user_details.email" : 0,
+            "user_details.__v" : 0,
+            "user_details.dateofBirth" : 0,
+            "user_details.isVerified" : 0,
+            "repostedTweet" : 0,
+            "reposted_details.reacters" : 0,
+            "reposted_details.commenters" : 0,
+            "reposted_details.__v" : 0,
+            "reposted_details.parent" : 0,
+            "reposted_details.repostedTweet" : 0,
+            "reposted_details.createdAt" : 0,
+            "reposted_user_details": 0,
+            "reposted_details.user_details.email" : 0,
+            "reposted_details.user_details.isVerified" : 0,
+            "reposted_details.user_details.__v" : 0,
+            "reposted_details.user_details.dateofBirth" : 0,
           }
         }
-        },
-      {
-        $project: {
-          __v : 0,
-          user : 0,
-          "user_details.email" : 0,
-          "user_details.__v" : 0,
-          "user_details.dateofBirth" : 0,
-          "user_details.isVerified" : 0
-        }
-      }
+      ]
   ]).sort({createdAt : -1}).skip(offset).limit(limit);
   return tweets;
 }
