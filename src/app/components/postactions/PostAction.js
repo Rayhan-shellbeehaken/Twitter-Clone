@@ -49,7 +49,6 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
 
     const onRepost = async() => {
         const data = {
-            postText : "",
             repostedTweet : id
         }
         try{

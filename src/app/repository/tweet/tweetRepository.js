@@ -80,8 +80,6 @@ export async function getAllTweet(page,parent) {
           "user_details.dateofBirth" : 0,
           "user_details.isVerified" : 0,
           "repostedTweet" : 0,
-          "reposted_details.reacters" : 0,
-          "reposted_details.commenters" : 0,
           "reposted_details.__v" : 0,
           "reposted_details.parent" : 0,
           "reposted_details.repostedTweet" : 0,
