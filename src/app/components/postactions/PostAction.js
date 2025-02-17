@@ -13,12 +13,14 @@ import CommentPopUp from '../commentpopup/CommentPopUp';
 import { RiEditLine } from "react-icons/ri";
 import { useRef } from 'react';
 import { useAppContext } from '@/app/store/store';
+import QuoteBox from '../quotebox/QuoteBox';
 
 export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters}) {
     const [reacted,setReacted] = useState(false);
     const router = useRouter();
     const { data: session } = useSession();
     const [show,setShow] = useState(false);
+    const [quotePopUp, setQuotePopUp] = useState(true);
     const [repostBox,setRepostBox] = useState(false);
     const popupRef = useRef(null);
     const {toggleAlert} = useAppContext();
@@ -62,6 +64,11 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
         }
     }
 
+    const onQuote = async() => {
+        setRepostBox(false)
+        setQuotePopUp(true);
+    }
+
     useEffect(() => {
         const handleClickOutside = (event) => {
           if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -93,6 +100,12 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                     userId={session?.user?._id}
                 />
             }
+
+            {quotePopUp &&
+                <QuoteBox
+                    setQuotePopUp={setQuotePopUp}
+                />
+            }
             
             <div className={styles.iconbox} onClick={onComment}><LiaCommentAlt/><span>{commenters.length}</span></div>
             <div className={`${styles.iconbox} ${styles.repost}`} onClick={()=>setRepostBox(true)}>
@@ -100,7 +113,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                     repostBox && 
                     <div className={styles.repostbox} ref={popupRef}>
                         <button onClick={onRepost}><BiRepost/> <span>Repost</span></button>
-                        <button><RiEditLine/> <span>Quote</span></button>
+                        <button onClick={onQuote}><RiEditLine/> <span>Quote</span></button>
                     </div>
                 }
                 <BiRepost/><span>60K</span>

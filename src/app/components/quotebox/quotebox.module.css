@@ -1,0 +1,132 @@
+.container{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(71, 87, 104, 0.35);
+    top: 0;
+    left: 0;
+    padding-top: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    direction: ltr;
+    z-index: 1;
+}
+
+.popup{
+    background-color: black;
+    width: 620px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.cross{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+.cross-right{
+    display: flex;
+    align-items: center;
+}
+
+.cross-icon{
+    width: 24px;
+    height: 24px;
+    font-size: 22px;
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.back-icon{
+    width: 0;
+    height: 0;
+    font-size: 22px;
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.cross-icon:hover,.back-icon:hover{
+    background-color: rgb(41, 41, 41);
+}
+
+.cross > div > p{
+    font-size: 16px;
+    padding: 4px 12px;
+    color: #00B2FF;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.cross > div> p:hover{
+    background-color: #1b2a30;
+}
+
+.button{
+    width: 75px;
+    height: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.button:disabled{
+    background-color: rgb(145, 144, 144);
+    color: black;
+    cursor: default;
+}
+
+.button:not(:disabled):hover{
+    background-color: rgb(201, 201, 201);
+}
+
+.top-button{
+    visibility: hidden;
+    width: 0px;
+    height: 0px;
+}
+
+.quote-container{
+    width: 100%;
+    display: flex;
+}
+
+.left{
+    width: 50px;
+    padding: 5px;
+}
+
+.left img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: red;
+    padding: 1px;
+    border-width: 0px;
+}
+
+.right{
+    width: 90%;
+}
+
+.right textarea{
+    width: 100%;
+    word-wrap: break-word;
+    resize: none;
+    font-size: 19px;
+    max-height: 200px;
+    padding: 10px 5px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+}
