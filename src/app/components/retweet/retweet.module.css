@@ -1,3 +1,48 @@
 .container{
     color: white;
+    border: 1px solid rgb(63,63,63);
+    border-radius: 20px;
+    padding: 12px 12px;
 }
+
+.head{
+    height: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.image-container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container > img{
+    width: 20px;
+    background-color: rgb(23, 88, 219);
+    border-radius: 50%;
+}
+
+.username{
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+.username > span{
+    font-weight: 100;
+    color: rgb(152, 152, 152);
+}
+
+.content{
+    font-size: 15px;
+    font-weight: 300;
+    color: rgb(185, 185, 185);
+    margin-top: 10px;
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

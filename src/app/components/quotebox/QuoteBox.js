@@ -15,10 +15,15 @@ import { IoLocationOutline } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
 import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
+import ReTweet from '../retweet/ReTweet';
+import { FaEarthAmericas } from "react-icons/fa6";
 
 export default function QuoteBox({setQuotePopUp}) {
     const textRef = useRef(null);
+    const fileRef = useRef(null);
     const [postText, setPostText] = useState("");
+    const [postImage, setPostImage] = useState(null);
+    const [file, setFile] = useState("");
 
     useEffect(()=>{
         if(textRef.current){
@@ -26,6 +31,21 @@ export default function QuoteBox({setQuotePopUp}) {
             textRef.current.style.height = `${textRef.current.scrollHeight}px`;
         }
     },[postText]);
+
+    useEffect(()=>{
+        if(file){
+            const reader = new FileReader();
+            reader.onloadend = () =>{
+                setPostImage(reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    },[file]);
+
+    const minimize = () =>{
+        setFile("");
+        setPostImage(null);
+    }
 
     return (
         <div className={styles.container}>
@@ -47,7 +67,35 @@ export default function QuoteBox({setQuotePopUp}) {
                     </div>
                     <div className={styles.right}>
                         <textarea placeholder='Add a comment' ref={textRef} value={postText} onChange={(e)=>setPostText(e.target.value)}></textarea>
-                        
+                        <input className={styles.input} type='file' ref={fileRef} onChange={(e)=>setFile(e.target.files[0])}></input>
+                        {postImage &&
+                            <div className={styles["preview-image-container"]}>
+                                <div onClick={minimize} className={styles.minimize}>
+                                    <GoXCircleFill/>
+                                </div>
+                                <img src={postImage} className={styles["preview-image"]}></img>
+                            </div>
+                        }
+                        <ReTweet/>
+                    </div>
+                </div>
+                <div className={styles.filter}>
+                    <FaEarthAmericas/>
+                    <p>Everyone can reply</p>
+                </div>
+                <hr/>
+                <div className={styles.submission}>
+                    <div className={styles["submission-left"]}>
+                        <div><IoImageOutline onClick={()=>fileRef.current.click()}/></div>
+                        <div><MdOutlineGifBox/></div>
+                        <div><VscVscode/></div>
+                        <div><BiPoll/></div>
+                        <div><MdOutlineEmojiEmotions/></div>
+                        <div><RiCalendarScheduleLine/></div>
+                        <div><IoLocationOutline/></div>
+                    </div>
+                    <div className={styles["submission-right"]}>
+                        <button className={`${styles.button} ${styles["bottom-button"]}`} disabled={!file && !postText}>Reply</button>
                     </div>
                 </div>
             </div>
