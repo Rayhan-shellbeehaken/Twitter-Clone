@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import CommentPopUp from '../commentpopup/CommentPopUp';
 import { RiEditLine } from "react-icons/ri";
 import { useRef } from 'react';
+import { useAppContext } from '@/app/store/store';
 
 export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters}) {
     const [reacted,setReacted] = useState(false);
@@ -20,6 +21,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
     const [show,setShow] = useState(false);
     const [repostBox,setRepostBox] = useState(false);
     const popupRef = useRef(null);
+    const {toggleAlert} = useAppContext();
 
     useEffect(()=>{
         setReacted(reacters.includes(session?.user?._id));
@@ -43,6 +45,22 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
 
     const onComment = async() => {
         setShow(!show);
+    }
+
+    const onRepost = async() => {
+        const data = {
+            postText : "",
+            repostedTweet : id
+        }
+        try{
+            const response = await axios.post('/api/tweets',data);
+            toggleAlert("success","Successfully posted");
+            setRepostBox(false);
+            router.refresh();
+        }catch(error){
+            toggleAlert("error","Failed to post");
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -82,7 +100,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                 {
                     repostBox && 
                     <div className={styles.repostbox} ref={popupRef}>
-                        <button><BiRepost/> <span>Repost</span></button>
+                        <button onClick={onRepost}><BiRepost/> <span>Repost</span></button>
                         <button><RiEditLine/> <span>Quote</span></button>
                     </div>
                 }

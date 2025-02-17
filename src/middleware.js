@@ -9,9 +9,7 @@ const privateRegexPaths = [/^\/[^\/]+\/status\/[^\/]+$/];
 export async function middleware(request) {
     try{
         const currentPath = request.nextUrl.pathname;
-        console.log(currentPath);
         const token = await getToken({ req: request, secret: process.env.SECRET_TOKEN });
-        console.log(token);
         const isPrivate = privatePaths.includes(currentPath) || privateRegexPaths.some((regex) => regex.test(currentPath));
         if(token && publicPaths.includes(currentPath)){
             if(token.isNewUser){

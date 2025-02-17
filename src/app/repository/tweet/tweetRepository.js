@@ -1,12 +1,13 @@
 import Tweet from "@/app/models/tweet.model";
 import mongoose from "mongoose";
 
-export async function addNewTweet(parent,postText, postImage, user) {
+export async function addNewTweet(parent,postText, postImage, user,repostedTweet) {
     const newTweet = new Tweet({
         parent,
         postText,
         postImage,
-        user
+        user,
+        repostedTweet
     });
 
     const saveTweet = await newTweet.save();

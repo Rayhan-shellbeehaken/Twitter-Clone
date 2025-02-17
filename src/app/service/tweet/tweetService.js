@@ -2,8 +2,8 @@ import { addNewTweet, getAllTweet, getATweet, updateATweet } from "@/app/reposit
 
 export async function addTweet(user,request) {
     const requestBody = await request.json();
-    const {postText, postImage} = requestBody;
-    const tweet = await addNewTweet(null,postText, postImage, user);
+    const {postText, postImage, repostedTweet} = requestBody;
+    const tweet = await addNewTweet(null,postText, postImage, user,repostedTweet);
     return tweet;
 }
 

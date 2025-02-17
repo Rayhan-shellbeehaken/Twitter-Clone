@@ -35,7 +35,6 @@ const tweetSchema = new mongoose.Schema({
     },
     repostedTweet : {
         type : mongoose.Types.ObjectId,
-        ref : "tweets",
         default : null
     }
     
