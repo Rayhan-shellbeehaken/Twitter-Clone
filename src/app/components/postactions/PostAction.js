@@ -10,12 +10,16 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import CommentPopUp from '../commentpopup/CommentPopUp';
+import { RiEditLine } from "react-icons/ri";
+import { useRef } from 'react';
 
 export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters}) {
     const [reacted,setReacted] = useState(false);
     const router = useRouter();
     const { data: session } = useSession();
     const [show,setShow] = useState(false);
+    const [repostBox,setRepostBox] = useState(false);
+    const popupRef = useRef(null);
 
     useEffect(()=>{
         setReacted(reacters.includes(session?.user?._id));
@@ -41,6 +45,24 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
         setShow(!show);
     }
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (popupRef.current && !popupRef.current.contains(event.target)) {
+            setRepostBox(false);
+          }
+        };
+    
+        if (repostBox) {
+          document.addEventListener("mousedown", handleClickOutside);
+        } else {
+          document.removeEventListener("mousedown", handleClickOutside);
+        }
+    
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [repostBox]);
+
     return (
         <>
             {show && 
@@ -54,16 +76,26 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                     userId={session?.user?._id}
                 />
             }
-            <p onClick={onComment}><LiaCommentAlt/><span>{commenters.length}</span></p>
-            <p><BiRepost/><span>60K</span></p>
+            
+            <div className={styles.iconbox} onClick={onComment}><LiaCommentAlt/><span>{commenters.length}</span></div>
+            <div className={`${styles.iconbox} ${styles.repost}`} onClick={()=>setRepostBox(true)}>
+                {
+                    repostBox && 
+                    <div className={styles.repostbox} ref={popupRef}>
+                        <button><BiRepost/> <span>Repost</span></button>
+                        <button><RiEditLine/> <span>Quote</span></button>
+                    </div>
+                }
+                <BiRepost/><span>60K</span>
+            </div>
 
-            <p className={`${reacted ? styles.react : ''}`} onClick={onReact}>
+            <div className={`${styles.iconbox} ${reacted ? styles.react : ''}`} onClick={onReact}>
                 {reacted ? 
                     <TiHeartFullOutline/> : 
                     <CiHeart/>
                 }
                 <span>{reacters.length || 0}</span>
-            </p>
+            </div>
         </>
     )
 }
