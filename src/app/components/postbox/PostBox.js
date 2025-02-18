@@ -27,7 +27,6 @@ export default function PostBox() {
 
     useEffect(()=>{
         if(textRef.current){
-            console.log("HEIGHT :: "+textRef.current.scrollHeight);
             textRef.current.style.height = "45px";
             textRef.current.style.height = `${textRef.current.scrollHeight}px`;
         }

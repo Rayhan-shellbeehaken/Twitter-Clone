@@ -10,6 +10,7 @@ import PostAction from '../postactions/PostAction';
 import Link from 'next/link';
 import { BiRepost } from "react-icons/bi";
 import { auth } from '@/auth';
+import ReTweet from '../retweet/ReTweet';
 
 export default async function SinglePost({
     id, title,
@@ -17,12 +18,12 @@ export default async function SinglePost({
     userDetails, commenters,
     notclickable, reposted_details
 }) {
-    const route = !notclickable ? `/${userDetails.username}/status/${id}` : undefined;
-    const Content = notclickable ? 'div': Link;
 
     const session = await auth();
 
-    const reposted = (!title && !imageUrl && reposted_details) ? true : false;
+    const reposted = (!title && !imageUrl && JSON.stringify(reposted_details) !== "{}") ? true : false; //can be modified
+
+    const withQuote = ((title || imageUrl) && JSON.stringify(reposted_details) !== "{}") ? true : false;
     
     const tweet_info = {
         id : reposted ? reposted_details._id : id,
@@ -32,6 +33,9 @@ export default async function SinglePost({
         commenters : reposted ? reposted_details.commenters : commenters,
         userDetails : reposted ? reposted_details.user_details : userDetails
     }
+
+    const route = !notclickable ? `/${tweet_info.userDetails.username}/status/${tweet_info.id}` : undefined;
+    const Content = notclickable ? 'div': Link;
     
     const reposter = (reposted && (userDetails._id === session?.user?._id)) ? "You" : userDetails.username;
     
@@ -63,6 +67,14 @@ export default async function SinglePost({
                             </div>
                         }
                     </Content>
+                    {withQuote && 
+                        <ReTweet
+                            id={reposted_details._id}
+                            userDetails={reposted_details.user_details}
+                            title={reposted_details.postText}
+                            imageUrl={reposted_details.postImage}
+                        />
+                    }
                     <div className={styles.elements}>
                         <PostAction 
                             reacters={tweet_info.reacters} 

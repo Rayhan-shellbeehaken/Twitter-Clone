@@ -37,7 +37,6 @@ export default function SignUpSecond() {
             },1000);
 
         }catch(error){
-            console.log("ERROR APPEARED");
             toggleAlert('error', 'Failed to register');
         }
     }
