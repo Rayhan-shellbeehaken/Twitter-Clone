@@ -35,7 +35,6 @@ export default function SignUpFirst({setPhaseComplete}) {
     }
 
     const handleChange = (type, event) => {
-        console.log(event.target.value);
         if(type === 'Month'){
             daysDeclaration(event.target.value,dateofBirth.Year);
         }else if(type === "Year"){

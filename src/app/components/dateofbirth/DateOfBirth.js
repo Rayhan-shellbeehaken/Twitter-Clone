@@ -10,7 +10,6 @@ export default function DateOfBirth() {
     const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});
 
     const handleChange = (type, event) => {
-        console.log(event.target.value);
         if(type === 'Month'){
             daysDeclaration(event.target.value,dateofBirth.Year);
         }else if(type === "Year"){

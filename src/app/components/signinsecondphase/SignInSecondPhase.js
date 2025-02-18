@@ -31,7 +31,6 @@ export default function SignInSecondPhase() {
         router.push("/home");
       }, 1000);
     } catch (error) {
-      console.log("Error");
       console.log(error);
       toggleAlert("error", "Failed to login");
     }

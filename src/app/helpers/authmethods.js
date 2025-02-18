@@ -6,7 +6,6 @@ export async function userAuthorize(credentials) {
     try{
         return (credentials.name || credentials.dateofBirth) ? await registration(credentials) : await login(credentials);
     }catch(error){
-        console.log(error);
         throw error;
     }
 }
@@ -24,7 +23,6 @@ async function login(credentials) {
         }
         return user;
     }catch(error){
-        console.log(error);
         throw error;
     }
 }
@@ -46,7 +44,6 @@ async function registration(credentials) {
         })
         return savedUser;
     }catch(error){
-        console.log(error);
         throw error;
     }
 }
@@ -65,7 +62,6 @@ export async function OAuthLogin(account, profile) {
             userName = profile.login || profile.name;
             image = profile.image
         }
-        console.log("HELLO")
         if(!user){
             user = await User.create({
                 username: userName,

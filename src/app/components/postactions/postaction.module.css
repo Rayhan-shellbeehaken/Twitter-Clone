@@ -20,6 +20,14 @@
     font-size: 24px;
 }
 
+.repost:hover{
+    color: rgb(96, 196, 96);
+}
+
+.reposted{
+    color: rgb(96, 196, 96);
+}
+
 .repostbox{
     position: absolute;
     display: flex;
@@ -57,4 +65,12 @@
 
 .repostbox > button:hover{
     background-color: rgb(15, 15, 15);
+}
+
+.comment-icon:hover{
+    color: #00B2FF;
+}
+
+.like:hover{
+    color:rgb(251, 91, 118);
 }

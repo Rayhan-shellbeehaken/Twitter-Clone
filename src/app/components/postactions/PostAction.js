@@ -17,6 +17,7 @@ import QuoteBox from '../quotebox/QuoteBox';
 
 export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters,reposters}) {
     const [reacted,setReacted] = useState(false);
+    const [reposted,setReposted] = useState(false);
     const router = useRouter();
     const { data: session } = useSession();
     const [show,setShow] = useState(false);
@@ -27,7 +28,8 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
 
     useEffect(()=>{
         setReacted(reacters.includes(session?.user?._id));
-    },[reacters,session]);
+        setReposted(reposters.includes(session?.user?._id));
+    },[reacters,reposters,session]);
 
     const onReact = async() => {
         reacted ? 
@@ -50,6 +52,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
     }
 
     const onRepost = async() => {
+        
         const data = {
             repostedTweet : id
         }
@@ -111,8 +114,8 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                 />
             }
             
-            <div className={styles.iconbox} onClick={onComment}><LiaCommentAlt/><span>{commenters.length}</span></div>
-            <div className={`${styles.iconbox} ${styles.repost}`} onClick={()=>setRepostBox(true)}>
+            <div className={`${styles.iconbox} ${styles["comment-icon"]}`} onClick={onComment}><LiaCommentAlt/><span>{commenters.length}</span></div>
+            <div className={`${styles.iconbox} ${styles.repost} ${reposted ? styles.reposted : ''}`} onClick={()=>setRepostBox(true)}>
                 {
                     repostBox && 
                     <div className={styles.repostbox} ref={popupRef}>
@@ -123,7 +126,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                 <BiRepost/><span>{reposters.length}</span>
             </div>
 
-            <div className={`${styles.iconbox} ${reacted ? styles.react : ''}`} onClick={onReact}>
+            <div className={`${styles.iconbox} ${styles.like} ${reacted ? styles.react : ''}`} onClick={onReact}>
                 {reacted ? 
                     <TiHeartFullOutline/> : 
                     <CiHeart/>

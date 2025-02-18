@@ -174,18 +174,16 @@ export async function getATweet(tweetId) {
 }
 
 export async function updateATweet(tweetId,data) {
-  if(data.reposterId){
-    const tweet = await Tweet.findByIdAndUpdate(tweetId,
-      {$push : {reposters : data.reposterId}},
-      {new : true , runValidators : true}
+  if (data.reposterId || data.commentId) {
+    const field = data.reposterId ? "reposters" : "commenters";
+    const value = data.reposterId || data.commentId;
+
+    const tweet = await Tweet.findByIdAndUpdate(
+        tweetId,
+        { $push: { [field]: value } },
+        { new: true, runValidators: true }
     );
-    return tweet;
-  }
-  else if(data.commentId){
-    const tweet = await Tweet.findByIdAndUpdate(tweetId,
-      {$push : {commenters : data.commentId}},
-      {new : true, runValidators : true}
-    )
+
     return tweet;
   }else{
     const tweet = await Tweet.findByIdAndUpdate(tweetId, 

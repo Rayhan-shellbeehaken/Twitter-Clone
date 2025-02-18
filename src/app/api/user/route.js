@@ -23,8 +23,6 @@ export async function PATCH(request) {
         },{status : 200});
 
     }catch(error){
-        console.log("FAILED TO UPDATE");
-        console.log(error);
         return NextResponse.json({error : error.message},{status : 500});
     }
 }
