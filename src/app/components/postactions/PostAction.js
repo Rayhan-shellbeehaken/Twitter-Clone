@@ -15,7 +15,7 @@ import { useRef } from 'react';
 import { useAppContext } from '@/app/store/store';
 import QuoteBox from '../quotebox/QuoteBox';
 
-export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters}) {
+export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters,reposters}) {
     const [reacted,setReacted] = useState(false);
     const router = useRouter();
     const { data: session } = useSession();
@@ -120,7 +120,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                         <button onClick={onQuote}><RiEditLine/> <span>Quote</span></button>
                     </div>
                 }
-                <BiRepost/><span>60K</span>
+                <BiRepost/><span>{reposters.length}</span>
             </div>
 
             <div className={`${styles.iconbox} ${reacted ? styles.react : ''}`} onClick={onReact}>

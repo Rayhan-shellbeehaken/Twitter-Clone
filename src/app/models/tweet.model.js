@@ -29,6 +29,13 @@ const tweetSchema = new mongoose.Schema({
             required : false
         }
     ],
+    reposters : [
+        {
+            type : mongoose.Types.ObjectId,
+            ref: "users",
+            required : false
+        }
+    ],
     user : {
         type : mongoose.Types.ObjectId,
         ref : "users"

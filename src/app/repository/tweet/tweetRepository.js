@@ -1,17 +1,23 @@
 import Tweet from "@/app/models/tweet.model";
 import mongoose from "mongoose";
 
-export async function addNewTweet(parent,postText, postImage, user,repostedTweet) {
-    const newTweet = new Tweet({
-        parent,
-        postText,
-        postImage,
-        user,
-        repostedTweet
-    });
+export async function addNewTweet(parent,postText,postImage,user,repostedTweet) {
+  if(repostedTweet !== null){
+    const data = {
+      reposterId : user
+    }
+    const result = await updateATweet(repostedTweet,data);
+  }
+  const newTweet = new Tweet({
+      parent,
+      postText,
+      postImage,
+      user,
+      repostedTweet
+  });
 
-    const saveTweet = await newTweet.save();
-    return saveTweet;
+  const saveTweet = await newTweet.save();
+  return saveTweet;
 }
 
 export async function getAllTweet(page,parent) {
@@ -168,7 +174,14 @@ export async function getATweet(tweetId) {
 }
 
 export async function updateATweet(tweetId,data) {
-  if(data.commentId){
+  if(data.reposterId){
+    const tweet = await Tweet.findByIdAndUpdate(tweetId,
+      {$push : {reposters : data.reposterId}},
+      {new : true , runValidators : true}
+    );
+    return tweet;
+  }
+  else if(data.commentId){
     const tweet = await Tweet.findByIdAndUpdate(tweetId,
       {$push : {commenters : data.commentId}},
       {new : true, runValidators : true}

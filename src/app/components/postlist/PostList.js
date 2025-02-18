@@ -23,6 +23,7 @@ export default async function PostList({page}) {
                             reacters={tweet.reacters}
                             userDetails={tweet.user_details}
                             commenters={tweet.commenters}
+                            reposters={tweet.reposters}
                             notclickable={false}
                             reposted_details={tweet.reposted_details}
                         />

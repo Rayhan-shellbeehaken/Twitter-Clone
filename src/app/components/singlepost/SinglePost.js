@@ -15,7 +15,7 @@ import ReTweet from '../retweet/ReTweet';
 export default async function SinglePost({
     id, title,
     imageUrl, reacters,
-    userDetails, commenters,
+    userDetails, commenters, reposters,
     notclickable, reposted_details
 }) {
 
@@ -31,7 +31,8 @@ export default async function SinglePost({
         imageUrl : reposted ? reposted_details.postImage : imageUrl,
         reacters : reposted ? reposted_details.reacters : reacters,
         commenters : reposted ? reposted_details.commenters : commenters,
-        userDetails : reposted ? reposted_details.user_details : userDetails
+        userDetails : reposted ? reposted_details.user_details : userDetails,
+        reposters : reposted ? reposted_details.reposters : reposters
     }
 
     const route = !notclickable ? `/${tweet_info.userDetails.username}/status/${tweet_info.id}` : undefined;
@@ -83,6 +84,7 @@ export default async function SinglePost({
                             imageUrl={tweet_info.imageUrl}
                             userDetails={tweet_info.userDetails}
                             commenters={tweet_info.commenters}
+                            reposters={tweet_info.reposters}
                         />
                         <p><IoIosStats/> <span>10M</span></p>
                         <div>

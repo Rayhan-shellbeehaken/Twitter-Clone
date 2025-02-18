@@ -44,6 +44,7 @@ export default async function page({params}) {
                         reacters={tweet.reacters}
                         userDetails={tweet.user_details}
                         commenters={tweet.commenters}
+                        reposters={tweet.reposters}
                         notclickable={true}
                         reposted_details={tweet.reposted_details}
                     />
@@ -62,6 +63,7 @@ export default async function page({params}) {
                                 reacters={comment.reacters}
                                 userDetails={comment.user_details}
                                 commenters={comment.commenters}
+                                reposters={comment.reposters}
                                 notclickable={false}
                                 reposted_details={comment.reposted_details}
                             />
