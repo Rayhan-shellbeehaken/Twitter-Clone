@@ -30,7 +30,7 @@ export default function Sidemenu() {
                 <ul className={styles["menu-items"]}>
                     <li><Link href="#"><GoHomeFill/> <span>Home</span></Link></li>
                     <li><Link href="#"><IoSearch/> <span>Explore</span></Link></li>
-                    <li><Link href="#"><RiNotification2Line/> <span>Notifications</span></Link></li>
+                    <li><Link href="/notifications"><RiNotification2Line/> <span>Notifications</span></Link></li>
                     <li><Link href="#"><FiMail/> <span>Messages</span></Link></li>
                     <li><Link href="#"><VscVscode/> <span>Grok</span></Link></li>
                     <li><Link href="#"><PiBookmarkSimpleBold/> <span>Bookmarks</span></Link></li>
