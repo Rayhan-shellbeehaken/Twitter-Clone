@@ -2,8 +2,9 @@
     display: flex;
     justify-content: flex-start;
     overflow-x: auto;
-    position: relative;
+    /* position: relative; */
     width: 100%;
+    
 }
 
 .left{

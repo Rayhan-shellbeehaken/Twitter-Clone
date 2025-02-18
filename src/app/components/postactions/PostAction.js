@@ -20,7 +20,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
     const router = useRouter();
     const { data: session } = useSession();
     const [show,setShow] = useState(false);
-    const [quotePopUp, setQuotePopUp] = useState(true);
+    const [quotePopUp, setQuotePopUp] = useState(false);
     const [repostBox,setRepostBox] = useState(false);
     const popupRef = useRef(null);
     const {toggleAlert} = useAppContext();
@@ -103,7 +103,11 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
 
             {quotePopUp &&
                 <QuoteBox
+                    id={id}
                     setQuotePopUp={setQuotePopUp}
+                    userDetails={userDetails}
+                    title={title}
+                    imageUrl={imageUrl}
                 />
             }
             

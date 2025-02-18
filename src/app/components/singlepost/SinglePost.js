@@ -57,7 +57,7 @@ export default async function SinglePost({
                         <div className={styles.text}>
                             <p>{tweet_info.title}</p>
                         </div>
-                        {imageUrl &&
+                        {tweet_info.imageUrl &&
                             <div className={styles["post-image"]}>
                                 <Image src={tweet_info.imageUrl} width={100} height={100} alt="xlogo" priority layout="intrinsic"/>
                             </div>

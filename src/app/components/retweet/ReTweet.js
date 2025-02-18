@@ -2,8 +2,10 @@ import React from 'react'
 import styles from './retweet.module.css';
 import xlogo from '../../../../public/images/xprofile.png'
 import Image from 'next/image';
+import Link from 'next/link';
 
-export default function ReTweet() {
+export default function ReTweet({id,userDetails,title,imageUrl}) {
+    const route = `/${userDetails.username}/status/${id}`;
     return (
         <div className={styles.container}>
             <div className={styles.head}>
@@ -11,16 +13,17 @@ export default function ReTweet() {
                     <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
                 </div>
                 <div className={styles.username}>
-                    SpaceX <span>@SpaceX</span>
+                    {userDetails.username} <span>@{userDetails.username}</span>
                 </div>
             </div>
-            <div className={styles.content}>
-                <p>
-                    Falcon 9 lands on the A Shortfall of Gravitas droneship,
-                    completing the first 26th launch and landing of an orbital class rocket
-                </p>
-                <Image src={xlogo} alt="xlogo" priority height={200}/>
-            </div>
+            <Link href={route} className={styles.content}>
+                <div>
+                    {title}
+                </div>
+                {imageUrl && 
+                    <img src={imageUrl} alt="xlogo" height={200}/>
+                }
+            </Link>
         </div>
     )
 }

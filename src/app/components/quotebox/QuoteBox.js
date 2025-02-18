@@ -17,13 +17,17 @@ import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
 import ReTweet from '../retweet/ReTweet';
 import { FaEarthAmericas } from "react-icons/fa6";
+import { useAppContext } from '@/app/store/store';
+import { useRouter } from 'next/navigation';
 
-export default function QuoteBox({setQuotePopUp}) {
+export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl}) {
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const [postText, setPostText] = useState("");
     const [postImage, setPostImage] = useState(null);
     const [file, setFile] = useState("");
+    const {toggleAlert} = useAppContext();
+    const router = useRouter();
 
     useEffect(()=>{
         if(textRef.current){
@@ -45,6 +49,23 @@ export default function QuoteBox({setQuotePopUp}) {
     const minimize = () =>{
         setFile("");
         setPostImage(null);
+    }
+
+    const onRepost = async() => {
+        const data = {
+            postText,
+            postImage,
+            repostedTweet : id
+        }
+        try{
+            const response = await axios.post('/api/tweets',data);
+            toggleAlert("success","Successfully posted");
+            setQuotePopUp(false);
+            router.refresh();
+        }catch(error){
+            toggleAlert("error","Failed to post");
+            console.log(error);
+        }
     }
 
     return (
@@ -76,7 +97,12 @@ export default function QuoteBox({setQuotePopUp}) {
                                 <img src={postImage} className={styles["preview-image"]}></img>
                             </div>
                         }
-                        <ReTweet/>
+                        <ReTweet 
+                            id={id}
+                            userDetails={userDetails}
+                            title={title}
+                            imageUrl={imageUrl}
+                        />
                     </div>
                 </div>
                 <div className={styles.filter}>
@@ -95,7 +121,12 @@ export default function QuoteBox({setQuotePopUp}) {
                         <div><IoLocationOutline/></div>
                     </div>
                     <div className={styles["submission-right"]}>
-                        <button className={`${styles.button} ${styles["bottom-button"]}`} disabled={!file && !postText}>Reply</button>
+                        <button
+                        onClick={onRepost}
+                        className={`${styles.button} ${styles["bottom-button"]}`} 
+                        disabled={!file && !postText}>
+                            Reply
+                        </button>
                     </div>
                 </div>
             </div>

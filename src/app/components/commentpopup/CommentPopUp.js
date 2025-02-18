@@ -15,6 +15,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { GoArrowLeft } from "react-icons/go";
 import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
+import { useAppContext } from '@/app/store/store';
 
 export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId}) {
     const textRef = useRef(null);
@@ -22,6 +23,7 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
     const [commentText, setCommentText] = useState("");
     const [file,setFile] = useState("");
     const [commentImage,setCommentImage] = useState(null);
+    const {toggleAlert} = useAppContext();
 
     useEffect(()=>{
         if(textRef.current){
@@ -53,7 +55,9 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
         try{
             const result = axios.patch(`/api/tweets?id=${id}`,data);
             setShow(false);
+            toggleAlert("success","Comment successfully");
         }catch(error){
+            toggleAlert("error","Failed to comment");
             console.log(error);
         }
     }
