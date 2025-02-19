@@ -4,16 +4,48 @@ import styles from './notificationbar.module.css';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { TbSettings } from "react-icons/tb";
+import { useEffect } from 'react';
 
 export default function NotificationBar() {
     const [active, setActive] = useState(1);
     const router = useRouter();
 
+    const activeNavOption = (value) =>{
+        switch (value) {
+            case "followed":
+                setActive(2);
+                break;
+            case "tweets":
+                setActive(3);
+                break;
+            default:
+                break;
+        }
+    }
+
+    useEffect(()=>{
+        const pathParts = window.location.pathname.split("/")[2];
+        activeNavOption(pathParts);
+    },[]);
+
     const handleButtonClick = (event,value) =>{
         event.preventDefault();
         setActive(value);
-        value===1 ? router.push(`?feed=foryou`) : router.push(`?feed=following`);
+        let newPath = "/notifications";
+        switch (value) {
+            case 2:
+                newPath = "/notifications/followed"
+                break;
+            case 3:
+                newPath = "/notifications/tweets"
+                break;
+            default:
+                break;
+        }
+        router.push(newPath, undefined, {shallow : true});
+        setActive(value);
     }
+
     return (
         <div className={styles["nav-container"]}>
             <div className={styles.title}>
