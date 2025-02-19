@@ -18,6 +18,8 @@ export default async function Home({searchParams}) {
     return (
         <ProtectedLayout>
             <div className={styles.page}>
+                <div className={styles.line}>
+                </div>
                 <div className={styles.left}>
                     <Navbar/>
                     <PostBox/>
@@ -25,6 +27,8 @@ export default async function Home({searchParams}) {
                         <PostList page={1}/>
                     </Suspense>
                     <Popup/>
+                </div>
+                <div className={styles.line}>
                 </div>
                 <div className={styles.right}>
                     <SearchBox/>

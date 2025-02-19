@@ -1,16 +1,17 @@
 .page{
     display: flex;
     justify-content: flex-start;
-    overflow-x: auto;
-    /* position: relative; */
+    overflow-y: auto;
+    position: relative;
     width: 100%;
-    
 }
 
 .left{
     width: 100%;
     max-width: 600px;
     position: relative;
+    padding: 0px;
+    overflow: visible;
 }
 
 .right{
@@ -23,6 +24,20 @@
     z-index: 0;
 }
 
+.line{
+    display: flex;
+    position: sticky;
+    top: 0;
+    background-color: blue;
+}
+
+.line:after{
+    content: '';
+    width: 1px;
+    background-color: rgb(63,63,63);
+}
+
+
 @media screen and (max-width : 1035px) {
     .right{
         visibility: hidden;
@@ -31,3 +46,12 @@
         margin: 0px;
     }
 }
+
+/* @media screen and (max-width : 900px) {
+    .page{
+        background-color: red;
+    }
+    .page::after{
+        left: 69px;
+    }
+} */

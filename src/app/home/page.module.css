@@ -23,6 +23,19 @@
     z-index: 0;
 }
 
+.line{
+    display: flex;
+    position: sticky;
+    top: 0;
+    background-color: blue;
+}
+
+.line:after{
+    content: '';
+    width: 1px;
+    background-color: rgb(63,63,63);
+}
+
 @media screen and (max-width : 1035px) {
     .right{
         visibility: hidden;
