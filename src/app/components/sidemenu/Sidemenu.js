@@ -28,7 +28,7 @@ export default function Sidemenu() {
                     <Image src={xlogo} alt="xlogo" priority layout="intrinsic" />
                 </div>
                 <ul className={styles["menu-items"]}>
-                    <li><Link href="#"><GoHomeFill/> <span>Home</span></Link></li>
+                    <li><Link href="/home?feed=foryou"><GoHomeFill/> <span>Home</span></Link></li>
                     <li><Link href="#"><IoSearch/> <span>Explore</span></Link></li>
                     <li><Link href="/notifications"><RiNotification2Line/> <span>Notifications</span></Link></li>
                     <li><Link href="#"><FiMail/> <span>Messages</span></Link></li>

@@ -21,11 +21,13 @@ export async function POST(request) {
 
 export async function GET(request){
     try{
-        const session = await auth(); // may need to be modified
-        if(!session?.user){
+        const url = new URL(request.url);
+        const user = url.searchParams.get('user');
+        
+        if(!user){
+            console.log("HERE IS THE PROBLEM");
             return NextResponse.json({message : 'Login first'},{status : 400});
         }
-        const user = session?.user?._id;
         const notifications = await getAllNotifications(user);
         return NextResponse.json({message : 'Get all notification successfully',notifications},{status : 200});
     }catch(error){

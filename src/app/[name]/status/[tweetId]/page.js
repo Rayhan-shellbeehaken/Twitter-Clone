@@ -29,6 +29,8 @@ export default async function page({params}) {
     return (
         <ProtectedLayout>
             <div className={styles.page}>    
+                <div className={styles.line}>
+                </div>
                 <div className={styles.left}>
                     <Popup/>
                     <div className={styles.head}>
@@ -69,6 +71,8 @@ export default async function page({params}) {
                             />
                         ))
                     }
+                </div>
+                <div className={styles.line}>
                 </div>
                 <div className={styles.right}>
                     <SearchBox/>

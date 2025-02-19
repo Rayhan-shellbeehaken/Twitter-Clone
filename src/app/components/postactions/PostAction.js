@@ -39,8 +39,18 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
         const data = {
             reacters : reacters
         }
+
+        const notification = {
+            notificationType : "react",
+            notifiedTo : userDetails._id,
+            redirectTo : `/${userDetails.username}/status/${id}`,
+        };
+
         try{
-            const tweet = await axios.patch(`/api/tweets?id=${id}`,data)
+            const tweet = await axios.patch(`/api/tweets?id=${id}`,data);
+            if(tweet.status === 200 && !reacted){
+                const result = await axios.post('/api/notifications',notification);
+            }
             router.refresh();
         }catch(error){
             console.log(error);
