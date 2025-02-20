@@ -68,6 +68,14 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
         }
         try{
             const response = await axios.post('/api/tweets',data);
+            if(response.status == 200 && session?.user?._id !== userDetails._id){
+                const notification = {
+                    notificationType : "repost",
+                    notifiedTo : userDetails._id,
+                    redirectTo: `/${userDetails.username}/status/${response.data.tweet._id}`
+                };
+                const result = await axios.post('/api/notifications',notification);
+            }
             toggleAlert("success","Successfully posted");
             setRepostBox(false);
             router.refresh();

@@ -19,6 +19,7 @@ import ReTweet from '../retweet/ReTweet';
 import { FaEarthAmericas } from "react-icons/fa6";
 import { useAppContext } from '@/app/store/store';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl}) {
     const textRef = useRef(null);
@@ -28,6 +29,7 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl}) 
     const [file, setFile] = useState("");
     const {toggleAlert} = useAppContext();
     const router = useRouter();
+    const {data:session} = useSession();
 
     useEffect(()=>{
         if(textRef.current){
@@ -57,8 +59,19 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl}) 
             postImage,
             repostedTweet : id
         }
+
+        
         try{
             const response = await axios.post('/api/tweets',data);
+            if(response.status === 200 && session?.user?._id !== userDetails._id){
+                const notification = {
+                    notificationType : "repost",
+                    notifiedTo: userDetails._id,
+                    redirectTo: `/${userDetails.username}/status/${response.data.tweet._id}`
+    
+                }
+                const result = await axios.post('/api/notifications',notification);
+            }
             toggleAlert("success","Successfully posted");
             setQuotePopUp(false);
             router.refresh();

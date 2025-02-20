@@ -26,9 +26,6 @@ export async function middleware(request) {
         }else if(pageHistory[pageHistory.length - 1] == currentPath){
             pageHistory.pop();
         }
-
-        // console.log("PAGEHISTORY")
-        // console.log(pageHistory);
         
         response.cookies.set("pageHistory",JSON.stringify(pageHistory),{path : "/"});
 

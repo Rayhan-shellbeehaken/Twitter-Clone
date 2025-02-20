@@ -37,9 +37,7 @@ export default function CommentBox({tweet}) {
             textRef.current.style.height = `${textRef.current.scrollHeight}px`;
         }
     },[value]);
-
-    // console.log(tweet);
-
+    
     useEffect(()=>{
         if(file){
             const reader = new FileReader();
