@@ -48,7 +48,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
 
         try{
             const tweet = await axios.patch(`/api/tweets?id=${id}`,data);
-            if(tweet.status === 200 && !reacted){
+            if(tweet.status === 200 && !reacted && session?.user?._id !== userDetails._id){
                 const result = await axios.post('/api/notifications',notification);
             }
             router.refresh();

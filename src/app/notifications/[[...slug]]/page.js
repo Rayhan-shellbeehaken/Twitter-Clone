@@ -14,7 +14,6 @@ export default async function Page() {
   const session = await auth();
   const result = await fetchNotification(session?.user?._id);
   const notifications = result.notifications;
-  console.log(notifications);
 
   const notificationMessage = (type) => {
     let message="";
@@ -24,6 +23,9 @@ export default async function Page() {
         break;
       case "comment":
         message = "commented to your tweet"
+        break;
+      case "reply":
+        message = "replied to your comment"
         break;
       case "repost":
         message = "reposted your tweet"

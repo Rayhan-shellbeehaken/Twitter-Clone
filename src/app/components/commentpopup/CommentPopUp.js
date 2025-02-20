@@ -52,10 +52,21 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
                 userId
             }
         }
+        
         try{
-            const result = axios.patch(`/api/tweets?id=${id}`,data);
+            const result = await axios.patch(`/api/tweets?id=${id}`,data);
+            console.log("RESULT PLEASE");
+            console.log(result.data.tweet.parent);
+            const notification = {
+                notificationType : result.data.tweet.parent === null ? "comment" : "reply",
+                notifiedTo : userDetails._id,
+                redirectTo : `/${userDetails.username}/status/${id}`,
+            };
             setShow(false);
             toggleAlert("success","Comment successfully");
+            if(result.status === 200 && userId !== userDetails._id){
+                const response = await axios.post('/api/notifications',notification);
+            }
         }catch(error){
             toggleAlert("error","Failed to comment");
             console.log(error);
