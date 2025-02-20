@@ -11,20 +11,24 @@ import Link from 'next/link';
 import { BiRepost } from "react-icons/bi";
 import { auth } from '@/auth';
 import ReTweet from '../retweet/ReTweet';
+import { formatDistanceToNow } from "date-fns";
 
 export default async function SinglePost({
     id, title,
     imageUrl, reacters,
     userDetails, commenters, reposters,
-    notclickable, reposted_details
+    notclickable, reposted_details,
+    createdAt
 }) {
 
     const session = await auth();
-
     const reposted = (!title && !imageUrl && JSON.stringify(reposted_details) !== "{}") ? true : false; //can be modified
-
     const withQuote = ((title || imageUrl) && JSON.stringify(reposted_details) !== "{}") ? true : false;
     
+    function timeAgo(date) {
+        return formatDistanceToNow(new Date(date), { addSuffix: true });
+    }
+
     const tweet_info = {
         id : reposted ? reposted_details._id : id,
         title : reposted ? reposted_details.postText : title,
@@ -55,7 +59,9 @@ export default async function SinglePost({
                 </div>
                 <div className={styles.right}>
                     <div className={styles.user}>                   
-                        <p>{tweet_info.userDetails.username}<span> @_{tweet_info.userDetails.username}</span></p>
+                        <p>
+                            {tweet_info.userDetails.username}<span> . @_{tweet_info.userDetails.username}</span> <span className={styles.time}>. {timeAgo(createdAt)}</span>
+                        </p>
                         <RiMoreFill/>
                     </div>
                     <Content href={route}>
@@ -85,6 +91,7 @@ export default async function SinglePost({
                             userDetails={tweet_info.userDetails}
                             commenters={tweet_info.commenters}
                             reposters={tweet_info.reposters}
+                            createdAt={createdAt}
                         />
                         <p><IoIosStats/> <span>10M</span></p>
                         <div>

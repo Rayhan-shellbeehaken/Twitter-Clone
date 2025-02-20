@@ -7,7 +7,6 @@ export async function fetchNotification(user,category) {
     }
     const response = await fetch(`http://localhost:3000/api/notifications?user=${user}&category=${category}`,{
             method: 'GET',
-            cache: 'no-store' 
         }
     );
     if(!response.ok){

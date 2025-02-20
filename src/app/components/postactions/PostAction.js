@@ -15,7 +15,7 @@ import { useRef } from 'react';
 import { useAppContext } from '@/app/store/store';
 import QuoteBox from '../quotebox/QuoteBox';
 
-export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters,reposters}) {
+export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters,reposters,createdAt}) {
     const [reacted,setReacted] = useState(false);
     const [reposted,setReposted] = useState(false);
     const router = useRouter();
@@ -119,6 +119,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                     userDetails={userDetails}
                     commenters={commenters}
                     userId={session?.user?._id}
+                    createdAt={createdAt}
                 />
             }
 
@@ -129,6 +130,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
                     userDetails={userDetails}
                     title={title}
                     imageUrl={imageUrl}
+                    createdAt={createdAt}
                 />
             }
             

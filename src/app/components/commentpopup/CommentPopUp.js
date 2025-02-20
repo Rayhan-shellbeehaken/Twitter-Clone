@@ -16,8 +16,9 @@ import { GoArrowLeft } from "react-icons/go";
 import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
+import { formatDistanceToNow } from "date-fns";
 
-export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId}) {
+export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId,createdAt}) {
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const [commentText, setCommentText] = useState("");
@@ -41,6 +42,10 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
             reader.readAsDataURL(file);
         }
     },[file]);
+
+    function timeAgo(date) {
+        return formatDistanceToNow(new Date(date), { addSuffix: true });
+    }
 
     const onComment = async(event) =>{
         event.preventDefault();
@@ -100,7 +105,9 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
                             <div className={styles["first-left-line"]}><hr/></div>
                         </div>
                         <div className={styles["first-right"]}>
-                            <p className={styles["first-account"]}><span>{userDetails.username}</span> @_{userDetails.username}</p>
+                            <p className={styles["first-account"]}>
+                                <span>{userDetails.username}</span> @_{userDetails.username} . {timeAgo(createdAt)}
+                            </p>
                             <p className={styles["post-text"]}>{title}</p>
                             <p className={styles["post-text"]}>
                                 {imageUrl ? 'www.image.com' : ''}

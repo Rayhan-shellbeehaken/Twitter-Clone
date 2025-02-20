@@ -143,8 +143,6 @@
     color: rgb(167, 167, 167);
 }
 
-
-
 .first-right p{
     word-wrap: break-word;
 }
@@ -305,6 +303,12 @@
     position: absolute;
     right: 0px;
     cursor: pointer;
+}
+
+.time{
+    font-size: 12px;
+    font-weight: 200;
+    color: rgb(201, 201, 201);
 }
 
 @media screen and (max-width : 635px) {

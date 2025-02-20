@@ -53,6 +53,7 @@ export default async function Page({params}) {
                   username={notification.user_details.username}
                   message={message}
                   redirectTo={notification.redirectTo}
+                  createdAt={notification.createdAt}
                 />
               );
             })

@@ -21,7 +21,7 @@ import { useAppContext } from '@/app/store/store';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
-export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl}) {
+export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl,createdAt}) {
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const [postText, setPostText] = useState("");
@@ -30,6 +30,8 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl}) 
     const {toggleAlert} = useAppContext();
     const router = useRouter();
     const {data:session} = useSession();
+
+   
 
     useEffect(()=>{
         if(textRef.current){
@@ -115,6 +117,7 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl}) 
                             userDetails={userDetails}
                             title={title}
                             imageUrl={imageUrl}
+                            createdAt={createdAt}
                         />
                     </div>
                 </div>

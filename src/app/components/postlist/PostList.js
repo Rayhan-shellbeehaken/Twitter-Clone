@@ -8,6 +8,7 @@ import Loader from '../loader/Loader';
 export default async function PostList({page}) {
     const result = await fetchTweet(page,null);
     const tweets = result.result;   
+    console.log(tweets);
     if(tweets.length === 0) return <div className={styles.end}>No more post available</div>;
 
     return (
@@ -26,6 +27,7 @@ export default async function PostList({page}) {
                             reposters={tweet.reposters}
                             notclickable={false}
                             reposted_details={tweet.reposted_details}
+                            createdAt={tweet.createdAt}
                         />
                     )
                 })

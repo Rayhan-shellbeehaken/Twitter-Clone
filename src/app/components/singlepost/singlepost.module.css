@@ -94,6 +94,11 @@
     margin-left: 10px;
 }
 
+.time{
+    font-size: 16px;
+    font-weight: 200;
+}
+
 @media screen and (max-width: 450px) {
     .elements{
         font-size: 12px;

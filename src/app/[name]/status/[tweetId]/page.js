@@ -48,6 +48,7 @@ export default async function page({params}) {
                         reposters={tweet.reposters}
                         notclickable={true}
                         reposted_details={tweet.reposted_details}
+                        createdAt={tweet.createdAt}
                     />
                     <div className={styles["replying-to"]}>
                         <p>Replying to <span>@_{tweet.user_details.username}</span></p>
@@ -67,6 +68,7 @@ export default async function page({params}) {
                                 reposters={comment.reposters}
                                 notclickable={false}
                                 reposted_details={comment.reposted_details}
+                                createdAt={comment.createdAt}
                             />
                         ))
                     }
