@@ -1,11 +1,11 @@
 "use server"
 import { auth } from "@/auth";
-export async function fetchNotification(user) {
+export async function fetchNotification(user,category) {
     const session = await auth();
     if(!session?.user){
         throw new Error("User doesn't exist!!");
     }
-    const response = await fetch(`http://localhost:3000/api/notifications?user=${user}`,{
+    const response = await fetch(`http://localhost:3000/api/notifications?user=${user}&category=${category}`,{
             method: 'GET',
             cache: 'no-store' 
         }

@@ -23,12 +23,13 @@ export async function GET(request){
     try{
         const url = new URL(request.url);
         const user = url.searchParams.get('user');
+        const category = url.searchParams.get('category') || null;
         
         if(!user){
             console.log("HERE IS THE PROBLEM");
             return NextResponse.json({message : 'Login first'},{status : 400});
         }
-        const notifications = await getAllNotifications(user);
+        const notifications = await getAllNotifications(user,category);
         return NextResponse.json({message : 'Get all notification successfully',notifications},{status : 200});
     }catch(error){
         return NextResponse.json({error : error.message},{status : 500});

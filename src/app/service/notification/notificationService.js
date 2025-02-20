@@ -7,7 +7,7 @@ export async function addNewNotification(user,request) {
     return notification;   
 }
 
-export async function getAllNotifications(user) {
-    const notifications = await getNotifications(user);
+export async function getAllNotifications(user,category) {
+    const notifications = await getNotifications(user,category);
     return notifications;
 }

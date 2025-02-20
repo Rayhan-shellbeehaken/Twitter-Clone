@@ -10,9 +10,10 @@ import Notification from '@/app/components/notification/Notification';
 import { fetchNotification } from '@/app/helpers/notificationoperation';
 import { auth } from '@/auth';
 
-export default async function Page() {
+export default async function Page({params}) {
   const session = await auth();
-  const result = await fetchNotification(session?.user?._id);
+  const slug = (await params)?.slug || [];
+  const result = await fetchNotification(session?.user?._id,slug[0]);
   const notifications = result.notifications;
 
   const notificationMessage = (type) => {
@@ -35,6 +36,7 @@ export default async function Page() {
     }
     return message;
   }
+  
   return (
     <ProtectedLayout>
       <div className={styles.page}>
