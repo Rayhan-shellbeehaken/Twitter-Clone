@@ -3,12 +3,11 @@ import styles from './postlist.module.css';
 import SinglePost from '../singlepost/SinglePost';
 import {fetchTweet} from '@/app/helpers/tweetoperation';
 import { Suspense } from 'react';
-import Loader from '../loader/Loader';
+import Loading from '@/app/loading';
 
 export default async function PostList({page}) {
     const result = await fetchTweet(page,null);
-    const tweets = result.result;   
-    console.log(tweets);
+    const tweets = result.result;
     if(tweets.length === 0) return <div className={styles.end}>No more post available</div>;
 
     return (
@@ -32,7 +31,7 @@ export default async function PostList({page}) {
                     )
                 })
             }
-            <Suspense fallback={<Loader/>}>
+            <Suspense fallback={<Loading/>}>
                 <PostList page={page + 1}/>
             </Suspense>
         </div>
