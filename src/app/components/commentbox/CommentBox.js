@@ -26,7 +26,6 @@ export default function CommentBox({tweet}) {
     const router = useRouter();
 
     const {data:session} = useSession();
-    
 
     useEffect(()=>{
         setUserId(session?.user?._id);
@@ -38,6 +37,8 @@ export default function CommentBox({tweet}) {
             textRef.current.style.height = `${textRef.current.scrollHeight}px`;
         }
     },[value]);
+
+    // console.log(tweet);
 
     useEffect(()=>{
         if(file){
@@ -64,8 +65,17 @@ export default function CommentBox({tweet}) {
             }
         }
         try{
-            const result = axios.patch(`/api/tweets?id=${tweet._id}`,data);
+            const result = await axios.patch(`/api/tweets?id=${tweet._id}`,data);
+            const notification = {
+                notificationType : result.data.tweet.parent === null ? "comment" : "reply",
+                notifiedTo : tweet.user_details._id,
+                redirectTo : `/${tweet.user_details.username}/status/${tweet._id}`
+            };
+            if(result.status === 200 && userId !== tweet.user_details._id){
+                const response = await axios.post('/api/notifications',notification);
+            }
             router.refresh();
+            
             toggleAlert("success","Comment successfully");
             setValue("");
             minimize();

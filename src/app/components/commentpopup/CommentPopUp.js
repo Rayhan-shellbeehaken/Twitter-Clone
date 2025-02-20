@@ -55,8 +55,6 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
         
         try{
             const result = await axios.patch(`/api/tweets?id=${id}`,data);
-            console.log("RESULT PLEASE");
-            console.log(result.data.tweet.parent);
             const notification = {
                 notificationType : result.data.tweet.parent === null ? "comment" : "reply",
                 notifiedTo : userDetails._id,
