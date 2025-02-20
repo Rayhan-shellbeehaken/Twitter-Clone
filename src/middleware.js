@@ -11,6 +11,28 @@ export async function middleware(request) {
         const currentPath = request.nextUrl.pathname;
         const token = await getToken({ req: request, secret: process.env.SECRET_TOKEN });
         const isPrivate = privatePaths.includes(currentPath) || privateRegexPaths.some((regex) => regex.test(currentPath));
+
+        const response = NextResponse.next();
+        const prevPages = request.cookies.get('pageHistory')?.value;
+        const pageHistory = prevPages ? JSON.parse(prevPages) : [];
+        const prev = request.headers.get("referer");
+        let prevPath;
+        if(prev){
+            prevPath = prev.split("?")[0].split("http://localhost:3000")[1];; 
+        }
+
+        if(prevPath && pageHistory[pageHistory.length - 1] !== currentPath){
+            pageHistory.push(prevPath);
+        }else if(pageHistory[pageHistory.length - 1] == currentPath){
+            pageHistory.pop();
+        }
+
+        // console.log("PAGEHISTORY")
+        // console.log(pageHistory);
+        
+        response.cookies.set("pageHistory",JSON.stringify(pageHistory),{path : "/"});
+
+
         if(token && publicPaths.includes(currentPath)){
             if(token.isNewUser){
                 return NextResponse.redirect(new URL("/dateofbirth", request.url));
@@ -21,6 +43,8 @@ export async function middleware(request) {
         else if(!token && isPrivate){
             return NextResponse.redirect(new URL("/", request.url));
         }
+
+        return response;
     }catch(error){
         console.log(error);
     }

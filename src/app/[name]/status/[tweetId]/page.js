@@ -11,18 +11,17 @@ import SinglePost from '@/app/components/singlepost/SinglePost'
 import { fetchATweet, fetchTweet } from '@/app/helpers/tweetoperation'
 import CommentBox from '@/app/components/commentbox/CommentBox'
 import Popup from '@/app/components/popup/Popup'
+import { cookies } from 'next/headers'
 
 export default async function page({params}) {
     const {tweetId} = await params;
     const result = await fetchATweet(tweetId);
     const tweet = result.result[0];
-
-    let backUrl = "/home?feed=foryou";
-    if(tweet.parent !== null){
-        const parentTweetResult = await fetchATweet(tweet.parent);
-        const parentTweetUser = parentTweetResult.result[0].user_details.username;
-        backUrl = `/${parentTweetUser}/status/${tweet.parent}`;
-    }
+    const cookieStore = cookies();
+    const prevPagesString = (await cookieStore).get("pageHistory")?.value;
+    const prevPages = JSON.parse(prevPagesString);
+    const backPage = prevPages[prevPages.length - 1] || '/home?feed=foryou';
+    
     const commentResult = await fetchTweet(1,tweetId);
     const comments = commentResult.result;
     
@@ -34,7 +33,7 @@ export default async function page({params}) {
                 <div className={styles.left}>
                     <Popup/>
                     <div className={styles.head}>
-                        <Link href={backUrl} className={styles.back}>
+                        <Link href={backPage} className={styles.back}>
                             <GoArrowLeft/>
                         </Link>
                         <div>Post</div>
