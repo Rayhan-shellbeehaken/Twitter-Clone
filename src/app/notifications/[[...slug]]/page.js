@@ -9,12 +9,18 @@ import NotificationBar from '@/app/components/notificationbar/NotificationBar';
 import Notification from '@/app/components/notification/Notification';
 import { fetchNotification } from '@/app/helpers/notificationoperation';
 import { auth } from '@/auth';
+import { notFound } from 'next/navigation';
 
 export default async function Page({params}) {
   const session = await auth();
   const slug = (await params)?.slug || [];
   const result = await fetchNotification(session?.user?._id,slug[0]);
   const notifications = result.notifications;
+
+  const allowedPaths = [undefined, 'followed', 'tweets'];
+  if(!allowedPaths.includes(slug[0])){
+    notFound();
+  }
 
   const notificationMessage = (type) => {
     let message="";

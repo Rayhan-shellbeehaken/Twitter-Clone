@@ -37,7 +37,7 @@ export default function Sidemenu() {
                     <li><Link href="#"><IoMdPeople/> <span>Communities</span></Link></li>
                     <li><Link href="#"><PiXLogoBold/> <span>Premium</span></Link></li>
                     <li><Link href="#"><GiElectric/> <span>Verified Orgs</span></Link></li>
-                    <li><Link href="#"><FaRegUser/> <span>Profile</span></Link></li>
+                    <li><Link href="/profile"><FaRegUser/> <span>Profile</span></Link></li>
                     <li><Link href="#"><CiCircleMore/> <span>More</span></Link></li>
                     <button className={styles.button}>
                         <BsFeather className={styles.feather}/>

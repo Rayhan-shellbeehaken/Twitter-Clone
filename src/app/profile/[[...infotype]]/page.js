@@ -1,5 +1,5 @@
 import React from 'react'
-import ProtectedLayout from '../layouts/protected/layout'
+import ProtectedLayout from '../../layouts/protected/layout'
 import styles from './page.module.css';
 
 export default function page() {
