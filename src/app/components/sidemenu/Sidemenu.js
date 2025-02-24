@@ -13,14 +13,15 @@ import { GiElectric } from "react-icons/gi";
 import { FaRegUser } from "react-icons/fa6";
 import { CiCircleMore } from "react-icons/ci";
 import { BsFeather } from "react-icons/bs";
-
+import { auth } from '@/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import SideBarPopUp from '../sidebarpopup/SideBarPopUp';
 import SideBarProfile from '../sidebarprofile/SideBarProfile';
 
-export default function Sidemenu() {
-
+export default async function Sidemenu() {
+    const session = await auth();
+    const profile = `/${session?.user?.username}?type=all`;
     return (
         <div className={styles.container}>
             <div className={styles.sidemenu}>
@@ -37,7 +38,7 @@ export default function Sidemenu() {
                     <li><Link href="#"><IoMdPeople/> <span>Communities</span></Link></li>
                     <li><Link href="#"><PiXLogoBold/> <span>Premium</span></Link></li>
                     <li><Link href="#"><GiElectric/> <span>Verified Orgs</span></Link></li>
-                    <li><Link href="/profile"><FaRegUser/> <span>Profile</span></Link></li>
+                    <li><Link href={profile}><FaRegUser/> <span>Profile</span></Link></li>
                     <li><Link href="#"><CiCircleMore/> <span>More</span></Link></li>
                     <button className={styles.button}>
                         <BsFeather className={styles.feather}/>
