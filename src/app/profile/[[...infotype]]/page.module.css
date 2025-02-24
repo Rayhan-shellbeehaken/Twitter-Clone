@@ -1,5 +1,224 @@
 .page{
-    color: white;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    /* position: relative; */
+    width: 100%;
+}
+
+.line{
+    display: flex;
+    position: sticky;
+    top: 0;
     background-color: blue;
-    height: 70px;
+}
+
+.line:after{
+    content: '';
+    width: 1px;
+    background-color: rgb(63,63,63);
+}
+
+.left{
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+}
+
+.right{
+    margin-left: 20px;
+    width: 350px;
+    padding: 0 5px;
+    padding-right: 15px;
+    position: sticky;
+    top: -190px;
+    z-index: 0;
+}
+
+.head{
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 7%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(7px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 20px;
+    padding: 0 15px;
+    font-weight: 600;
+}
+
+.back{
+    margin-right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 50%;
+    text-decoration: none;
+    color: white;
+}
+
+.back:hover{
+    background-color: rgb(32, 32, 32);
+}
+
+.head > div > h3{
+    font-size: 20px;
+}
+
+.head > div > p{
+    font-size: 13px;
+    font-weight: 200;
+    color: rgb(123, 123, 123);
+}
+
+.profile{
+    height: 400px;
+    /* background-color: antiquewhite; */
+}
+
+.profile-top{
+    background-color: rgb(123, 123, 123);
+    height: 200px;
+}
+
+.first{
+    /* display: flex; */
+    height: 65px;
+    padding: 0 20px;
+    position: relative;
+}
+
+.first div:nth-child(1){
+    position: absolute;
+    bottom: 0;
+}
+
+.first div:nth-child(2){
+    position: absolute;
+    right: 10px;
+    height: 100%;
+    width: 200px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 10px;
+
+}
+
+.first > div > img{
+    width: 130px;
+    background-color: rgb(157, 232, 157);
+    border-radius: 50%;
+    border: 3px solid rgb(47, 46, 46);
+}
+
+.first > div > button{
+    padding: 10px;
+    width: 110px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: transparent;
+    border-radius: 20px;
+    border: 1px solid rgb(124, 124, 124);
+    color: white;
+    cursor: pointer;
+}
+
+.first > div > button:hover{
+    background-color: rgb(18, 18, 18);
+}
+
+.second{
+    height: 125px;
+    margin-top: 10px;
+    padding: 0px 15px;
+}
+
+.second > div:nth-child(1){
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+.second > div:nth-child(1) > div:nth-child(1){
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 18px;
+}
+
+.second > div:nth-child(1) > div:nth-child(1) > p{
+    font-size: 16px;
+    color: rgb(132, 132, 132);
+    font-weight: 200;
+}
+
+.second > div:nth-child(1) > div:nth-child(2){
+    border: 1px solid rgb(95, 95, 95);
+    padding: 1px 5px;
+    border-radius: 15px;
+    width: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.second > div:nth-child(1) > div:nth-child(2):hover{
+    background-color: rgb(18, 18, 18);
+}
+
+.verified{
+    color: #00B2FF;
+    margin-right: 5px;
+}
+
+.second > div:nth-child(2){
+    margin-top: 10px;
+}
+
+.second > div:nth-child(2) > div:nth-child(1){
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: rgb(132, 132, 132);
+    font-weight: 200;
+}
+
+.calender{
+    margin-right: 5px;
+}
+
+.second > div:nth-child(2) > div:nth-child(2){
+    display: flex;
+    justify-content: flex-start;
+    color: rgb(132, 132, 132); 
+    margin-top: 12px;
+}
+
+.second > div:nth-child(2) > div:nth-child(2) > a{
+    color: rgb(132, 132, 132); 
+    text-decoration: none;
+    margin-right: 10px;
+    font-weight: 200;
+}
+
+.second > div:nth-child(2) > div:nth-child(2) > a:hover{
+    text-decoration: underline;
+    color: white;
+}
+
+@media screen and (max-width : 1035px) {
+    .right{
+        visibility: hidden;
+        width: 0px;
+        padding: 0px;
+        margin: 0px;
+    }
 }

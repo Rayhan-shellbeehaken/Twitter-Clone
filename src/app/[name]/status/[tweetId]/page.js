@@ -24,7 +24,6 @@ export default async function page({params}) {
     
     const commentResult = await fetchTweet(1,tweetId);
     const comments = commentResult.result;
-    // console.log();
     return (
         <ProtectedLayout>
             <div className={styles.page}>    
