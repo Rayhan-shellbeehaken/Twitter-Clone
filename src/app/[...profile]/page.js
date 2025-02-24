@@ -1,5 +1,5 @@
 import React from 'react'
-import ProtectedLayout from '../../layouts/protected/layout'
+import ProtectedLayout from '../layouts/protected/layout'
 import styles from './page.module.css';
 import SearchBox from '@/app/components/searchbox/SearchBox';
 import WhoToFollow from '@/app/components/whotofollow/WhoToFollow';
@@ -8,10 +8,15 @@ import TermsAndCondition from '@/app/components/termsandcondition/TermsAndCondit
 import { GoArrowLeft } from "react-icons/go";
 import Link from 'next/link'
 import { cookies } from 'next/headers'
-import xlogo from '../../../../public/images/xprofile.png';
+import xlogo from '../../../public/images/xprofile.png';
 import Image from 'next/image';
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { SlCalender } from "react-icons/sl";
+import ProfileNavBar from '../components/profilenavbar/ProfileNavBar';
+import { RiMoreFill } from "react-icons/ri";
+import { VscVscode } from "react-icons/vsc";
+import { FiMail } from "react-icons/fi";
+import { IoSearch } from "react-icons/io5";
 
 export default async function page() {
     const cookieStore = cookies();
@@ -43,7 +48,12 @@ export default async function page() {
                                     <Image src={xlogo} alt='profile picture' priority layout="intrinsic"></Image>
                                 </div>
                                 <div>
-                                    <button>Edit profile</button>
+                                    <button className={`${styles.circle} ${styles.hide}`}><RiMoreFill/></button>
+                                    <button className={`${styles.circle} ${styles.hide}`}><VscVscode/></button>
+                                    <button className={`${styles.circle} ${styles.hide}`}><IoSearch/></button>
+                                    <button className={`${styles.circle} ${styles.hide}`}><FiMail/></button>
+                                    <button className={`${styles.button} ${styles.hide}`}>Follow</button>
+                                    <button className={styles.button}>Edit profile</button>
                                 </div>
                             </div>
                             <div className={styles.second}>
@@ -68,6 +78,7 @@ export default async function page() {
                                     </div>
                                 </div>
                             </div>
+                            <ProfileNavBar base="rayhan"/>
                         </div>
                     </div>
                 </div>
