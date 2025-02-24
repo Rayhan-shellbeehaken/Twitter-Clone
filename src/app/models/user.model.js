@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
         type : Boolean,
         default : false
     },
+    followers : [{
+        type : mongoose.Types.ObjectId,
+        ref : "users" 
+    }],
     verifyToken : String,
     verifyTokenExpiry : Date,
     forgetPasswordToken : String,

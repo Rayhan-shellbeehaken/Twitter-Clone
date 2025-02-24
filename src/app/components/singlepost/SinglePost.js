@@ -80,6 +80,7 @@ export default async function SinglePost({
                             userDetails={reposted_details.user_details}
                             title={reposted_details.postText}
                             imageUrl={reposted_details.postImage}
+                            createdAt={createdAt}
                         />
                     }
                     <div className={styles.elements}>

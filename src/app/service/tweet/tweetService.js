@@ -7,8 +7,8 @@ export async function addTweet(user,request) {
     return tweet;
 }
 
-export async function getTweets(page,parent) {
-    const tweets = await getAllTweet(page,parent);
+export async function getTweets(page,parent,user) {
+    const tweets = await getAllTweet(page,parent,user);
     return tweets;
 }
 

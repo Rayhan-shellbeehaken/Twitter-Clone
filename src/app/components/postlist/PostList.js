@@ -5,8 +5,8 @@ import {fetchTweet} from '@/app/helpers/tweetoperation';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
 
-export default async function PostList({page}) {
-    const result = await fetchTweet(page,null);
+export default async function PostList({page,user}) {
+    const result = user ? await fetchTweet(page,null,true) : await fetchTweet(page,null,false);
     const tweets = result.result;
     if(tweets.length === 0) return <div className={styles.end}>No more post available</div>;
 

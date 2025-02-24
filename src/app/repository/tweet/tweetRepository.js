@@ -20,18 +20,21 @@ export async function addNewTweet(parent,postText,postImage,user,repostedTweet) 
   return saveTweet;
 }
 
-export async function getAllTweet(page,parent) {
+export async function getAllTweet(page,parent,user) {
   const limit = 7;
   const offset = (page - 1) * limit;
   const filterValue = parent && parent !== "null" 
   ? new mongoose.Types.ObjectId(parent) 
   : null;
 
+  const matcher = {
+    parent : parent==="null" ? null : new mongoose.Types.ObjectId(parent),
+    ...(user !== "null" && { user: new mongoose.Types.ObjectId(user) }) 
+  }
+
   const tweets = await Tweet.aggregate([
       { 
-        $match: filterValue !== null 
-          ? { parent: filterValue }
-          : { parent: null } 
+        $match: matcher
       },
       {
         $lookup: {
@@ -98,6 +101,7 @@ export async function getAllTweet(page,parent) {
         }
       }
   ]).sort({createdAt : -1}).skip(offset).limit(limit);
+
   return tweets;
 }
 

@@ -17,12 +17,19 @@ import { RiMoreFill } from "react-icons/ri";
 import { VscVscode } from "react-icons/vsc";
 import { FiMail } from "react-icons/fi";
 import { IoSearch } from "react-icons/io5";
+import { auth } from '@/auth';
+import { Suspense } from 'react';
+import Loader from '../components/loader/Loader';
+import Loading from '../loading';
+import PostList from '../components/postlist/PostList';
 
 export default async function page() {
     const cookieStore = cookies();
     const prevPagesString = (await cookieStore).get("pageHistory")?.value;
     const prevPages = JSON.parse(prevPagesString);
     const backPage = prevPages[prevPages.length - 1] || '/home?feed=foryou';
+
+    const session = await auth();
 
     return (
         <ProtectedLayout>      
@@ -78,7 +85,10 @@ export default async function page() {
                                     </div>
                                 </div>
                             </div>
-                            <ProfileNavBar base="rayhan"/>
+                            <ProfileNavBar base={session?.user?.username}/>
+                            <Suspense fallback={<Loader/>}>
+                                <PostList page={1} user={true}/>
+                            </Suspense>
                         </div>
                     </div>
                 </div>

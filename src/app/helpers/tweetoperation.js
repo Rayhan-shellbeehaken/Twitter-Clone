@@ -1,10 +1,11 @@
 import { auth } from "@/auth";
-export async function fetchTweet(page,parent) {
+export async function fetchTweet(page,parent,user) {
     const session = await auth();
     if(!session?.user){
         throw new Error("User doesn't exist!!");
     }
-    const response = await fetch(`http://localhost:3000/api/tweets?page=${page}&parent=${parent}`,{
+    let userId = user===true ? session?.user?._id : null;
+    const response = await fetch(`http://localhost:3000/api/tweets?page=${page}&parent=${parent}&user=${userId}`,{
             method : "GET",
             cache : "no-store"
         }
