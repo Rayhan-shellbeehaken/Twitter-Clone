@@ -23,7 +23,8 @@ import Loader from '../components/loader/Loader';
 import Loading from '../loading';
 import PostList from '../components/postlist/PostList';
 
-export default async function page() {
+export default async function page({searchParams}) {
+    const params = (await searchParams).type;
     const cookieStore = cookies();
     const prevPagesString = (await cookieStore).get("pageHistory")?.value;
     const prevPages = JSON.parse(prevPagesString);
@@ -85,9 +86,9 @@ export default async function page() {
                                     </div>
                                 </div>
                             </div>
-                            <ProfileNavBar base={session?.user?.username}/>
+                            <ProfileNavBar base={params}/>
                             <Suspense fallback={<Loader/>}>
-                                <PostList page={1} user={true}/>
+                                <PostList page={1} user={true} type={params}/>
                             </Suspense>
                         </div>
                     </div>

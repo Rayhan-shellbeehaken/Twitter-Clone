@@ -20,13 +20,9 @@ export async function addNewTweet(parent,postText,postImage,user,repostedTweet) 
   return saveTweet;
 }
 
-export async function getAllTweet(page,parent,user) {
+export async function getAllTweet(page,parent,user,filterBy) {
   const limit = 7;
   const offset = (page - 1) * limit;
-  const filterValue = parent && parent !== "null" 
-  ? new mongoose.Types.ObjectId(parent) 
-  : null;
-
   const matcher = {
     parent : parent==="null" ? null : new mongoose.Types.ObjectId(parent),
     ...(user !== "null" && { user: new mongoose.Types.ObjectId(user) }) 

@@ -27,11 +27,12 @@ export async function GET(request) {
         const tweetId = url.searchParams.get('tweetId') || null;
         const parent = url.searchParams.get('parent') || null;
         const user = url.searchParams.get('user') || null;
+        const filterBy = url.searchParams.get('filterBy') || null;
         let result;
         if(tweetId){
             result = await getTweet(tweetId);
         }else if(page){
-            result = await getTweets(page,parent,user);
+            result = await getTweets(page,parent,user,filterBy);
         }
         if(!result) return NextResponse.json({message : 'Not found'},{status : 400});
         return NextResponse.json({message : "Successfully get result",result},{status : 200});

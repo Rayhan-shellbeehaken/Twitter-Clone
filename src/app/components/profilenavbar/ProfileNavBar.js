@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function ProfileNavBar({base}) {
-    const [active, setActive] = useState(1);
+    const [active, setActive] = useState(null);
     const router = useRouter();
 
     const activeNavOption = (value) =>{
@@ -32,13 +32,12 @@ export default function ProfileNavBar({base}) {
     }
 
     useEffect(()=>{
-        const pathParts = window.location.pathname.split("/")[2];
-        activeNavOption(pathParts);
-    },[router.asPath]);
+        activeNavOption(base);
+    },[]);
 
     const handleButtonClick = (event,value) =>{
         event.preventDefault();
-        setActive(value);
+        // setActive(value);
         let newPath = `?type=all`;
         switch (value) {
             case 2:
@@ -59,7 +58,7 @@ export default function ProfileNavBar({base}) {
             default:
                 break;
         }
-        router.push(newPath, undefined, {shallow : true});
+        router.push(newPath);
         setActive(value);
     }
 

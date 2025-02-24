@@ -5,8 +5,25 @@ import {fetchTweet} from '@/app/helpers/tweetoperation';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
 
-export default async function PostList({page,user}) {
-    const result = user ? await fetchTweet(page,null,true) : await fetchTweet(page,null,false);
+export default async function PostList({page,user,type}) {
+    
+    const getFilterBy = (type) =>{
+        let filterBy = null;
+        switch (type) {
+            case "with_replies":
+                filterBy = "repost"
+                break;
+            case "likes":
+                filterBy = "react"
+                break;
+            default:
+                break;
+        }
+        return filterBy;
+    }
+
+    const filterBy = getFilterBy(type);
+    const result = user ? await fetchTweet(page,null,true,filterBy) : await fetchTweet(page,null,false,filterBy);
     const tweets = result.result;
     if(tweets.length === 0) return <div className={styles.end}>No more post available</div>;
 
@@ -32,7 +49,7 @@ export default async function PostList({page,user}) {
                 })
             }
             <Suspense fallback={<Loading/>}>
-                <PostList page={page + 1}/>
+                <PostList page={page + 1} user={user} type={type}/>
             </Suspense>
         </div>
     )
