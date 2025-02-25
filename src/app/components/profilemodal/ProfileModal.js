@@ -1,17 +1,22 @@
+"use client"
 import React from 'react'
 import styles from './profilemodal.module.css';
 import { FiX } from "react-icons/fi";
 import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 import DateOfBirth from '../dateofbirth/DateOfBirth';
+import { useAppContext } from '@/app/store/store';
 
 export default function ProfileModal() {
+    const {profileModal, setProfileModal} = useAppContext();
+
     return (
+        profileModal &&
         <div className={styles.container}>
             <div className={styles.modal}>
                 <div className={styles.head}>
                     <div className={styles["head-left"]}>
-                        <div>
+                        <div onClick={()=>setProfileModal(false)}>
                             <FiX className={styles.cross}/>
                         </div>
                         <div>
