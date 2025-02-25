@@ -57,6 +57,8 @@ export async function OAuthLogin(account, profile) {
         let image;
         if(account.provider === "google"){
             userName = profile.name || "Google User";
+            console.log("GOOGLE PROFILE PICTURE");
+            console.log(profile.picture);
             image = profile.picture;
         }else if(account.provider === "github"){
             userName = profile.login || profile.name;
@@ -67,7 +69,7 @@ export async function OAuthLogin(account, profile) {
                 username: userName,
                 email: profile.email,
                 isVerified: true,
-                image: image
+                profileImage: image
             });
             account.isNewUser = true;
         }else account.isNewUser = false;
