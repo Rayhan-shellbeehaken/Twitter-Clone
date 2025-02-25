@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './profilemodal.module.css';
 import { FiX } from "react-icons/fi";
 import xlogo from '../../../../public/images/xprofile.png';
@@ -7,9 +7,29 @@ import Image from 'next/image';
 import DateOfBirth from '../dateofbirth/DateOfBirth';
 import { useAppContext } from '@/app/store/store';
 import { RiCameraAiLine } from "react-icons/ri";
+import { useRef, useEffect } from 'react';
 
 export default function ProfileModal() {
     const {profileModal, setProfileModal} = useAppContext();
+    const [file,setFile] = useState("");
+    const [imagePreview, setImagePreview] = useState(null);
+    const fileRef = useRef(null);
+
+
+    useEffect(()=>{
+        if(file){
+            const reader = new FileReader();
+            reader.onloadend = () =>{
+                setImagePreview(reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    },[file]);
+
+    const removeCoverPhoto = () =>{
+        setImagePreview(null);
+        setFile("");
+    }
 
     return (
         profileModal &&
@@ -29,16 +49,24 @@ export default function ProfileModal() {
                     </button>
                 </div>
                 <div>
+
                     <div className={styles.cover}>
-                        <div className={styles.camera}>
-                            <div className={styles["icon-container"]}>
+                        <div className={`${styles.camera} ${imagePreview? styles["state-1"] : styles["state-2"]}`}>
+                            <div className={styles["icon-container"]} onClick={()=>fileRef.current.click()}>
                                 <RiCameraAiLine />
                             </div>
-                            <div className={styles["icon-container"]}>
+                            
+                            <div className={`${styles["icon-container"]} ${imagePreview !== null? '' : styles.hidden}`} onClick={removeCoverPhoto}>
                                 <FiX/>
                             </div>
                         </div>
+                        <input type='file' ref={fileRef} onChange={(e)=>setFile(e.target.files[0])}></input>
+                        {imagePreview && 
+                            <img src={imagePreview} alt='cover picture'></img>
+                        }
+                        
                     </div>
+
                     <div className={styles["profile-pic"]}>
                         
                         <div className={styles["profile-pic-container"]}>
