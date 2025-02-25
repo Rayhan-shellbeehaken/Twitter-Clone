@@ -13,10 +13,6 @@ import Image from 'next/image';
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { SlCalender } from "react-icons/sl";
 import ProfileNavBar from '../components/profilenavbar/ProfileNavBar';
-import { RiMoreFill } from "react-icons/ri";
-import { VscVscode } from "react-icons/vsc";
-import { FiMail } from "react-icons/fi";
-import { IoSearch } from "react-icons/io5";
 import { auth } from '@/auth';
 import { Suspense } from 'react';
 import Loader from '../components/loader/Loader';
@@ -24,6 +20,8 @@ import PostList from '../components/postlist/PostList';
 import { IoMdLock } from "react-icons/io";
 import { TbError404 } from "react-icons/tb";
 import { fetchUser } from '../helpers/useroperation';
+import ProfileAction from '../components/profileactions/ProfileAction';
+import ProfileModal from '../components/profilemodal/ProfileModal';
 
 export default async function page({searchParams}) {
     const params = (await searchParams).type;
@@ -48,6 +46,7 @@ export default async function page({searchParams}) {
     return (
         <ProtectedLayout>      
             <div className={styles.page}>
+                <ProfileModal/>
                 <div className={styles.line}>
                 </div>
                 <div className={styles.left}>
@@ -68,14 +67,7 @@ export default async function page({searchParams}) {
                                 <div>
                                     <Image src={user.profileImage} width={100} height={100} alt='profile picture' priority layout="intrinsic"></Image>
                                 </div>
-                                <div>
-                                    <button className={`${styles.circle} ${styles.hide}`}><RiMoreFill/></button>
-                                    <button className={`${styles.circle} ${styles.hide}`}><VscVscode/></button>
-                                    <button className={`${styles.circle} ${styles.hide}`}><IoSearch/></button>
-                                    <button className={`${styles.circle} ${styles.hide}`}><FiMail/></button>
-                                    <button className={`${styles.button} ${styles.hide}`}>Follow</button>
-                                    <button className={styles.button}>Edit profile</button>
-                                </div>
+                                <ProfileAction/>
                             </div>
                             <div className={styles.second}>
                                 <div>
