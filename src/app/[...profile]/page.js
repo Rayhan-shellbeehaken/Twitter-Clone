@@ -20,8 +20,9 @@ import { IoSearch } from "react-icons/io5";
 import { auth } from '@/auth';
 import { Suspense } from 'react';
 import Loader from '../components/loader/Loader';
-import Loading from '../loading';
 import PostList from '../components/postlist/PostList';
+import { IoMdLock } from "react-icons/io";
+import { TbError404 } from "react-icons/tb";
 
 export default async function page({searchParams}) {
     const params = (await searchParams).type;
@@ -87,9 +88,24 @@ export default async function page({searchParams}) {
                                 </div>
                             </div>
                             <ProfileNavBar base={params}/>
-                            <Suspense fallback={<Loader/>}>
-                                <PostList page={1} user={true} type={params}/>
-                            </Suspense>
+                            {params === "likes" && 
+                                <div className={styles["likes-message"]}>
+                                    <IoMdLock/>
+                                    <p>Your likes are private. Only you can see them.</p>
+                                </div>
+                            }
+                            {(params === "highlights" || params === "media" || params === "articles") &&
+                                <div className={styles["likes-message"]}>
+                                    <TbError404/>
+                                    <p>Didn't work on this page.</p>
+                                </div>
+                            }
+                            {(params !== "highlights" && params !== "media" && params !== "articles") &&
+                                <Suspense fallback={<Loader/>}>
+                                    <PostList page={1} user={true} type={params}/>
+                                </Suspense>
+                            }
+                            
                         </div>
                     </div>
                 </div>
