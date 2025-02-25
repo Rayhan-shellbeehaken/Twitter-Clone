@@ -12,9 +12,11 @@ import { useRef, useEffect } from 'react';
 export default function ProfileModal() {
     const {profileModal, setProfileModal} = useAppContext();
     const [file,setFile] = useState("");
+    const [proFile,setProFile] = useState("");
     const [imagePreview, setImagePreview] = useState(null);
+    const [profileImage, setProfileImage] = useState(null);
     const fileRef = useRef(null);
-
+    const profileRef = useRef(null);
 
     useEffect(()=>{
         if(file){
@@ -25,6 +27,16 @@ export default function ProfileModal() {
             reader.readAsDataURL(file);
         }
     },[file]);
+
+    useEffect(()=>{
+        if(proFile){
+            const reader = new FileReader();
+            reader.onloadend = () =>{
+                setProfileImage(reader.result);
+            }
+            reader.readAsDataURL(proFile);
+        }
+    },[proFile]);
 
     const removeCoverPhoto = () =>{
         setImagePreview(null);
@@ -70,11 +82,12 @@ export default function ProfileModal() {
                     <div className={styles["profile-pic"]}>
                         
                         <div className={styles["profile-pic-container"]}>
-                            
-                            <div className={styles["icon-container"]}>
+                            <input type='file' ref={profileRef} onChange={(e)=>setProFile(e.target.files[0])}></input>
+                            <div className={styles["icon-container"]} onClick={()=>profileRef.current.click()}>
                                 <RiCameraAiLine />
                             </div>
-                            <Image src={xlogo} width={100} height={100} alt='profile picture' priority layout="intrinsic"></Image>
+                            <Image src={profileImage ? profileImage : xlogo} width={100} height={100} alt='profile picture'></Image>
+                            
                         </div>
                         
                     </div>

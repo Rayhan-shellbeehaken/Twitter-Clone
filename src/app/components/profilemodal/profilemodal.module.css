@@ -155,13 +155,19 @@
     align-items: center;
 }
 
+.profile-pic-container > input{
+    visibility: hidden;
+    width: 0;
+}
+
 .profile-pic-container > div{
     position: absolute;
 }
 
 .profile-pic-container > img{
     /* position: absolute; */
-    width: 100%;
+    width: 100px;
+    height: 100px;
     background-color: green;
     border-radius: 50%;
     /* bottom: 0; */
