@@ -11,7 +11,7 @@ export async function GET(request) {
         if(!session?.user){
             return NextResponse.json({message : 'Login first', session},{status : 400});
         }
-        const id = session?.user?._id;
+        const id = await session?.user?._id;
         const user = await getUser(id);
 
         return NextResponse.json({

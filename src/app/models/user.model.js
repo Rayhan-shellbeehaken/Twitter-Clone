@@ -28,6 +28,14 @@ const userSchema = new mongoose.Schema({
         type : mongoose.Types.ObjectId,
         ref : "users" 
     }],
+    following : [{
+        type : mongoose.Types.ObjectId,
+        ref : "users"
+    }],
+    createdAt : {
+        type : Date,
+        default : Date.now
+    },
     verifyToken : String,
     verifyTokenExpiry : Date,
     forgetPasswordToken : String,

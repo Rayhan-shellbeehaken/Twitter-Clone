@@ -193,6 +193,9 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    height: 100%;
+    margin-left: 10px;
+    margin-top: 2px;
 }
 
 .second > div:nth-child(1) > div:nth-child(2):hover{

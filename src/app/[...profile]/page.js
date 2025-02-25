@@ -23,6 +23,7 @@ import Loader from '../components/loader/Loader';
 import PostList from '../components/postlist/PostList';
 import { IoMdLock } from "react-icons/io";
 import { TbError404 } from "react-icons/tb";
+import { fetchUser } from '../helpers/useroperation';
 
 export default async function page({searchParams}) {
     const params = (await searchParams).type;
@@ -32,6 +33,17 @@ export default async function page({searchParams}) {
     const backPage = prevPages[prevPages.length - 1] || '/home?feed=foryou';
 
     const session = await auth();
+    const result = await fetchUser();
+    const user = result.user;
+    console.log(user);
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            month: 'long',
+            year: 'numeric',
+        });
+    }
 
     return (
         <ProtectedLayout>      
@@ -44,7 +56,7 @@ export default async function page({searchParams}) {
                             <GoArrowLeft/>
                         </Link>
                         <div>
-                            <h3>Rayhan</h3>
+                            <h3>{user.username}</h3>
                             <p>2 posts</p>
                         </div>
                     </div>
@@ -54,7 +66,7 @@ export default async function page({searchParams}) {
                         <div className={styles["profile-bottom"]}>
                             <div className={styles.first}>
                                 <div>
-                                    <Image src={xlogo} alt='profile picture' priority layout="intrinsic"></Image>
+                                    <Image src={user.profileImage} width={100} height={100} alt='profile picture' priority layout="intrinsic"></Image>
                                 </div>
                                 <div>
                                     <button className={`${styles.circle} ${styles.hide}`}><RiMoreFill/></button>
@@ -68,8 +80,8 @@ export default async function page({searchParams}) {
                             <div className={styles.second}>
                                 <div>
                                     <div>
-                                        <h3>Rayhan</h3>
-                                        <p>_@Rayhan66</p>
+                                        <h3>{user.username}</h3>
+                                        <p>_@{user.username}</p>
                                     </div>
                                     <div>
                                         <RiVerifiedBadgeFill className={styles.verified}/>
@@ -79,11 +91,11 @@ export default async function page({searchParams}) {
                                 <div>
                                     <div>
                                         <SlCalender className={styles.calender}/>
-                                        Joined January 25
+                                        Joined {formatDate(user.createdAt)}
                                     </div>
                                     <div>
-                                        <Link href="#">2 following</Link>
-                                        <Link href="#">1 follower</Link>
+                                        <Link href="#">{user.following.length} following</Link>
+                                        <Link href="#">{user.followers.length} follower</Link>
                                     </div>
                                 </div>
                             </div>
