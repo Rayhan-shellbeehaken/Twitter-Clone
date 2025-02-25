@@ -82,9 +82,39 @@
 
 .cover{
     /* height: 100px; */
-    background-color: wheat;
+    background-color: black;
+    position: relative;
     /* margin-top: 10px; */
     height: 150px;
+}
+
+.camera{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100px;
+}
+
+.icon-container{
+    width: 40px;
+    height: 40px;
+    background-color: rgb(21, 21, 21,0.8);
+    border-radius: 50%;
+    color:rgb(115, 115, 115);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-container:hover{
+    background-color: rgb(63,63,63,0.8);
+    color: white;
 }
 
 .profile-pic{
@@ -93,13 +123,29 @@
     height: 50px;
 }
 
-.profile-pic > img{
+.profile-pic-container{
     position: absolute;
     width: 100px;
+    height: 100px;
+    margin-left: 20px;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-pic-container > div{
+    position: absolute;
+}
+
+.profile-pic-container > img{
+    /* position: absolute; */
+    width: 100%;
     background-color: green;
     border-radius: 50%;
-    bottom: 0;
-    left: 20px;
+    /* bottom: 0; */
+    /* bottom: 0;
+    left: 20px; */
 }
 
 .input-box-container{

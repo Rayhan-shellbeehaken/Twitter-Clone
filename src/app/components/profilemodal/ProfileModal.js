@@ -6,6 +6,7 @@ import xlogo from '../../../../public/images/xprofile.png';
 import Image from 'next/image';
 import DateOfBirth from '../dateofbirth/DateOfBirth';
 import { useAppContext } from '@/app/store/store';
+import { RiCameraAiLine } from "react-icons/ri";
 
 export default function ProfileModal() {
     const {profileModal, setProfileModal} = useAppContext();
@@ -29,10 +30,25 @@ export default function ProfileModal() {
                 </div>
                 <div>
                     <div className={styles.cover}>
-                        Cover pic
+                        <div className={styles.camera}>
+                            <div className={styles["icon-container"]}>
+                                <RiCameraAiLine />
+                            </div>
+                            <div className={styles["icon-container"]}>
+                                <FiX/>
+                            </div>
+                        </div>
                     </div>
                     <div className={styles["profile-pic"]}>
-                        <Image src={xlogo} width={100} height={100} alt='profile picture' priority layout="intrinsic"></Image>
+                        
+                        <div className={styles["profile-pic-container"]}>
+                            
+                            <div className={styles["icon-container"]}>
+                                <RiCameraAiLine />
+                            </div>
+                            <Image src={xlogo} width={100} height={100} alt='profile picture' priority layout="intrinsic"></Image>
+                        </div>
+                        
                     </div>
                     <div className={styles["input-box-container"]}>
                         <input className={styles.input} id='name' required></input>
