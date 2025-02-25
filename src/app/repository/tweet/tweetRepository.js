@@ -23,11 +23,19 @@ export async function addNewTweet(parent,postText,postImage,user,repostedTweet) 
 export async function getAllTweet(page,parent,user,filterBy) {
   const limit = 7;
   const offset = (page - 1) * limit;
-  const matcher = {
+  let matcher = {
     parent : parent==="null" ? null : new mongoose.Types.ObjectId(parent),
     ...(user !== "null" && { user: new mongoose.Types.ObjectId(user) }) 
   }
 
+  if(matcher.user){
+    if(filterBy === "repost"){
+      matcher = {
+        ...matcher,
+        repostedTweet : {$ne : null}
+      }
+    }
+  }
   const tweets = await Tweet.aggregate([
       { 
         $match: matcher

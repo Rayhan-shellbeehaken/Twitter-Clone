@@ -11,6 +11,9 @@ export default function ProfileNavBar({base}) {
 
     const activeNavOption = (value) =>{
         switch (value) {
+            case "all":
+                setActive(1);
+                break;
             case "with_replies":
                 setActive(2);
                 break;
