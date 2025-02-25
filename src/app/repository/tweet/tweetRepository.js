@@ -29,11 +29,21 @@ export async function getAllTweet(page,parent,user,filterBy) {
   }
 
   if(matcher.user){
-    if(filterBy === "repost"){
-      matcher = {
-        ...matcher,
-        repostedTweet : {$ne : null}
-      }
+    switch (filterBy) {
+      case "repost":
+        matcher = {
+          ...matcher,
+          repostedTweet : {$ne : null}
+        }
+        break;
+      case "react":
+        matcher = {
+          ...matcher,
+          reacters : { $in : [new mongoose.Types.ObjectId(user)]}
+        }
+        break;
+      default:
+        break;
     }
   }
   const tweets = await Tweet.aggregate([
