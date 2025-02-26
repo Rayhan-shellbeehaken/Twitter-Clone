@@ -36,11 +36,17 @@ async function registration(credentials) {
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(credentials.password, salt);
+        const correctedDate = credentials.dateofbirth.replace(/,/, ", ");
+        const birthDate = new Date(correctedDate);
+        birthDate.setHours(12, 0, 0, 0);
+
+        const formattedDate = birthDate.toISOString().split("T")[0];
+
         const savedUser = await User.create({
             username : credentials.name,
             email : credentials.email,
             password : hashedPassword,
-            dateofBirth : credentials.dateofbirth
+            dateofBirth : formattedDate
         })
         return savedUser;
     }catch(error){

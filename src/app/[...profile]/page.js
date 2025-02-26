@@ -65,10 +65,11 @@ export default async function page({searchParams}) {
                         <div className={styles["profile-bottom"]}>
                             <div className={styles.first}>
                                 <div>
-                                    <Image src={user.profileImage} width={100} height={100} alt='profile picture' priority layout="intrinsic"></Image>
+                                    <Image src={user.profileImage ? user.profileImage : xlogo} width={100} height={100} alt='profile picture' priority layout="intrinsic"></Image>
                                 </div>
                                 <ProfileAction/>
                             </div>
+                            
                             <div className={styles.second}>
                                 <div>
                                     <div>

@@ -8,16 +8,22 @@ import DateOfBirth from '../dateofbirth/DateOfBirth';
 import { useAppContext } from '@/app/store/store';
 import { RiCameraAiLine } from "react-icons/ri";
 import { useRef, useEffect } from 'react';
+import daysDeclaration from '@/app/helpers/birthdate';
+import SelectorInput from '@/app/components/selectorinput/SelectorInput';
+import width from '@/app/components/css/width.module.css';
+import { Months } from '@/app/helpers/birthdate';
+import axios from 'axios';
 
 export default function ProfileModal({user}) {
     const {profileModal, setProfileModal} = useAppContext();
     const [file,setFile] = useState("");
     const [proFile,setProFile] = useState("");
-    const [imagePreview, setImagePreview] = useState(null);
-    const [profileImage, setProfileImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(user.coverImage);
+    const [profileImage, setProfileImage] = useState(user.profileImage);
     const fileRef = useRef(null);
     const profileRef = useRef(null);
-    const [userInfo,setUserInfo] = useState({name : '' , dateofBirth : ''});
+    const [userInfo,setUserInfo] = useState({name : user.username , dateofBirth : user.dateofBirth});
+    const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});
 
     useEffect(()=>{
         if(file){
@@ -40,7 +46,9 @@ export default function ProfileModal({user}) {
     },[proFile]);
 
     useEffect(()=>{
-        setUserInfo({name : user.username, dateofBirth : user.dateofBirth});
+        const [year, month, date] = user.dateofBirth.split("T")[0].split("-");
+        const monthName = Months[parseInt(month,10)].name;
+        setDateofBirth({Month : monthName, Year : year, Day : date});
     },[]);
 
     const removeCoverPhoto = () =>{
@@ -53,6 +61,46 @@ export default function ProfileModal({user}) {
             ...prevInfo,
             name : e.target.value
         }))
+    }
+
+    const handleChange = (type, event) => {
+        if(type === 'Month'){
+            daysDeclaration(event.target.value,dateofBirth.Year);
+        }else if(type === "Year"){
+            daysDeclaration(dateofBirth.Month,event.target.value);
+        }
+        setDateofBirth((prevState) => ({
+            ...prevState,
+            [type] : event.target.value
+        }))
+    }
+
+    const onUpdate = async() => {
+        const birth = new Date(`${dateofBirth.Month} ${dateofBirth.Day}, ${dateofBirth.Year}`);
+        birth.setHours(12, 0, 0, 0);
+        const formattedDate = birth.toISOString().split("T")[0];
+        console.log("DATE OF BIRTH");
+        console.log(formattedDate);
+
+        const data = {
+            coverImage : imagePreview,
+            profileImage : profileImage,
+            username : userInfo.name,
+            dateofBirth : formattedDate
+        }
+
+        
+
+        
+
+        try{
+            const result = await axios.patch('/api/user',data);
+            console.log(result);
+            setProfileModal(false);
+        }catch(error){
+            console.log(error);
+        }
+        
     }
 
     return (
@@ -68,12 +116,11 @@ export default function ProfileModal({user}) {
                             Edit profile
                         </div>
                     </div>
-                    <button className={styles["head-right"]}>
+                    <button className={styles["head-right"]} onClick={onUpdate}>
                         Save
                     </button>
                 </div>
                 <div>
-
                     <div className={styles.cover}>
                         <div className={`${styles.camera} ${imagePreview? styles["state-1"] : styles["state-2"]}`}>
                             <div className={styles["icon-container"]} onClick={()=>fileRef.current.click()}>
@@ -86,7 +133,7 @@ export default function ProfileModal({user}) {
                         </div>
                         <input type='file' ref={fileRef} onChange={(e)=>setFile(e.target.files[0])}></input>
                         {(imagePreview || user.coverImage) &&
-                            <Image src={imagePreview ? imagePreview : user.coverImage} alt='cover picture'></Image>
+                            <img src={imagePreview ? imagePreview : user.coverImage} alt='cover picture'></img>
                         }
                     </div>
 
@@ -97,7 +144,7 @@ export default function ProfileModal({user}) {
                             <div className={styles["icon-container"]} onClick={()=>profileRef.current.click()}>
                                 <RiCameraAiLine />
                             </div>
-                            <Image src={profileImage ? profileImage : user.profileImage} width={100} height={100} alt='profile picture'></Image>
+                            <Image src={profileImage ? profileImage : user.profileImage || xlogo} width={100} height={100} alt='profile picture'></Image>
                             
                         </div>
                         
@@ -107,7 +154,9 @@ export default function ProfileModal({user}) {
                         <label className={styles.label} htmlFor='name'>Name</label>
                     </div>
                     <div className={styles["date-of-birth"]}>
-                        <DateOfBirth birth={userInfo.dateofBirth}/>
+                        <SelectorInput value={dateofBirth.Month} width={width["width-200"]} label="Month" onChange={(e) => handleChange("Month",e)}/>
+                        <SelectorInput value={dateofBirth.Day} width={width["width-85"]} label="Day" onChange={(e) => handleChange("Day",e)}/>
+                        <SelectorInput value={dateofBirth.Year} width={width["width-150"]} label="Year" onChange={(e) => handleChange("Year",e)}/>
                     </div>
                     <div className={styles["info-text"]}>
                         <p>
@@ -119,7 +168,6 @@ export default function ProfileModal({user}) {
                             you choose otherwise <span>here</span>.
                         </p>
                     </div>
-                    
                 </div>
             </div>
         </div>
