@@ -56,12 +56,11 @@ export default async function SinglePost({
             <div className={styles.container}>
                 <div className={styles.left}>
                     <img src={tweet_info.userDetails.profileImage}></img>
-                    {/* <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/> */}
                 </div>
                 <div className={styles.right}>
                     <div className={styles.user}>                   
                         <p>
-                            {tweet_info.userDetails.username}<span> . @_{tweet_info.userDetails.username}</span> <span className={styles.time}>. {timeAgo(createdAt)}</span>
+                            <Link href={`/${tweet_info.userDetails.username}?type=all`}>{tweet_info.userDetails.username}</Link><span> . <Link href="#">@_{tweet_info.userDetails.username}</Link></span> <span className={styles.time}>. {timeAgo(createdAt)}</span>
                         </p>
                         <RiMoreFill/>
                     </div>

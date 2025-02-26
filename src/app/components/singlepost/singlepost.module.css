@@ -47,6 +47,10 @@
     color: white;
 }
 
+.user > p a:hover{
+    text-decoration: underline;
+}
+
 .user > p > span{
     font-weight: light;
     color: rgb(119, 119, 119);

@@ -37,6 +37,7 @@ export async function getAllTweet(page,parent,user,filterBy) {
         }
         break;
       case "react":
+        delete matcher.user;
         matcher = {
           ...matcher,
           reacters : { $in : [new mongoose.Types.ObjectId(user)]}
