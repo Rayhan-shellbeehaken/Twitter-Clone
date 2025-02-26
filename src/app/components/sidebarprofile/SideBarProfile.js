@@ -16,7 +16,6 @@ export default function SideBarProfile() {
         async function fetchData() {
             try{
                 const user = await axios.get('/api/user');
-                console.log(user);
                 setUserInfo({name : user.data.user.username , profileImage : user.data.user.profileImage});
             }catch(error){
                 console.log(error);
