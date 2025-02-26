@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { formatDistanceToNow } from "date-fns";
 
-export default function Notification({username,message,redirectTo,createdAt}) {
+export default function Notification({username,profileImage,message,redirectTo,createdAt}) {
     function timeAgo(date) {
         return formatDistanceToNow(new Date(date), { addSuffix: true });
     }
@@ -14,7 +14,7 @@ export default function Notification({username,message,redirectTo,createdAt}) {
         <Link href={redirectTo} className={styles.container}>
             <div className={styles.left}>
                 <div>
-                    <Image src={xlogo} alt='xlogo' priority layout='intrinsic'></Image>
+                    <img src={profileImage} alt='profile pic'></img>
                 </div>
                 <div>
                     <p>{username} <span className={styles.time}>. {timeAgo(createdAt)}</span></p>

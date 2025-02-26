@@ -37,8 +37,8 @@ export default function SideBarProfile() {
                         
                     </div>
                     <div className={styles["profile-info"]}>
-                        <h3>{userInfo.name}</h3>
-                        <p>@_{userInfo.name}</p>
+                        <h3>{userInfo.name || "username"}</h3>
+                        <p>@_{userInfo.name || "account name"}</p>
                     </div>
                 </div>
                 

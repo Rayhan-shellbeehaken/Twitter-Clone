@@ -25,6 +25,7 @@ export default async function PostList({page,user,type}) {
     const filterBy = getFilterBy(type);
     const result = user ? await fetchTweet(page,null,true,filterBy) : await fetchTweet(page,null,false,filterBy);
     const tweets = result.result;
+    console.log(tweets);
     if(tweets.length === 0) return <div className={styles.end}>No more post available</div>;
 
     return (

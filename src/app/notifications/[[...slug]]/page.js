@@ -55,6 +55,7 @@ export default async function Page({params}) {
                 <Notification
                   key={notification._id}
                   username={notification.user_details.username}
+                  profileImage={notification.user_details.profileImage}
                   message={message}
                   redirectTo={notification.redirectTo}
                   createdAt={notification.createdAt}

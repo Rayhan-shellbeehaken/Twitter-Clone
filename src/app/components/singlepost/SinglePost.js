@@ -55,7 +55,8 @@ export default async function SinglePost({
             
             <div className={styles.container}>
                 <div className={styles.left}>
-                    <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
+                    <img src={tweet_info.userDetails.profileImage}></img>
+                    {/* <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/> */}
                 </div>
                 <div className={styles.right}>
                     <div className={styles.user}>                   
