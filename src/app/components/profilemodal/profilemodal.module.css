@@ -153,6 +153,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .profile-pic-container > input{
@@ -168,7 +169,7 @@
     /* position: absolute; */
     width: 100px;
     height: 100px;
-    background-color: green;
+    background-color: rgb(157, 232, 157);
     border-radius: 50%;
     /* bottom: 0; */
     /* bottom: 0;

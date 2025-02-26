@@ -2,6 +2,8 @@ import "./globals.css";
 import AppWrapper from "./store/store";
 import { Geologica } from 'next/font/google';
 import { SessionProvider } from "next-auth/react";
+import Sidemenu from "./components/sidemenu/Sidemenu";
+import { headers } from "next/headers";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,11 +13,16 @@ export const metadata = {
 const geologica = Geologica({subsets : ["latin"], weight : ["100", "200", "300", "400", "500", "600"]});
 
 export default async function RootLayout({ children }) {
+  const headersList = await headers();
+  const hideBar = headersList.get("x-hide-bar") === "true";
   return (
     <html lang="en">
       <body className={`${geologica.className} background`}>
         <AppWrapper>
           <SessionProvider>
+            {!hideBar && 
+              <Sidemenu/>
+            }
             {children}
           </SessionProvider>
         </AppWrapper>

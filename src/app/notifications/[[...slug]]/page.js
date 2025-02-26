@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './page.module.css';
-import ProtectedLayout from '@/app/layouts/protected/layout';
 import SearchBox from '@/app/components/searchbox/SearchBox';
 import Trending from '@/app/components/trending/Trending';
 import WhoToFollow from '@/app/components/whotofollow/WhoToFollow';
@@ -44,7 +43,6 @@ export default async function Page({params}) {
   }
   
   return (
-    <ProtectedLayout>
       <div className={styles.page}>
         <div className={styles.line}>
         </div>
@@ -75,6 +73,5 @@ export default async function Page({params}) {
             <TermsAndCondition/>
         </div>
       </div>
-    </ProtectedLayout>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import ProtectedLayout from '../layouts/protected/layout'
 import styles from './page.module.css';
 import SearchBox from '@/app/components/searchbox/SearchBox';
 import WhoToFollow from '@/app/components/whotofollow/WhoToFollow';
@@ -44,90 +43,88 @@ export default async function page({searchParams}) {
         });
     }
 
-    return (
-        <ProtectedLayout>      
-            <div className={styles.page}>
-                <Popup/>
-                <ProfileModal user={user}/>
-                <div className={styles.line}>
-                </div>
-                <div className={styles.left}>
-                    <div className={styles.head}>
-                        <Link href={backPage} className={styles.back}>
-                            <GoArrowLeft/>
-                        </Link>
-                        <div>
-                            <h3>{user.username}</h3>
-                            <p>profile</p>
-                        </div>
-                    </div>
-                    <div className={styles.profile}>
-                        <div className={styles["profile-top"]}>
-                            {user.coverImage && 
-                                <img src={user.coverImage}></img>
-                            }
-                        </div>
-                        <div className={styles["profile-bottom"]}>
-                            <div className={styles.first}>
-                                <div>
-                                    <img src={user.profileImage ? user.profileImage : xlogo} alt='profile picture'></img>
-                                </div>
-                                <ProfileAction/>
-                            </div>
-                            
-                            <div className={styles.second}>
-                                <div>
-                                    <div>
-                                        <h3>{user.username}</h3>
-                                        <p>_@{user.username}</p>
-                                    </div>
-                                    <div>
-                                        <RiVerifiedBadgeFill className={styles.verified}/>
-                                        Get verified
-                                    </div>
-                                </div>
-                                <div>
-                                    <div>
-                                        <SlCalender className={styles.calender}/>
-                                        Joined {formatDate(user.createdAt)}
-                                    </div>
-                                    <div>
-                                        <Link href="#">{user.following.length} following</Link>
-                                        <Link href="#">{user.followers.length} follower</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <ProfileNavBar base={params}/>
-                            {params === "likes" && 
-                                <div className={styles["likes-message"]}>
-                                    <IoMdLock/>
-                                    <p>Your likes are private. Only you can see them.</p>
-                                </div>
-                            }
-                            {(params === "highlights" || params === "media" || params === "articles") &&
-                                <div className={styles["likes-message"]}>
-                                    <TbError404/>
-                                    <p>Didn't work on this page.</p>
-                                </div>
-                            }
-                            {(params !== "highlights" && params !== "media" && params !== "articles") &&
-                                <Suspense fallback={<Loader/>}>
-                                    <PostList page={1} user={true} type={params}/>
-                                </Suspense>
-                            }
-                            
-                        </div>
+    return (    
+        <div className={styles.page}>
+            <Popup/>
+            <ProfileModal user={user}/>
+            <div className={styles.line}>
+            </div>
+            <div className={styles.left}>
+                <div className={styles.head}>
+                    <Link href={backPage} className={styles.back}>
+                        <GoArrowLeft/>
+                    </Link>
+                    <div>
+                        <h3>{user.username}</h3>
+                        <p>profile</p>
                     </div>
                 </div>
-                <div className={styles.line}>
-                </div>
-                <div className={styles.right}>
-                    <SearchBox/>
-                    <WhoToFollow/>
-                    <Trending/>
-                    <TermsAndCondition/>
+                <div className={styles.profile}>
+                    <div className={styles["profile-top"]}>
+                        {user.coverImage && 
+                            <img src={user.coverImage}></img>
+                        }
+                    </div>
+                    <div className={styles["profile-bottom"]}>
+                        <div className={styles.first}>
+                            <div>
+                                <img src={user.profileImage ? user.profileImage : xlogo} alt='profile picture'></img>
+                            </div>
+                            <ProfileAction/>
+                        </div>
+                        
+                        <div className={styles.second}>
+                            <div>
+                                <div>
+                                    <h3>{user.username}</h3>
+                                    <p>_@{user.username}</p>
+                                </div>
+                                <div>
+                                    <RiVerifiedBadgeFill className={styles.verified}/>
+                                    Get verified
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <SlCalender className={styles.calender}/>
+                                    Joined {formatDate(user.createdAt)}
+                                </div>
+                                <div>
+                                    <Link href="#">{user.following.length} following</Link>
+                                    <Link href="#">{user.followers.length} follower</Link>
+                                </div>
+                            </div>
+                        </div>
+                        <ProfileNavBar base={params}/>
+                        {params === "likes" && 
+                            <div className={styles["likes-message"]}>
+                                <IoMdLock/>
+                                <p>Your likes are private. Only you can see them.</p>
+                            </div>
+                        }
+                        {(params === "highlights" || params === "media" || params === "articles") &&
+                            <div className={styles["likes-message"]}>
+                                <TbError404/>
+                                <p>Didn't work on this page.</p>
+                            </div>
+                        }
+                        {(params !== "highlights" && params !== "media" && params !== "articles") &&
+                            <Suspense fallback={<Loader/>}>
+                                <PostList page={1} user={true} type={params}/>
+                            </Suspense>
+                        }
+                        
+                    </div>
                 </div>
             </div>
-        </ProtectedLayout>
+            <div className={styles.line}>
+            </div>
+            <div className={styles.right}>
+                <SearchBox/>
+                <WhoToFollow/>
+                <Trending/>
+                <TermsAndCondition/>
+            </div>
+        </div>
     )
 }

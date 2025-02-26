@@ -7,7 +7,6 @@ import SearchBox from '../components/searchbox/SearchBox';
 import Subscribe from '../components/subscribe/Subscribe';
 import Trending from '../components/trending/Trending';
 import WhoToFollow from '../components/whotofollow/WhoToFollow';
-import ProtectedLayout from '../layouts/protected/layout';
 import Popup from '../components/popup/Popup';
 import TermsAndCondition from '../components/termsandcondition/TermsAndCondition';
 import { Suspense } from 'react';
@@ -16,29 +15,26 @@ import Loader from '../components/loader/Loader';
 export default async function Home({searchParams}) {
     const params = (await searchParams).feed || 'foryou';
     return (
-        <ProtectedLayout>
-            <div className={styles.page}>
-                <div className={styles.line}>
-                </div>
-                <div className={styles.left}>
-                    <Navbar/>
-                    <PostBox/>
-                    <Suspense fallback={<Loader/>}>
-                        <PostList page={1}/>
-                    </Suspense>
-                    <Popup/>
-                </div>
-                <div className={styles.line}>
-                </div>
-                <div className={styles.right}>
-                    <SearchBox/>
-                    <Subscribe/>
-                    <Trending/>
-                    <WhoToFollow/>
-                    <TermsAndCondition/>
-                </div>
+        <div className={styles.page}>
+            <div className={styles.line}>
             </div>
-        </ProtectedLayout>
-        
+            <div className={styles.left}>
+                <Navbar/>
+                <PostBox/>
+                <Suspense fallback={<Loader/>}>
+                    <PostList page={1}/>
+                </Suspense>
+                <Popup/>
+            </div>
+            <div className={styles.line}>
+            </div>
+            <div className={styles.right}>
+                <SearchBox/>
+                <Subscribe/>
+                <Trending/>
+                <WhoToFollow/>
+                <TermsAndCondition/>
+            </div>
+        </div>
     )
 }

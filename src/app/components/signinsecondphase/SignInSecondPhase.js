@@ -28,7 +28,8 @@ export default function SignInSecondPhase() {
       toggleAlert("success", "Success to login");
       setTimeout(() => {
         hidePopUp();
-        router.push("/home");
+        router.push("/home?feed=foryou");
+        router.refresh();
       }, 1000);
     } catch (error) {
       console.log(error);
