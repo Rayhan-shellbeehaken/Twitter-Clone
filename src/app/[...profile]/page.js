@@ -58,11 +58,14 @@ export default async function page({searchParams}) {
                         </Link>
                         <div>
                             <h3>{user.username}</h3>
-                            <p>2 posts</p>
+                            <p>profile</p>
                         </div>
                     </div>
                     <div className={styles.profile}>
                         <div className={styles["profile-top"]}>
+                            {user.coverImage && 
+                                <img src={user.coverImage}></img>
+                            }
                         </div>
                         <div className={styles["profile-bottom"]}>
                             <div className={styles.first}>

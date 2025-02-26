@@ -28,6 +28,8 @@ export default function ProfileModal({user}) {
     const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});
     const router = useRouter();
 
+    console.log(imagePreview);
+
     useEffect(()=>{
         if(file){
             const reader = new FileReader();
@@ -55,8 +57,11 @@ export default function ProfileModal({user}) {
     },[]);
 
     const removeCoverPhoto = () =>{
-        setImagePreview(null);
+        setImagePreview("");
         setFile("");
+        if (fileRef.current) {
+            fileRef.current.value = ""; // Reset the file input
+        }
     }
 
     const changeUserInfo = (e) =>{
@@ -126,7 +131,7 @@ export default function ProfileModal({user}) {
                                 <RiCameraAiLine />
                             </div>
                             
-                            <div className={`${styles["icon-container"]} ${imagePreview !== null? '' : styles.hidden}`} onClick={removeCoverPhoto}>
+                            <div className={`${styles["icon-container"]} ${imagePreview !== "" ? '' : styles.hidden}`} onClick={()=>removeCoverPhoto()}>
                                 <FiX/>
                             </div>
                         </div>
