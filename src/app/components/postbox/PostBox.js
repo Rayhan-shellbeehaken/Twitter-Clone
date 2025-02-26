@@ -24,6 +24,7 @@ export default function PostBox() {
     const {toggleAlert} = useAppContext();
     const [imagePreview, setImagePreview] = useState(null);
     const router = useRouter();
+    const [userInfo, setUserInfo] = useState({name : '' , profileImage : ''});
 
     useEffect(()=>{
         if(textRef.current){
@@ -76,10 +77,26 @@ export default function PostBox() {
         setImagePreview(null);
     }
 
+    useEffect(()=>{
+        async function fetchData() {
+            try{
+                const user = await axios.get('/api/user');
+                console.log(user);
+                setUserInfo({name : user.data.user.username , profileImage : user.data.user.profileImage});
+            }catch(error){
+                console.log(error);
+            }
+        }
+        fetchData();
+    },[])
+
     return (
         <div className={styles["postbox-container"]}>
             <div className={styles.image}>
-                <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
+                {userInfo.profileImage !== '' &&
+                    <img src={userInfo.profileImage}></img>
+                }
+                {/* <img src={xlogo} alt="xlogo"/> */}
             </div>
             <form onSubmit={handleSubmit} className={styles.right}>
                 <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='What is happening?!'></textarea>
