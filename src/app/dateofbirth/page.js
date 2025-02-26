@@ -25,7 +25,7 @@ export default function page() {
             const response = await axios.patch('/api/user',data);
             console.log(response);
             toggleAlert("success", "User registration successfully");
-            router.push('/home');
+            router.push('/home?feed=foryou');
             
         }catch(error){
             toggleAlert("error", "User registration failed");

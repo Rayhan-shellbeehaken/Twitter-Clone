@@ -68,9 +68,9 @@ export default function SignUpFirst({setPhaseComplete}) {
                     <h3>Date of birth</h3>
                     <p>This will not be shown publicly. Confirm your own age, even if this account is for a business, a pet, or something else.</p>
                     <div className={styles["date-of-birth"]}>
-                        <SelectorInput width={width["width-200"]} label="Month" onChange={(e) => handleChange("Month",e)}/>
-                        <SelectorInput width={width["width-85"]} label="Day" onChange={(e) => handleChange("Day",e)}/>
-                        <SelectorInput width={width["width-150"]} label="Year" onChange={(e) => handleChange("Year",e)}/>
+                        <SelectorInput value={dateofBirth.Month} width={width["width-200"]} label="Month" onChange={(e) => handleChange("Month",e)}/>
+                        <SelectorInput value={dateofBirth.Day} width={width["width-85"]} label="Day" onChange={(e) => handleChange("Day",e)}/>
+                        <SelectorInput value={dateofBirth.Year} width={width["width-150"]} label="Year" onChange={(e) => handleChange("Year",e)}/>
                     </div>
                 </div>
 

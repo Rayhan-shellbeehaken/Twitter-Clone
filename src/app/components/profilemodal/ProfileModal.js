@@ -9,7 +9,7 @@ import { useAppContext } from '@/app/store/store';
 import { RiCameraAiLine } from "react-icons/ri";
 import { useRef, useEffect } from 'react';
 
-export default function ProfileModal() {
+export default function ProfileModal({user}) {
     const {profileModal, setProfileModal} = useAppContext();
     const [file,setFile] = useState("");
     const [proFile,setProFile] = useState("");
@@ -17,6 +17,7 @@ export default function ProfileModal() {
     const [profileImage, setProfileImage] = useState(null);
     const fileRef = useRef(null);
     const profileRef = useRef(null);
+    const [userInfo,setUserInfo] = useState({name : '' , dateofBirth : ''});
 
     useEffect(()=>{
         if(file){
@@ -38,9 +39,20 @@ export default function ProfileModal() {
         }
     },[proFile]);
 
+    useEffect(()=>{
+        setUserInfo({name : user.username, dateofBirth : user.dateofBirth});
+    },[]);
+
     const removeCoverPhoto = () =>{
         setImagePreview(null);
         setFile("");
+    }
+
+    const changeUserInfo = (e) =>{
+        setUserInfo((prevInfo)=>({
+            ...prevInfo,
+            name : e.target.value
+        }))
     }
 
     return (
@@ -73,10 +85,9 @@ export default function ProfileModal() {
                             </div>
                         </div>
                         <input type='file' ref={fileRef} onChange={(e)=>setFile(e.target.files[0])}></input>
-                        {imagePreview && 
-                            <img src={imagePreview} alt='cover picture'></img>
+                        {(imagePreview || user.coverImage) &&
+                            <Image src={imagePreview ? imagePreview : user.coverImage} alt='cover picture'></Image>
                         }
-                        
                     </div>
 
                     <div className={styles["profile-pic"]}>
@@ -86,17 +97,17 @@ export default function ProfileModal() {
                             <div className={styles["icon-container"]} onClick={()=>profileRef.current.click()}>
                                 <RiCameraAiLine />
                             </div>
-                            <Image src={profileImage ? profileImage : xlogo} width={100} height={100} alt='profile picture'></Image>
+                            <Image src={profileImage ? profileImage : user.profileImage} width={100} height={100} alt='profile picture'></Image>
                             
                         </div>
                         
                     </div>
                     <div className={styles["input-box-container"]}>
-                        <input className={styles.input} id='name' required></input>
+                        <input value={userInfo.name} onChange={changeUserInfo} className={styles.input} id='name' required></input>
                         <label className={styles.label} htmlFor='name'>Name</label>
                     </div>
                     <div className={styles["date-of-birth"]}>
-                        <DateOfBirth/>
+                        <DateOfBirth birth={userInfo.dateofBirth}/>
                     </div>
                     <div className={styles["info-text"]}>
                         <p>

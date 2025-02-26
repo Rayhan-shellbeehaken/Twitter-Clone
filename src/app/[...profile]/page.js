@@ -46,7 +46,7 @@ export default async function page({searchParams}) {
     return (
         <ProtectedLayout>      
             <div className={styles.page}>
-                <ProfileModal/>
+                <ProfileModal user={user}/>
                 <div className={styles.line}>
                 </div>
                 <div className={styles.left}>

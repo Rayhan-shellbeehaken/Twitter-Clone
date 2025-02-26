@@ -42,11 +42,11 @@ export default function daysDeclaration(monthName, year){
 
 export function birthDate(formData){
     const date = formData.get("Day");
-    const month = formData.get("Month")
+    const month = formData.get("Month");
     const year = formData.get("Year");
     const birthDate = new Date(`${month} ${date}, ${year}`);
+    birthDate.setHours(12, 0, 0, 0);
     const formattedDate = birthDate.toISOString().split("T")[0];
-
     return formattedDate;
 }
 
