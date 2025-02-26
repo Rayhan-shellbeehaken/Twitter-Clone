@@ -13,9 +13,11 @@ import SelectorInput from '@/app/components/selectorinput/SelectorInput';
 import width from '@/app/components/css/width.module.css';
 import { Months } from '@/app/helpers/birthdate';
 import axios from 'axios';
+import Popup from '../popup/Popup';
+import { useRouter } from 'next/navigation';
 
 export default function ProfileModal({user}) {
-    const {profileModal, setProfileModal} = useAppContext();
+    const {profileModal, setProfileModal, toggleAlert} = useAppContext();
     const [file,setFile] = useState("");
     const [proFile,setProFile] = useState("");
     const [imagePreview, setImagePreview] = useState(user.coverImage);
@@ -24,6 +26,7 @@ export default function ProfileModal({user}) {
     const profileRef = useRef(null);
     const [userInfo,setUserInfo] = useState({name : user.username , dateofBirth : user.dateofBirth});
     const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});
+    const router = useRouter();
 
     useEffect(()=>{
         if(file){
@@ -79,8 +82,6 @@ export default function ProfileModal({user}) {
         const birth = new Date(`${dateofBirth.Month} ${dateofBirth.Day}, ${dateofBirth.Year}`);
         birth.setHours(12, 0, 0, 0);
         const formattedDate = birth.toISOString().split("T")[0];
-        console.log("DATE OF BIRTH");
-        console.log(formattedDate);
 
         const data = {
             coverImage : imagePreview,
@@ -88,17 +89,15 @@ export default function ProfileModal({user}) {
             username : userInfo.name,
             dateofBirth : formattedDate
         }
-
-        
-
-        
-
         try{
             const result = await axios.patch('/api/user',data);
             console.log(result);
             setProfileModal(false);
+            toggleAlert("success","Saved successfully");
+            router.refresh();
         }catch(error){
             console.log(error);
+            toggleAlert("error","Failed to update");
         }
         
     }

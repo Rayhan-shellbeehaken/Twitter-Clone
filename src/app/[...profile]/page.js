@@ -22,6 +22,7 @@ import { TbError404 } from "react-icons/tb";
 import { fetchUser } from '../helpers/useroperation';
 import ProfileAction from '../components/profileactions/ProfileAction';
 import ProfileModal from '../components/profilemodal/ProfileModal';
+import Popup from '../components/popup/Popup';
 
 export default async function page({searchParams}) {
     const params = (await searchParams).type;
@@ -33,7 +34,7 @@ export default async function page({searchParams}) {
     const session = await auth();
     const result = await fetchUser();
     const user = result.user;
-    console.log(user);
+    // console.log(user);
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -46,6 +47,7 @@ export default async function page({searchParams}) {
     return (
         <ProtectedLayout>      
             <div className={styles.page}>
+                <Popup/>
                 <ProfileModal user={user}/>
                 <div className={styles.line}>
                 </div>
@@ -65,7 +67,7 @@ export default async function page({searchParams}) {
                         <div className={styles["profile-bottom"]}>
                             <div className={styles.first}>
                                 <div>
-                                    <Image src={user.profileImage ? user.profileImage : xlogo} width={100} height={100} alt='profile picture' priority layout="intrinsic"></Image>
+                                    <img src={user.profileImage ? user.profileImage : xlogo} alt='profile picture'></img>
                                 </div>
                                 <ProfileAction/>
                             </div>
