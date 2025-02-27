@@ -36,6 +36,8 @@ export default async function Page({params}) {
       case "repost":
         message = "reposted your tweet"
         break;
+      case "follow":
+        message = "followed you"
       default:
         break;
     }

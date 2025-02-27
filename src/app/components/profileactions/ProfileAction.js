@@ -9,7 +9,7 @@ import { useAppContext } from '@/app/store/store';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-export default function ProfileAction({ownProfile,ownId,userId,followed}) {
+export default function ProfileAction({ownProfile,ownId,userId,username,followed}) {
     const {setProfileModal,toggleAlert} = useAppContext();
     const router = useRouter();
 
@@ -20,6 +20,14 @@ export default function ProfileAction({ownProfile,ownId,userId,followed}) {
         try{
             const result = await axios.patch(`/api/user?id=${userId}&followed=${followed}`,data);
             const message = followed ? "Successfully unfollowed" : "Successfully followed";
+            const notification = {
+                notificationType : 'follow',
+                notifiedTo : userId,
+                redirectTo : `/${username}?type=all`,
+            }
+            if(result.status === 200 && !followed){
+                const newNotification = await axios.post('/api/notifications',notification);
+            }
             toggleAlert("success",message);
             router.refresh();
         }catch(error){

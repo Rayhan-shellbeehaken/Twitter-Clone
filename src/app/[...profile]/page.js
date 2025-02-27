@@ -80,6 +80,7 @@ export default async function page({searchParams, params}) {
                                 ownProfile={ownProfile}
                                 ownId={session?.user?._id}
                                 userId={user._id}
+                                username={session?.user?.username}
                                 followed={followed}
                             />
                         </div>

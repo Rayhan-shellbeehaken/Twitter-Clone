@@ -55,7 +55,7 @@ function notificationCategory(user,category) {
       notifiedTo : new mongoose.Types.ObjectId(user),
       notificationType : "follow"
     }
-  }else if(category === null){
+  }else if(category === "undefined"){
     matcher = {
       notifiedTo : new mongoose.Types.ObjectId(user)
     }
