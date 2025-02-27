@@ -36,7 +36,7 @@ export default async function page({searchParams, params}) {
     const result = await fetchUser(profile[0]);
     const user = result.user;
 
-    console.log(user);
+    // console.log(user);
 
     const ownProfile = profile[0] === session?.user?.username ? true : false;
     const followed = user.followers.includes(session?.user?._id) ? true : false;
