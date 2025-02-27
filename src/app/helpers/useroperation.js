@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
 
-export async function fetchUser() {
+export async function fetchUser(username) {
     const cookieHeaders = await cookies();
-    const response = await fetch('http://localhost:3000/api/user',{
+    const response = await fetch(`http://localhost:3000/api/user?username=${username}`,{
         method : 'GET',
         headers: { Cookie: cookieHeaders.toString() },
         credentials: 'include'

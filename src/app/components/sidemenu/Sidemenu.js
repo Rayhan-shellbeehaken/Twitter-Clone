@@ -45,7 +45,7 @@ export default async function Sidemenu() {
                         <span>Post</span>
                     </button>
                 </ul>
-                <SideBarProfile/>
+                <SideBarProfile username={session?.user?.username}/>
             </div>
         </div>
         

@@ -8,14 +8,14 @@ import SideBarPopUp from '../sidebarpopup/SideBarPopUp';
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function SideBarProfile() {
+export default function SideBarProfile({username}) {
     const [showPopUp, setShowPopUp] = useState(false);
     const [userInfo, setUserInfo] = useState({name : '' , profileImage : ''});
 
     useEffect(()=>{
         async function fetchData() {
             try{
-                const user = await axios.get('/api/user');
+                const user = await axios.get(`/api/user?username=${username}`);
                 setUserInfo({name : user.data.user.username , profileImage : user.data.user.profileImage});
             }catch(error){
                 console.log(error);

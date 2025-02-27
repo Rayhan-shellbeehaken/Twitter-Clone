@@ -1,7 +1,7 @@
 import User from "@/app/models/user.model";
 
-export async function getUserInfo(id) {
-    const user = await User.findById(id);
+export async function getUserInfo(username) {
+    const user = await User.findOne({username : username});
     return user;
 }
 export async function updateUserInfo(id,reqBody) {

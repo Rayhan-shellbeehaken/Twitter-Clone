@@ -1,7 +1,7 @@
 import { getUserInfo, updateUserInfo } from "@/app/repository/user/userRepository";
 
-export async function getUser(id) {
-    const user = await getUserInfo(id);
+export async function getUser(username) {
+    const user = await getUserInfo(username);
     return user;
 }
 

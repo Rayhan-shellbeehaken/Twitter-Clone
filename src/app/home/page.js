@@ -11,16 +11,18 @@ import Popup from '../components/popup/Popup';
 import TermsAndCondition from '../components/termsandcondition/TermsAndCondition';
 import { Suspense } from 'react';
 import Loader from '../components/loader/Loader';
+import { auth } from '@/auth';
 
 export default async function Home({searchParams}) {
     const params = (await searchParams).feed || 'foryou';
+    const session = await auth();
     return (
         <div className={styles.page}>
             <div className={styles.line}>
             </div>
             <div className={styles.left}>
                 <Navbar/>
-                <PostBox/>
+                <PostBox username={session?.user?.username}/>
                 <Suspense fallback={<Loader/>}>
                     <PostList page={1}/>
                 </Suspense>

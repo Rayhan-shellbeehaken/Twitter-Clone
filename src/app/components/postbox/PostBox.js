@@ -16,7 +16,7 @@ import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
 import { useRouter } from 'next/navigation';
 
-export default function PostBox() {
+export default function PostBox({username}) {
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const [value, setValue] = useState("");
@@ -80,7 +80,7 @@ export default function PostBox() {
     useEffect(()=>{
         async function fetchData() {
             try{
-                const user = await axios.get('/api/user');
+                const user = await axios.get(`/api/user?username=${username}`);
                 console.log(user);
                 setUserInfo({name : user.data.user.username , profileImage : user.data.user.profileImage});
             }catch(error){

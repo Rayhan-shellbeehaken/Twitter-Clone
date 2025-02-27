@@ -11,8 +11,11 @@ export async function GET(request) {
         if(!session?.user){
             return NextResponse.json({message : 'Login first', session},{status : 400});
         }
-        const id = await session?.user?._id;
-        const user = await getUser(id);
+        const url = new URL(request.url);
+        const username = url.searchParams.get('username');
+        const user = await getUser(username);
+        // const id = await session?.user?._id;
+        // const user = await getUser(id);
 
         return NextResponse.json({
             message : 'Successfully get user info',

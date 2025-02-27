@@ -23,16 +23,19 @@ import ProfileAction from '../components/profileactions/ProfileAction';
 import ProfileModal from '../components/profilemodal/ProfileModal';
 import Popup from '../components/popup/Popup';
 
-export default async function page({searchParams}) {
-    const params = (await searchParams).type;
+export default async function page({searchParams, params}) {
+    const queryParams = (await searchParams).type;
+    const {profile} = await params;
+
     const cookieStore = cookies();
     const prevPagesString = (await cookieStore).get("pageHistory")?.value;
     const prevPages = JSON.parse(prevPagesString);
     const backPage = prevPages[prevPages.length - 1] || '/home?feed=foryou';
 
     const session = await auth();
-    const result = await fetchUser();
+    const result = await fetchUser(profile[0]);
     const user = result.user;
+    // console.log("USER___________________");
     // console.log(user);
 
     function formatDate(dateString) {
@@ -95,22 +98,22 @@ export default async function page({searchParams}) {
                                 </div>
                             </div>
                         </div>
-                        <ProfileNavBar base={params}/>
-                        {params === "likes" && 
+                        <ProfileNavBar base={queryParams}/>
+                        {queryParams === "likes" && 
                             <div className={styles["likes-message"]}>
                                 <IoMdLock/>
                                 <p>Your likes are private. Only you can see them.</p>
                             </div>
                         }
-                        {(params === "highlights" || params === "media" || params === "articles") &&
+                        {(queryParams === "highlights" || queryParams === "media" || queryParams === "articles") &&
                             <div className={styles["likes-message"]}>
                                 <TbError404/>
                                 <p>Didn't work on this page.</p>
                             </div>
                         }
-                        {(params !== "highlights" && params !== "media" && params !== "articles") &&
+                        {(queryParams !== "highlights" && queryParams !== "media" && queryParams !== "articles") &&
                             <Suspense fallback={<Loader/>}>
-                                <PostList page={1} user={true} type={params}/>
+                                <PostList page={1} user={user._id} type={queryParams}/>
                             </Suspense>
                         }
                         
