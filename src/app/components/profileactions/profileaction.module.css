@@ -19,11 +19,12 @@
     background-color: transparent;
     border-radius: 20px;
     border: 1px solid rgb(124, 124, 124);
-    color: white;
+    color: black;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
 
 .circle{
@@ -42,7 +43,10 @@
     align-items: center;
 }
 
-.button:hover,.circle:hover{
+.button:hover{
+    background-color: rgb(163, 163, 163);
+}
+.circle:hover{
     background-color: rgb(18, 18, 18);
 }
 

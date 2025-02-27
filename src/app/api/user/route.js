@@ -31,13 +31,14 @@ export async function PATCH(request) {
         const session = await auth();
         const url = new URL(request.url);
         const userId = url.searchParams.get('id');
+        const followed = url.searchParams.get('followed');
 
         if(!session?.user){
             return NextResponse.json({message : 'Login first', session},{status : 400});
         }
 
         const id = (userId !== null) ? userId : session?.user?._id;
-        const user = await updateUser(id,reqBody);
+        const user = await updateUser(id,reqBody,followed);
 
         return NextResponse.json({
             message : 'Successfully Updated',

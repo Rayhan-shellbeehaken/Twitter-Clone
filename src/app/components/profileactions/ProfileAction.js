@@ -7,20 +7,25 @@ import { FiMail } from "react-icons/fi";
 import { IoSearch } from "react-icons/io5";
 import { useAppContext } from '@/app/store/store';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
-export default function ProfileAction({ownProfile,ownId,userId}) {
+export default function ProfileAction({ownProfile,ownId,userId,followed}) {
     const {setProfileModal,toggleAlert} = useAppContext();
+    const router = useRouter();
 
     const onFollow = async() => {
         const data = {
             newFollower : ownId
         }
         try{
-            const result = await axios.patch(`/api/user?id=${userId}`,data);
-            toggleAlert("success","Successfully followed");
+            const result = await axios.patch(`/api/user?id=${userId}&followed=${followed}`,data);
+            const message = followed ? "Successfully unfollowed" : "Successfully followed";
+            toggleAlert("success",message);
+            router.refresh();
         }catch(error){
             console.log(error);
-            toggleAlert("error","Failed to follow")
+            const message = followed ? "Failed to unfollow" : "Failed to follow";
+            toggleAlert("error",message);
         }
     }
 
@@ -30,7 +35,9 @@ export default function ProfileAction({ownProfile,ownId,userId}) {
             <button className={`${styles.circle} ${!ownProfile ? '' : styles.hide}`}><VscVscode/></button>
             <button className={`${styles.circle} ${!ownProfile ? '' : styles.hide}`}><IoSearch/></button>
             <button className={`${styles.circle} ${!ownProfile ? '' : styles.hide}`}><FiMail/></button>
-            <button className={`${styles.button} ${!ownProfile ? '' : styles.hide}`} onClick={onFollow}>Follow</button>
+            <button className={`${styles.button} ${!ownProfile ? '' : styles.hide}`} onClick={onFollow}>
+                {followed ? "Following" : "Follow"}
+            </button>
             <button className={`${styles.button} ${ownProfile ? '' : styles.hide}`} onClick={()=>setProfileModal(true)}>Edit profile</button>
         </div>
     )

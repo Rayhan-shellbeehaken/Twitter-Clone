@@ -5,7 +5,7 @@ export async function getUser(username) {
     return user;
 }
 
-export async function updateUser(id,reqBody){
-    const user = await updateUserInfo(id, reqBody);
+export async function updateUser(id,reqBody,followed){
+    const user = await updateUserInfo(id,reqBody,followed);
     return user;
 }
