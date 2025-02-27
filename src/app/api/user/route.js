@@ -14,8 +14,6 @@ export async function GET(request) {
         const url = new URL(request.url);
         const username = url.searchParams.get('username');
         const user = await getUser(username);
-        // const id = await session?.user?._id;
-        // const user = await getUser(id);
 
         return NextResponse.json({
             message : 'Successfully get user info',
@@ -31,12 +29,14 @@ export async function PATCH(request) {
     try{
         const reqBody = await request.json();
         const session = await auth();
+        const url = new URL(request.url);
+        const userId = url.searchParams.get('id');
 
         if(!session?.user){
             return NextResponse.json({message : 'Login first', session},{status : 400});
         }
 
-        const id = session?.user._id;
+        const id = (userId !== null) ? userId : session?.user?._id;
         const user = await updateUser(id,reqBody);
 
         return NextResponse.json({

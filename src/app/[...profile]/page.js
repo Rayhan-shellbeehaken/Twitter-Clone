@@ -36,6 +36,8 @@ export default async function page({searchParams, params}) {
     const result = await fetchUser(profile[0]);
     const user = result.user;
 
+    // console.log(user);
+
     const ownProfile = profile[0] === session?.user?.username ? true : false;
 
     function formatDate(dateString) {
@@ -73,7 +75,11 @@ export default async function page({searchParams, params}) {
                             <div>
                                 <img src={user.profileImage ? user.profileImage : xlogo} alt='profile picture'></img>
                             </div>
-                            <ProfileAction ownProfile={ownProfile}/>
+                            <ProfileAction 
+                                ownProfile={ownProfile}
+                                ownId={session?.user?._id}
+                                userId={user._id}
+                            />
                         </div>
                         
                         <div className={styles.second}>

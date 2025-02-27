@@ -26,7 +26,7 @@ export default function page() {
             console.log(response);
             toggleAlert("success", "User registration successfully");
             router.push('/home?feed=foryou');
-            
+            router.refresh();
         }catch(error){
             toggleAlert("error", "User registration failed");
             console.log("ERROR IN UPTADING DATE OF BIRTH");

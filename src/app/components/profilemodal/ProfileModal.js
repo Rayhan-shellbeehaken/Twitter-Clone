@@ -28,8 +28,6 @@ export default function ProfileModal({user}) {
     const [dateofBirth, setDateofBirth] = useState({Month : '', Day : '', Year : ''});
     const router = useRouter();
 
-    console.log(imagePreview);
-
     useEffect(()=>{
         if(file){
             const reader = new FileReader();
