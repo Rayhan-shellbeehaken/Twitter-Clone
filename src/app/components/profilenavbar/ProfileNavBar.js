@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export default function ProfileNavBar({base}) {
+export default function ProfileNavBar({base,ownProfile}) {
     const [active, setActive] = useState(null);
     const router = useRouter();
 
@@ -72,17 +72,23 @@ export default function ProfileNavBar({base}) {
         {key: 4, name : "Articles"},
         {key: 5, name : "Media"},
         {key: 6, name : "Likes"},
-
     ];
+
+    const filteredButtonList = ownProfile ? buttonList
+                             : buttonList.filter(button => button.key !== 4 && button.key !== 6);
+
 
     return (
         <div className={styles["nav-container"]}>
             <form className={styles["nav-form"]}>
                 {
-                    buttonList.map(button => (
+                    filteredButtonList.map(button => (
                         <button
                         key={button.key}
-                        className={`${styles.button} ${active === button.key ? styles.active : ''}`}
+                        className={`${styles.button} 
+                        ${active === button.key ? styles.active : ''}
+                        ${!ownProfile ? styles["extra-padding"] : ''}
+                        `}
                         onClick={(event)=>handleButtonClick(event,button.key)}
                         >
                             {button.name}

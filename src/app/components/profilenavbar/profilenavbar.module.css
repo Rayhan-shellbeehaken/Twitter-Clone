@@ -17,7 +17,6 @@
 }
 
 .button{
-    background-color: red;
     height: 60px;
     background-color: transparent;
     border-width: 0px;
@@ -27,6 +26,10 @@
     position: relative;
     cursor: pointer;
     padding: 0 25px;
+}
+
+.extra-padding{
+    padding: 0 50px;
 }
 
 .button::after{

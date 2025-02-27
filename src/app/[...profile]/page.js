@@ -35,8 +35,8 @@ export default async function page({searchParams, params}) {
     const session = await auth();
     const result = await fetchUser(profile[0]);
     const user = result.user;
-    // console.log("USER___________________");
-    // console.log(user);
+
+    const ownProfile = profile[0] === session?.user?.username ? true : false;
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -73,7 +73,7 @@ export default async function page({searchParams, params}) {
                             <div>
                                 <img src={user.profileImage ? user.profileImage : xlogo} alt='profile picture'></img>
                             </div>
-                            <ProfileAction/>
+                            <ProfileAction ownProfile={ownProfile}/>
                         </div>
                         
                         <div className={styles.second}>
@@ -98,7 +98,7 @@ export default async function page({searchParams, params}) {
                                 </div>
                             </div>
                         </div>
-                        <ProfileNavBar base={queryParams}/>
+                        <ProfileNavBar base={queryParams} ownProfile={ownProfile}/>
                         {queryParams === "likes" && 
                             <div className={styles["likes-message"]}>
                                 <IoMdLock/>
