@@ -24,7 +24,7 @@ export default async function Home({searchParams}) {
                 <Navbar/>
                 <PostBox username={session?.user?.username}/>
                 <Suspense fallback={<Loader/>}>
-                    <PostList page={1}/>
+                    <PostList params={params} page={1}/>
                 </Suspense>
                 <Popup/>
             </div>

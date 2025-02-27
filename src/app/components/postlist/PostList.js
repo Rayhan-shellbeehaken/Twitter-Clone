@@ -4,8 +4,9 @@ import SinglePost from '../singlepost/SinglePost';
 import {fetchTweet} from '@/app/helpers/tweetoperation';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
+import { auth } from '@/auth';
 
-export default async function PostList({page,user,type}) {
+export default async function PostList({params,page,user,type}) {
     
     const getFilterBy = (type) =>{
         let filterBy = null;
@@ -22,6 +23,7 @@ export default async function PostList({page,user,type}) {
         return filterBy;
     }
 
+    const session = await auth();
     const filterBy = getFilterBy(type);
     const result = user ? await fetchTweet(page,null,user,filterBy) : await fetchTweet(page,null,null,filterBy);
     const tweets = result.result;
@@ -30,7 +32,9 @@ export default async function PostList({page,user,type}) {
     return (
         <div>
             {
-                tweets.map(tweet => {
+                tweets
+                .filter(tweet => params !== "following" || tweet.user_details.followers.includes(session?.user?._id))
+                .map(tweet => {
                     return (
                         <SinglePost 
                             key={tweet._id} 
