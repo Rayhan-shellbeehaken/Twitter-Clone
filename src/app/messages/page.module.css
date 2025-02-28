@@ -7,6 +7,10 @@
     width: 100%;
 }
 
+.layout a{
+    text-decoration: none;
+}
+
 .left{
     width: 100%;
     max-width: 440px;

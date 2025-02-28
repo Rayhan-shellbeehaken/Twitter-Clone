@@ -4,6 +4,7 @@ import { RiSettings3Line } from "react-icons/ri";
 import { RiMailAddLine } from "react-icons/ri";
 import SearchBox from '../components/searchbox/SearchBox';
 import User from '../components/user/User';
+import Link from 'next/link';
 
 export default function MessagesLayout({children}) {
   return (
@@ -25,6 +26,9 @@ export default function MessagesLayout({children}) {
             <div className={styles.searchBox}>
                 <SearchBox/>
             </div>
+            <Link href="/messages/1">
+                <User/>
+            </Link>
             <User/>
         </div>
         <div className={styles.line}>

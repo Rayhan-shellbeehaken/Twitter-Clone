@@ -21,6 +21,7 @@
 
 .info{
     margin-left: 8px;
+    color: white;
 }
 
 .info > div > span{
@@ -36,4 +37,8 @@
 
 .container:hover{
     background-color: rgb(43, 43, 43, 0.8);
+}
+
+.right{
+    color: rgb(117, 117, 117);
 }

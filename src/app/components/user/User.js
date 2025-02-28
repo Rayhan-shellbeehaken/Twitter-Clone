@@ -18,7 +18,7 @@ export default function User() {
                 </div>
             </div>
         </div>
-        <div>
+        <div className={styles.right}>
             <RiMoreFill/>
         </div>
     </div>
