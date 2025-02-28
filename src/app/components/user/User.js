@@ -11,7 +11,7 @@ export default function User() {
             </div>
             <div className={styles.info}>
                 <div>
-                    Username . @user_account . 1h
+                    Username <span> @user_account . 1h</span> 
                 </div>
                 <div>
                     Hi
