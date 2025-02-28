@@ -9,8 +9,7 @@ import Link from 'next/link';
 export default function MessagesLayout({children}) {
   return (
     <div className={styles.layout}>
-        <div className={styles.line}>
-        </div>
+        <div className={styles.line}></div>
         <div className={styles.left}>
             <div className={styles["message-bar"]}>
                 <div>Messages</div>
@@ -31,9 +30,9 @@ export default function MessagesLayout({children}) {
             </Link>
             <User/>
         </div>
-        <div className={styles.line}>
-        </div>
+        <div className={styles.line}></div>
         {children}
+        <div className={styles.line}></div>
     </div>
   )
 }

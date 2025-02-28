@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "type" : "module",
+  
   "scripts": {
-    "dev": "node server.js",
-    "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "dev": "NODE_OPTIONS='--max-old-space-size=4096' node server.js",
+    "build": "NODE_OPTIONS='--max-old-space-size=8192' next build",
+    "start": "NODE_ENV=production NODE_OPTIONS='--max-old-space-size=4096' node server.js",
     "lint": "next lint"
   },
+
   "dependencies": {
     "antd": "^5.23.4",
     "axios": "^1.7.9",
