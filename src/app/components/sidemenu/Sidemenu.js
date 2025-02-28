@@ -32,7 +32,7 @@ export default async function Sidemenu() {
                     <li><Link href="/home?feed=foryou"><GoHomeFill/> <span>Home</span></Link></li>
                     <li><Link href="#"><IoSearch/> <span>Explore</span></Link></li>
                     <li><Link href="/notifications"><RiNotification2Line/> <span>Notifications</span></Link></li>
-                    <li><Link href="#"><FiMail/> <span>Messages</span></Link></li>
+                    <li><Link href="/messages"><FiMail/> <span>Messages</span></Link></li>
                     <li><Link href="#"><VscVscode/> <span>Grok</span></Link></li>
                     <li><Link href="#"><PiBookmarkSimpleBold/> <span>Bookmarks</span></Link></li>
                     <li><Link href="#"><IoMdPeople/> <span>Communities</span></Link></li>

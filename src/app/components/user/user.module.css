@@ -1,0 +1,28 @@
+.container{
+    padding: 15px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    cursor: pointer;
+}
+
+.left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.image{
+    width: 40px;
+    height: 40px;
+    background-color: aquamarine;
+    border-radius: 50%;
+}
+
+.info{
+    margin-left: 8px;
+}
+
+.container:hover{
+    background-color: rgb(43, 43, 43, 0.8);
+}
