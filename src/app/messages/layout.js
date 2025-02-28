@@ -5,10 +5,13 @@ import { RiMailAddLine } from "react-icons/ri";
 import SearchBox from '../components/searchbox/SearchBox';
 import User from '../components/user/User';
 import Link from 'next/link';
+import MessageModal from '../components/messageModal/MessageModal';
 
 export default function MessagesLayout({children}) {
+  
   return (
     <div className={styles.layout}>
+        <MessageModal/>
         <div className={styles.line}></div>
         <div className={styles.left}>
             <div className={styles["message-bar"]}>

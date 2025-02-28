@@ -3,8 +3,9 @@
     display: flex;
     justify-content: flex-start;
     overflow-x: auto;
-    /* position: relative; */
+    position: relative;
     width: 100%;
+    z-index: 0;
 }
 
 .layout a{
@@ -74,6 +75,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .page > div{
@@ -105,4 +107,21 @@
 
 .page > div > button:hover{
     background-color: #05a1e4;
+}
+
+
+
+@media screen and (max-width : 1000px) {
+    .page{
+        visibility: hidden;
+        width: 0px;
+        padding: 0px;
+        margin: 0px;
+    }
+}
+
+@media screen and (max-width : 900px) {
+    .left{
+        max-width: 550px;
+    }
 }

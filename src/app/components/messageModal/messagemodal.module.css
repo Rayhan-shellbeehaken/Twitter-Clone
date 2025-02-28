@@ -1,0 +1,79 @@
+.modal{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    z-index: 100;
+    background-color: rgba(101, 133, 146, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box{
+    width: 600px;
+    height: 620px;
+    background-color: black;
+    border-radius: 20px;
+}
+
+.head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.head > div:nth-child(1){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.head > div:nth-child(1) > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.head > div:nth-child(1) > div:nth-child(1){
+    padding: 5px;
+    /* background-color: blue; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.head > div:nth-child(1) > div:nth-child(2){
+    margin-left: 25px;
+    font-size: 22px;
+    /* background-color: red; */
+    /* padding: 5px 0; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+
+}
+
+.head > div:nth-child(1) > div:nth-child(1):hover{
+    background-color: rgb(34, 34, 34);
+}
+
+.head > div:nth-child(2){
+    background-color: white;
+    color: black;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.head > div:nth-child(2):hover{
+    background-color: rgb(217, 217, 217);
+}
