@@ -21,7 +21,7 @@ export default async function page({params}) {
     const prevPages = JSON.parse(prevPagesString);
     const backPage = prevPages[prevPages.length - 1] || '/home?feed=foryou';
     
-    const commentResult = await fetchTweet(1,tweetId);
+    const commentResult = await fetchTweet(1,tweetId,null,null);
     const comments = commentResult.result;
     return (
         <div className={styles.page}>    
