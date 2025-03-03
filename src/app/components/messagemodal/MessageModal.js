@@ -9,12 +9,15 @@ import { FaUsers } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import axios from 'axios';
 import Loader from '../loader/Loader';
+import { useRouter } from 'next/navigation';
 
 export default function MessageModal({username}) {
     const {messageModal, setMessageModal} = useAppContext();
     const [followings, setFollowings] = useState([]);
     const [loading,setLoading] = useState(true);
     const [chooseUser, setChooseUser] = useState([]);
+    const router = useRouter();
+
     useEffect(()=>{
         async function fetchFollowings() {
             try{
@@ -30,15 +33,21 @@ export default function MessageModal({username}) {
         fetchFollowings();
     },[]);
 
-    const addUser = (image, name) =>{
+    const addUser = (image, name, id) =>{
         setChooseUser((prevUsers) => {
-            const exists = prevUsers.some(user => user.image === image && user.name === name);
+            const exists = prevUsers.some(user => user.image === image && user.name === name && user.id === id);
             if (exists) {
-                return prevUsers.filter(user => user.image !== image || user.name !== name);
+                return prevUsers.filter(user => user.image !== image || user.name !== name || user.id !== id);
             } else {
-                return [...prevUsers, { image, name }];
+                return [...prevUsers, { image, name, id }];
             }
         });
+    }
+
+    const sendMessage = (id) =>{
+        router.push(`/messages/${id}`);
+        setMessageModal(false);
+        setChooseUser([]);
     }
 
     return (
@@ -50,7 +59,7 @@ export default function MessageModal({username}) {
                         <div onClick={()=>setMessageModal(false)}><FiX/></div>
                         <div>New Message</div>
                     </div>
-                    <div>
+                    <div onClick={()=>sendMessage(chooseUser[0].id)}>
                         Next
                     </div>
                 </div>
@@ -63,7 +72,7 @@ export default function MessageModal({username}) {
                     
                     {chooseUser.length !== 0 ? (
                         chooseUser.map((user)=>(
-                            <div key={user.name} onClick={()=>addUser(user.image,user.name)} className={styles["choose-user"]}>
+                            <div key={user.name} onClick={()=>addUser(user.image,user.name,user.id)} className={styles["choose-user"]}>
                                 <div className={styles.userImage}>
                                     <img src={user.image} alt=''></img>
                                 </div>
@@ -86,7 +95,7 @@ export default function MessageModal({username}) {
                 }
                 {
                     followings.map(following => (
-                        <div onClick={() => addUser(following.profileImage, following.username)} key={following._id} className={styles.user}>
+                        <div onClick={() => addUser(following.profileImage, following.username, following._id)} key={following._id} className={styles.user}>
                             <div className={styles.image}>
                                 <img src={following.profileImage}></img>
                             </div>
