@@ -104,16 +104,20 @@
     border: 1px solid rgb(65, 65, 65);
 }
 
+.cursor-pointer{
+    cursor: pointer;
+}
+
 .group{
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding: 20px 20px;
     color: #00B2FF;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
-.group > div{
+.user-icon{
     /* background-color: red; */
     padding: 10px;
     border-radius: 50%;
@@ -183,6 +187,54 @@
 .user:hover{
     background-color: rgb(31, 31, 31, 0.5);
 }
+.choose-user{
+    display: flex;
+    justify-content: flex-start;
+    /* align-items: center; */
+    /* background-color: red; */
+    border: 1px solid rgb(73, 73, 73);
+    border-radius: 17px;
+    padding: 3px 3px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.userImage{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: aquamarine;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userImage > img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.choose-user-name{
+    height: 25px;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.choose-user-name > p:nth-child(2){
+    margin-left: 8px;
+    color: #00B2FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 @media screen and (max-width : 700px) {
     .box{

@@ -8,17 +8,20 @@ import { IoSearch } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import axios from 'axios';
+import Loader from '../loader/Loader';
 
 export default function MessageModal({username}) {
     const {messageModal, setMessageModal} = useAppContext();
     const [followings, setFollowings] = useState([]);
-
+    const [loading,setLoading] = useState(true);
+    const [chooseUser, setChooseUser] = useState([]);
     useEffect(()=>{
         async function fetchFollowings() {
             try{
                 const result = await axios.get(`/api/user?username=${username}`);
                 const followings = result.data.user.following;
                 setFollowings(followings);
+                setLoading(false);
                 // console.log(result);
             }catch(error){
                 console.log(error);
@@ -26,6 +29,17 @@ export default function MessageModal({username}) {
         }
         fetchFollowings();
     },[]);
+
+    const addUser = (image, name) =>{
+        setChooseUser((prevUsers) => {
+            const exists = prevUsers.some(user => user.image === image && user.name === name);
+            if (exists) {
+                return prevUsers.filter(user => user.image !== image || user.name !== name);
+            } else {
+                return [...prevUsers, { image, name }];
+            }
+        });
+    }
 
     return (
         messageModal && 
@@ -45,16 +59,34 @@ export default function MessageModal({username}) {
                     <input placeholder='Search people'></input>
                 </div>
                 <hr/>
-                <div className={styles.group}>
-                    <div>
-                        <FaUsers/>
-                    </div>
-                    Create a group
+                <div className={`${styles.group} ${chooseUser.length === 0 ? styles["cursor-pointer"] : ''}`}>
+                    
+                    {chooseUser.length !== 0 ? (
+                        chooseUser.map((user)=>(
+                            <div key={user.name} onClick={()=>addUser(user.image,user.name)} className={styles["choose-user"]}>
+                                <div className={styles.userImage}>
+                                    <img src={user.image} alt=''></img>
+                                </div>
+                                <div className={styles["choose-user-name"]}>
+                                    <p>{user.name}</p>    
+                                    <p><FiX/></p>
+                                </div>
+                            </div>
+                        ))): 
+                        <>
+                            <div className={styles["user-icon"]}><FaUsers/></div>
+                            Create a group
+                        </>
+                    }
+
                 </div>
                 <hr/>
                 {
+                    loading && <Loader/>
+                }
+                {
                     followings.map(following => (
-                        <div key={following._id} className={styles.user}>
+                        <div onClick={() => addUser(following.profileImage, following.username)} key={following._id} className={styles.user}>
                             <div className={styles.image}>
                                 <img src={following.profileImage}></img>
                             </div>
