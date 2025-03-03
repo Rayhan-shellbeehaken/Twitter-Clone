@@ -11,7 +11,7 @@ export default function AppWrapper({ children }) {
     const [alertVisible, setAlertVisible] = useState({visible : false, type : '', message : ''});
     const [userSignUp, setUserSignUp] = useState({name : '', email : '', password : '', dateofbirth : ''});
     const [profileModal, setProfileModal] = useState(false);
-    const [messageModal, setMessageModal] = useState(false);
+    const [messageModal, setMessageModal] = useState(true);
 
     const toggleAlert = (type, message) => {
         setAlertVisible({visible : true, type : type, message : message});

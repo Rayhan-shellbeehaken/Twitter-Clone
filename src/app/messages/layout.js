@@ -5,7 +5,7 @@ import { RiMailAddLine } from "react-icons/ri";
 import SearchBox from '../components/searchbox/SearchBox';
 import User from '../components/user/User';
 import Link from 'next/link';
-import MessageModal from '../components/messageModal/MessageModal';
+import MessageModal from '../components/messagemodal/MessageModal';
 
 export default function MessagesLayout({children}) {
   
