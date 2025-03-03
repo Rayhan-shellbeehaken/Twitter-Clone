@@ -40,6 +40,7 @@ export default async function page({searchParams, params}) {
 
     const ownProfile = profile[0] === session?.user?.username ? true : false;
     const followed = user.followers.includes(session?.user?._id) ? true : false;
+    // const followed = true;
 
     function formatDate(dateString) {
         const date = new Date(dateString);

@@ -2,8 +2,35 @@ import User from "@/app/models/user.model";
 import mongoose, { mongo } from "mongoose";
 
 export async function getUserInfo(username) {
-    const user = await User.findOne({username : username});
-    return user;
+    const user = await User.aggregate([
+        {
+          $match: {
+            username : username
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "following",
+            foreignField: "_id",
+            as: "following"
+          }
+        },
+        {
+          $project: {
+            password : 0,
+            isVerified : 0,
+            __v : 0,
+            "following.createdAt" : 0,
+            "following.followers" : 0,
+            "following.following" : 0,
+            "following.email" : 0,
+            "following.__v" : 0,
+            "following.isVerified" : 0,
+          }
+        }
+    ]);
+    return user[0];
 }
 
 export async function updateUserInfo(id,reqBody,followed) {

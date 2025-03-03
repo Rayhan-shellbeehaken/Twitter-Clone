@@ -33,7 +33,8 @@ export default function SignUpSecond() {
             toggleAlert('success', 'Success to register');
             setTimeout(()=>{
                 hideSignUp();
-                router.push('/home');
+                router.push('/home?feed=foryou');
+                router.refresh();
             },1000);
 
         }catch(error){

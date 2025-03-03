@@ -14,7 +14,7 @@ export default function Notification({username,profileImage,message,redirectTo,c
         <Link href={redirectTo} className={styles.container}>
             <div className={styles.left}>
                 <div>
-                    <img src={profileImage} alt='profile pic'></img>
+                    <img src={profileImage} alt=''></img>
                 </div>
                 <div>
                     <p>{username} <span className={styles.time}>. {timeAgo(createdAt)}</span></p>

@@ -6,12 +6,13 @@ import SearchBox from '../components/searchbox/SearchBox';
 import User from '../components/user/User';
 import Link from 'next/link';
 import MessageModal from '../components/messagemodal/MessageModal';
+import { auth } from '@/auth';
 
-export default function MessagesLayout({children}) {
-  
+export default async function MessagesLayout({children}) {
+  const session = await auth();
   return (
     <div className={styles.layout}>
-        <MessageModal/>
+        <MessageModal username={session?.user?.username}/>
         <div className={styles.line}></div>
         <div className={styles.left}>
             <div className={styles["message-bar"]}>
