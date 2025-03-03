@@ -51,6 +51,7 @@
     background-color: transparent;
     cursor: pointer;
     z-index: 0;
+    margin-bottom: 20px;
 }
 
 .image{
@@ -131,7 +132,8 @@
 
 .textarea{
     width: 70%;
-
+    height: 15px;
+    max-height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,6 +142,7 @@
 .textarea > textarea{
     width: 100%;
     background-color: transparent;
+    /* background-color: red; */
     border-width: 0px;
     font-size: 15px;
     height: 15px;
@@ -148,6 +151,37 @@
     border: none;
     outline: none;
     color: white;
+}
+
+.messages{
+    display: flex;
+    flex-direction: column;
+}
+
+.incoming{
+    align-self: flex-start;
+    background-color: rgb(57, 57, 57);
+    padding: 12px 10px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 5px;
+    margin: 3px 0;
+}
+
+.outgoing{
+    align-self: flex-end;
+    background-color: #00B2FF;
+    padding: 12px 10px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 5px;
+    margin: 3px 0;
+}
+
+.not-last{
+    border-radius: 30px;
 }
 
 .textarea > textarea::-webkit-scrollbar{

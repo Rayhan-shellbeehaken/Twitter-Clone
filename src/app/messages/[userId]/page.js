@@ -38,7 +38,10 @@ export default function page() {
                     <p>Joined February 25 . 1 follower</p>
                 </div>
                 <div className={styles.messages}>
-
+                    <div className={`${styles.incoming} ${styles["not-last"]}`}>Hello</div>
+                    <div className={`${styles.incoming}`}>Incoming</div>
+                    <div className={`${styles.outgoing} ${styles["not-last"]}`}>Outgoing</div>
+                    <div className={`${styles.outgoing}`}>Outgoing</div>
                 </div>
             </div>
             
