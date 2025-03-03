@@ -177,3 +177,11 @@
 .user:hover{
     background-color: rgb(31, 31, 31, 0.5);
 }
+
+@media screen and (max-width : 700px) {
+    .box{
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0px;
+    }
+}
