@@ -12,10 +12,18 @@ const handler = app.getRequestHandler();
 app.prepare().then(() => {
   const httpServer = createServer(handler);
 
-  const io = new Server(httpServer);
+  const io = new Server(httpServer,{
+    cors: {
+      origin: "http://localhost:3000", // Change this to match your frontend URL
+      methods: ["GET", "POST"]
+    }
+  });
 
   io.on("connection", (socket) => {
-    console.log("USER CONNECTED SUCCESSFULLY ",socket.id);
+    socket.on("message",(data)=>{
+      console.log(`${socket.id} :: ${data}`);
+      socket.broadcast.emit("receive-message",data);
+    })
   });
 
   httpServer

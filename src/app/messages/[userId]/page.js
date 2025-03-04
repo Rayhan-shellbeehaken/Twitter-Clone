@@ -11,12 +11,12 @@ import { FiX } from "react-icons/fi";
 import { useParams } from 'next/navigation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import { socket } from '@/socket';
 
 export default function page() {
 
     const {userId} = useParams();
     const {data:session} = useSession();
-
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const containerRef = useRef(null);
@@ -53,14 +53,36 @@ export default function page() {
         setOwnId(session?.user?._id);
     },[session]);
 
+    async function fetchUser() {
+        const result = await axios.get(`/api/user?id=${userId}`);
+        const user = result.data.user;
+        setUserInfo(user);
+        setJoinedDate(formatDate(user?.createdAt));
+    }
+
+    function onConnect() {
+        console.log("connected :: "+socket.id);
+    }
+  
+    function onDisconnect() {
+        console.log("Disconnected")
+    }
+
     useEffect(()=>{
-        async function fetchUser() {
-            const result = await axios.get(`/api/user?id=${userId}`);
-            const user = result.data.user;
-            setUserInfo(user);
-            setJoinedDate(formatDate(user?.createdAt));
-        }
         fetchUser();
+
+        if (socket.connected) onConnect();
+        socket.on("connect", onConnect);
+        socket.on("disconnect", onDisconnect);
+
+        socket.on("receive-message",(data)=>{
+            console.log(data);
+        })
+    
+        return () => {
+            socket.off("connect", onConnect);
+            socket.off("disconnect", onDisconnect);
+        };
     },[]);
 
     function formatDate(dateString) {
@@ -79,6 +101,7 @@ export default function page() {
             messageImage : selectedImage
         }
         const message = await axios.post('/api/messages',data);
+        socket.emit("message",value);
         setValue("");
         minimize();
     }
@@ -97,6 +120,8 @@ export default function page() {
                     <p>{userInfo?.username || "Loading..."}</p>
                     <p>@_{userInfo?.username || "Loading..."}</p>
                     <p>Joined {joinedDate} . {userInfo?.followers?.length || '0'} follower</p>
+                    {/* <p>Status: { isConnected ? "connected" : "disconnected" }</p>
+                    <p>Transport: { transport }</p> */}
                 </div>
                 <div className={styles.messages}>
                     <div className={`${styles.incoming} ${styles["not-last"]}`}>Hello</div>
