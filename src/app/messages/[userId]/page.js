@@ -8,15 +8,20 @@ import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { LuSendHorizontal } from "react-icons/lu";
 import { useState, useEffect, useRef } from 'react';
 import { FiX } from "react-icons/fi";
+import { useParams } from 'next/navigation';
+import axios from 'axios';
 
 export default function page() {
-    // const {userId} = await params;
+
+    const {userId} = useParams();
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const containerRef = useRef(null);
     const [value, setValue] = useState("");
     const [file, setFile] = useState("");
     const [selectedImage, setSelectedImage] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
+    const [joinedDate, setJoinedDate] = useState(null);
 
     useEffect(()=>{
         if(textRef.current){
@@ -40,10 +45,29 @@ export default function page() {
         setSelectedImage(null);
     }
 
+    useEffect(()=>{
+        async function fetchUser() {
+            const result = await axios.get(`/api/user?id=${userId}`);
+            const user = result.data.user;
+            setUserInfo(user);
+            setJoinedDate(formatDate(user?.createdAt));
+        }
+        fetchUser();
+    },[]);
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const formattedMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
+        const year = date.getFullYear().toString().slice(-2);
+      
+        return `${formattedMonth} ${year}`;
+    }
+      
+
     return (
         <div className={styles.page}>
             <div className={styles.head}>
-                <div>User name</div>
+                <div>{userInfo?.username || "Loading..."}</div>
                 <div><PiInfoBold/></div>
             </div>
             <div className={styles.content}>
@@ -51,9 +75,9 @@ export default function page() {
                     <div className={styles.image}>
 
                     </div>
-                    <p>User name</p>
-                    <p>@_User account</p>
-                    <p>Joined February 25 . 1 follower</p>
+                    <p>{userInfo?.username || "Loading..."}</p>
+                    <p>@_{userInfo?.username || "Loading..."}</p>
+                    <p>Joined {joinedDate} . {userInfo?.followers?.length || '0'} follower</p>
                 </div>
                 <div className={styles.messages}>
                     <div className={`${styles.incoming} ${styles["not-last"]}`}>Hello</div>

@@ -33,6 +33,11 @@ export async function getUserInfo(username) {
     return user[0];
 }
 
+export async function getUserInfoById(id){
+  const user = await User.findById(id).select("username profileImage coverImage followers createdAt");
+  return user;
+}
+
 export async function updateUserInfo(id,reqBody,followed) {
     if(reqBody.newFollower){
         const field = "followers";

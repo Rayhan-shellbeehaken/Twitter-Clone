@@ -12,8 +12,9 @@ export async function GET(request) {
             return NextResponse.json({message : 'Login first', session},{status : 400});
         }
         const url = new URL(request.url);
-        const username = url.searchParams.get('username');
-        const user = await getUser(username);
+        const id = url.searchParams.get('id') || null;
+        const username = url.searchParams.get('username') || null;
+        const user = await getUser(id,username);
 
         return NextResponse.json({
             message : 'Successfully get user info',
