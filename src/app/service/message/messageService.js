@@ -1,4 +1,5 @@
-import { createNewConversation, addMessage } from "@/app/repository/message/messageRepository";
+import { createNewConversation, addMessage, getAllMessages } from "@/app/repository/message/messageRepository";
+import mongoose from "mongoose";
 
 export async function addNewMessage(user,request) {
     const requestBody = await request.json();
@@ -17,4 +18,12 @@ export async function addNewMessage(user,request) {
 
     const conversation = await addMessage(id, newMessage);
     return conversation;
+}
+
+export async function getMessages(person1, person2) {
+    const user1 = new mongoose.Types.ObjectId(person1);
+    const user2 = new mongoose.Types.ObjectId(person2);
+
+    const messages = await getAllMessages(user1, user2);
+    return messages;
 }

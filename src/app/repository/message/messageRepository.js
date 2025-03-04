@@ -1,5 +1,4 @@
 import Conversations from "@/app/models/conversation.model";
-import mongoose from "mongoose";
 
 export async function createNewConversation(data) {
     const {person1, person2} = data;
@@ -23,4 +22,14 @@ export async function addMessage(id,data){
         { new: true, runValidators: true }
     )
     return conversation;
+}
+
+export async function getAllMessages(person1, person2) {
+    const messages = await Conversations.findOne({
+        $or : [
+            {person1, person2},
+            {person1 : person2, person2 : person1}
+        ]
+    });
+    return messages;
 }
