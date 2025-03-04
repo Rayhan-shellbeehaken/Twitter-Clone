@@ -10,10 +10,13 @@ import { useState, useEffect, useRef } from 'react';
 import { FiX } from "react-icons/fi";
 import { useParams } from 'next/navigation';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 
 export default function page() {
 
     const {userId} = useParams();
+    const {data:session} = useSession();
+
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const containerRef = useRef(null);
@@ -22,6 +25,7 @@ export default function page() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [joinedDate, setJoinedDate] = useState(null);
+    const [ownId, setOwnId] = useState(null);
 
     useEffect(()=>{
         if(textRef.current){
@@ -46,6 +50,10 @@ export default function page() {
     }
 
     useEffect(()=>{
+        setOwnId(session?.user?._id);
+    },[session]);
+
+    useEffect(()=>{
         async function fetchUser() {
             const result = await axios.get(`/api/user?id=${userId}`);
             const user = result.data.user;
@@ -62,7 +70,18 @@ export default function page() {
       
         return `${formattedMonth} ${year}`;
     }
-      
+    
+    const onSend = async() =>{
+        const data = {
+            person1 : userId,
+            person2 : ownId,
+            text : value,
+            messageImage : selectedImage
+        }
+        const message = await axios.post('/api/messages',data);
+        setValue("");
+        minimize();
+    }
 
     return (
         <div className={styles.page}>
@@ -105,7 +124,11 @@ export default function page() {
                         <input type='file' ref={fileRef} className={styles.hidden} onChange={(e)=>setFile(e.target.files[0])}></input>
                         <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='Start a new message'></textarea>
                     </div>
-                    <div className={styles.icon}><LuSendHorizontal/></div>
+                    
+                    <button className={styles.icon} onClick={onSend}>
+                        <LuSendHorizontal/>
+                    </button>
+                    
                 </div>
             </div>
         </div>
