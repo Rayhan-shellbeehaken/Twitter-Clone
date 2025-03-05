@@ -15,7 +15,8 @@
 .left{
     width: 100%;
     max-width: 450px;
-    position: relative;
+    position: sticky;
+    top: 0;
 }
 
 .line{

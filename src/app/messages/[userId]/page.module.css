@@ -10,11 +10,11 @@
     align-items: center;
     padding: 15px 15px;
     font-size: 20px;
-    position: absolute;
+    position: sticky;
     top: 0;
     width: 100%;
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .head > div{
@@ -40,6 +40,11 @@
     padding: 0 15px;
 }
 
+.content > a{
+    text-decoration: none;
+    color: white;
+}
+
 .profile{
     padding: 0 15px;
     height: 300px;
@@ -58,6 +63,12 @@
     width: 60px;
     height: 60px;
     background-color: aquamarine;
+    border-radius: 50%;
+}
+
+.image > img{
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
 }
 
@@ -87,11 +98,12 @@
 }
 
 .chatbox{
-    position: absolute;
-    width: 100%;
+    position: fixed;
+    width: 600px;
     /* min-height: 60px;
     max-height: 150px; */
     /* background-color: brown; */
+    background-color: black;
     bottom: 0;
     padding: 7px 15px;
 }
@@ -222,26 +234,19 @@
     align-self: flex-start;
     background-color: rgb(57, 57, 57);
     padding: 12px 10px;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 5px;
+    border-radius: 30px;
     margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .outgoing{
     align-self: flex-end;
     background-color: #00B2FF;
     padding: 12px 10px;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 5px;
-    margin: 5px 0;
-}
-
-.not-last{
     border-radius: 30px;
+    margin: 5px 0;
 }
 
 

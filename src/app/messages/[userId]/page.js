@@ -12,6 +12,7 @@ import { useParams } from 'next/navigation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { io } from "socket.io-client";
+import Link from 'next/link';
 
 export default function page() {
     const socket = useMemo(()=>io("http://localhost:3000"),[]);  
@@ -56,6 +57,7 @@ export default function page() {
     async function fetchUser() {
         const result = await axios.get(`/api/user?id=${userId}`);
         const user = result.data.user;
+        console.log(user);
         setUserInfo(user);
         setJoinedDate(formatDate(user?.createdAt));
     }
@@ -144,20 +146,20 @@ export default function page() {
                 <div><PiInfoBold/></div>
             </div>
             <div className={styles.content}>
-                <div className={styles.profile}>
+                <Link href={`/${userInfo?.username}?type=all`} className={styles.profile}>
                     <div className={styles.image}>
-
+                        <img src={userInfo?.profileImage}></img>
                     </div>
                     <p>{userInfo?.username || "Loading..."}</p>
                     <p>@_{userInfo?.username || "Loading..."}</p>
                     <p>Joined {joinedDate} . {userInfo?.followers?.length || '0'} follower</p>
-                </div>
+                </Link>
                 <div className={styles.messages}>
                     {
                         messages.map((message,index) => (
                             message.sender === senderId ?
-                            <div key={index} className={`${styles.outgoing} ${styles["not-last"]}`}>{message.text}</div> :
-                            <div key={index} className={`${styles.incoming} ${styles["not-last"]}`}>{message.text}</div>
+                            <div key={index} className={`${styles.outgoing}`}>{message.text}</div> :
+                            <div key={index} className={`${styles.incoming}`}>{message.text}</div>
                         ))
                     }
                 </div>
@@ -177,7 +179,6 @@ export default function page() {
                                 </div>
                             </div>
                         }
-                        
                         <input type='file' ref={fileRef} className={styles.hidden} onChange={(e)=>setFile(e.target.files[0])}></input>
                         <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='Start a new message'></textarea>
                     </div>
