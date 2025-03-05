@@ -20,12 +20,7 @@ export async function addNewMessage(id,data){
     return conversation;
 }
 
-export async function getAllMessages(person1, person2) {
-    const messages = await Conversations.findOne({
-        $or : [
-            {person1, person2},
-            {person1 : person2, person2 : person1}
-        ]
-    });
-    return messages;
+export async function getAllMessages(roomId) {
+    const result = await Conversations.findOne({room : roomId});
+    return result.messages;
 }

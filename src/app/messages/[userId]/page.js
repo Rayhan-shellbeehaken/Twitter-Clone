@@ -26,7 +26,6 @@ export default function page() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [joinedDate, setJoinedDate] = useState(null);
-    const [ownId, setOwnId] = useState(null);
 
     const [messages, setMessages] = useState([]);
 
@@ -54,16 +53,23 @@ export default function page() {
         setSelectedImage(null);
     }
 
-    useEffect(()=>{
-        if(!senderId) return;
-        setOwnId(senderId);
-    },[senderId]);
-
     async function fetchUser() {
         const result = await axios.get(`/api/user?id=${userId}`);
         const user = result.data.user;
         setUserInfo(user);
         setJoinedDate(formatDate(user?.createdAt));
+    }
+
+    async function fetchMessages(senderId, userId) {
+        const roomId = [senderId, userId].sort().join("-");
+        try{
+            const result = await axios.get(`/api/messages?roomId=${roomId}`);
+            const messages = result.data.messages;
+            setMessages(messages);
+            console.log(messages);
+        }catch(error){
+            console.log(error);
+        }
     }
 
     async function createRoom(senderId, userId) {
@@ -79,19 +85,22 @@ export default function page() {
     }
 
     useEffect(()=>{
+        fetchUser();
         if(!senderId || !userId) return;
         socket.emit('join-room',{
             senderId,
             receiverId : userId
         });
         createRoom(senderId,userId);
+        fetchMessages(senderId,userId);
+        return () => {
+            socket.off("receive-message");
+        };
     },[senderId, userId]);
 
     useEffect(()=>{
-        fetchUser();
-
         socket.on("receive-message",({senderId, text})=>{
-            setMessages((prev) => [...prev, { senderId, text }]);
+            setMessages((prev) => [...prev, { sender : senderId, text }]);
         })
 
         return () => {
@@ -146,7 +155,7 @@ export default function page() {
                 <div className={styles.messages}>
                     {
                         messages.map((message,index) => (
-                            message.senderId === senderId ?
+                            message.sender === senderId ?
                             <div key={index} className={`${styles.outgoing} ${styles["not-last"]}`}>{message.text}</div> :
                             <div key={index} className={`${styles.incoming} ${styles["not-last"]}`}>{message.text}</div>
                         ))

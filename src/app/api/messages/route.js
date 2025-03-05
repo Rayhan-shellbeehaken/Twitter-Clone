@@ -38,10 +38,9 @@ export async function GET(request){
         if(!session?.user){
             return NextResponse.json({message : 'Login first'},{stauts : 400});
         }
-        const person1 = session?.user?._id;
         const url = new URL(request.url);
-        const person2 = url.searchParams.get('user') || null;
-        const messages = await getMessages(person1, person2);
+        const roomId = url.searchParams.get('roomId') || null;
+        const messages = await getMessages(roomId);
         return NextResponse.json({message : 'Successfully get all data', messages},{status : 200});
     }catch(error){
         return NextResponse.json({error : error.message},{status : 500});
