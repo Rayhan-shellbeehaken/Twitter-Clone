@@ -108,20 +108,24 @@ export default function page() {
     }
     
     const onSend = async() =>{
+        const roomId = [senderId, userId].sort().join("-");
         const data = {
-            person1 : userId,
-            person2 : ownId,
+            roomId,
             text : value,
             messageImage : selectedImage
         }
-        // const message = await axios.post('/api/messages',data);
         socket.emit("send-message",{
             senderId,
             receiverId : userId,
             text : value
         });
-        setValue("");
-        minimize();
+        try{
+            const message = await axios.patch('/api/messages', data);
+            setValue("");
+            minimize();
+        }catch(error){
+            console.log(error);
+        }
     }
 
     return (

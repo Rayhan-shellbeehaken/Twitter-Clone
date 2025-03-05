@@ -1,4 +1,4 @@
-import { createNewConversation, addMessage, getAllMessages, createNewRoom } from "@/app/repository/message/messageRepository";
+import { addNewMessage, getAllMessages, createNewRoom } from "@/app/repository/message/messageRepository";
 import mongoose from "mongoose";
 
 export async function createRoom(request) {
@@ -8,22 +8,16 @@ export async function createRoom(request) {
     return room;
 }
 
-export async function addNewMessage(user,request) {
+export async function addMessage(user,request) {
     const requestBody = await request.json();
-    const {person1, person2, text, messageImage} = requestBody;
-    const data = {
-        person1,
-        person2
-    }
-    const id = await createNewConversation(data);
-    
+    const {roomId, text, messageImage} = requestBody;
     const newMessage = {
         text,
         messageImage,
         sender : user
     }
-
-    const conversation = await addMessage(id, newMessage);
+    console.log(newMessage);
+    const conversation = await addNewMessage(roomId, newMessage);
     return conversation;
 }
 

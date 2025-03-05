@@ -1,7 +1,7 @@
 import { connect } from "@/app/db/db.config";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { addNewMessage, createRoom, getMessages } from "@/app/service/message/messageService";
+import { addMessage, createRoom, getMessages } from "@/app/service/message/messageService";
 
 connect();
 
@@ -13,6 +13,20 @@ export async function POST(request) {
         }
         const room = await createRoom(request);
         return NextResponse.json({message : 'Successfully created', room},{status : 200});``
+    }catch(error){
+        return NextResponse.json({error : error.message},{status : 500});
+    }
+}
+
+export async function PATCH(request){
+    try{
+        const session = await auth();
+        if(!session?.user){
+            return NextResponse.json({message : 'Login first'},{status : 400});
+        }
+        const user = session?.user?._id;
+        const message = await addMessage(user, request);
+        return NextResponse.json({message : 'Successfully saved message', message}, {status : 200});
     }catch(error){
         return NextResponse.json({error : error.message},{status : 500});
     }
