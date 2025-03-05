@@ -2,6 +2,7 @@ import { createServer } from "http";
 import next from "next";
 import { Server } from "socket.io";
 
+
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
 const port = 3000;
@@ -21,8 +22,9 @@ app.prepare().then(() => {
 
   io.on("connection", (socket) => {
 
-    socket.on("join-room", ({ senderId, receiverId }) => {
-      const roomId = [senderId, receiverId].sort().join("-"); 
+    socket.on("join-room", async({ senderId, receiverId }) => {
+      const roomId = [senderId, receiverId].sort().join("-");
+      // const room = await createNewRoom(roomId);
       socket.join(roomId);
       console.log(`${senderId} joined room: ${roomId}`);
     });

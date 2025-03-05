@@ -66,12 +66,25 @@ export default function page() {
         setJoinedDate(formatDate(user?.createdAt));
     }
 
+    async function createRoom(senderId, userId) {
+        const roomId = [senderId, userId].sort().join("-");
+        const data = {
+            roomId
+        }
+        try{
+            const room = await axios.post('/api/messages',data);
+        }catch(error){
+            console.log(error);
+        }
+    }
+
     useEffect(()=>{
         if(!senderId || !userId) return;
         socket.emit('join-room',{
             senderId,
             receiverId : userId
         });
+        createRoom(senderId,userId);
     },[senderId, userId]);
 
     useEffect(()=>{

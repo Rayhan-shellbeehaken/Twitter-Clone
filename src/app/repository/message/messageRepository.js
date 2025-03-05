@@ -1,5 +1,15 @@
 import Conversations from "@/app/models/conversation.model";
 
+export async function createNewRoom(roomId) {
+    const room = await Conversations.findOne({room : roomId});
+    if(room) return room;
+    else{
+        const newRoom = new Conversations({room : roomId});
+        const room = await newRoom.save();
+        return room;
+    }
+}
+
 export async function createNewConversation(data) {
     const {person1, person2} = data;
     const exist = await Conversations.findOne({

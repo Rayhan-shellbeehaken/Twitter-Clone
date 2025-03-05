@@ -1,5 +1,12 @@
-import { createNewConversation, addMessage, getAllMessages } from "@/app/repository/message/messageRepository";
+import { createNewConversation, addMessage, getAllMessages, createNewRoom } from "@/app/repository/message/messageRepository";
 import mongoose from "mongoose";
+
+export async function createRoom(request) {
+    const requestBody = await request.json();
+    const {roomId} = requestBody;
+    const room = await createNewRoom(roomId);
+    return room;
+}
 
 export async function addNewMessage(user,request) {
     const requestBody = await request.json();

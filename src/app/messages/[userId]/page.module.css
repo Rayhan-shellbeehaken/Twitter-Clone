@@ -226,7 +226,7 @@
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 5px;
-    margin: 3px 0;
+    margin: 5px 0;
 }
 
 .outgoing{
@@ -237,7 +237,7 @@
     border-top-right-radius: 30px;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 5px;
-    margin: 3px 0;
+    margin: 5px 0;
 }
 
 .not-last{
