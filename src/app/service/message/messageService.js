@@ -1,4 +1,4 @@
-import { addNewMessage, getAllMessages, createNewRoom } from "@/app/repository/message/messageRepository";
+import { addNewMessage, getAllMessages, createNewRoom, getChatList } from "@/app/repository/message/messageRepository";
 import mongoose from "mongoose";
 
 export async function createRoom(request) {
@@ -23,4 +23,9 @@ export async function addMessage(user,request) {
 export async function getMessages(roomId) {
     const messages = await getAllMessages(roomId);
     return messages;
+}
+
+export async function getChats(userId) {
+    const chatList = await getChatList(userId);
+    return chatList;
 }

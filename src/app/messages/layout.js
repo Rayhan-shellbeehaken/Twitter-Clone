@@ -7,9 +7,14 @@ import User from '../components/user/User';
 import Link from 'next/link';
 import MessageModal from '../components/messagemodal/MessageModal';
 import { auth } from '@/auth';
+import { getChatList } from '../helpers/chatList';
 
 export default async function MessagesLayout({children}) {
   const session = await auth();
+  const result = await getChatList();
+  const chatList = result.chatList;
+  console.log("\n\nchatlist");
+  console.log(chatList);
   return (
     <div className={styles.layout}>
         <MessageModal username={session?.user?.username}/>
@@ -29,10 +34,18 @@ export default async function MessagesLayout({children}) {
             <div className={styles.searchBox}>
                 <SearchBox/>
             </div>
-            <Link href="/messages/1">
-                <User/>
-            </Link>
-            <User/>
+            {
+                chatList.map(list => (
+                    <Link key={list.otherUserInfo._id} href={`/messages/${list.otherUserInfo._id}`}>
+                        <User
+                            image={list.otherUserInfo.profileImage}
+                            name={list.otherUserInfo.username}
+                            lastMessageTime={list.lastMessageCreatedAt}
+                            lastMessage={list.lastMessageText}
+                        />
+                    </Link>
+                ))
+            }
         </div>
         <div className={styles.line}></div>
         {children}
