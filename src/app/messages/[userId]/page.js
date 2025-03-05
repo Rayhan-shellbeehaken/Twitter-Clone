@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useMemo } from 'react'
 import styles from './page.module.css';
 import { PiInfoBold } from "react-icons/pi";
 import { IoImageOutline } from "react-icons/io5";
@@ -11,9 +11,10 @@ import { FiX } from "react-icons/fi";
 import { useParams } from 'next/navigation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { socket } from '@/socket';
+import { io } from "socket.io-client";
 
 export default function page() {
+    const socket = useMemo(()=>io("http://localhost:3000"),[]);  
 
     const {userId} = useParams();
     const {data:session} = useSession();
@@ -26,6 +27,10 @@ export default function page() {
     const [userInfo, setUserInfo] = useState(null);
     const [joinedDate, setJoinedDate] = useState(null);
     const [ownId, setOwnId] = useState(null);
+
+    const [messages, setMessages] = useState([]);
+
+    const senderId = useMemo(() => session?.user?._id, [session]);
 
     useEffect(()=>{
         if(textRef.current){
@@ -50,8 +55,9 @@ export default function page() {
     }
 
     useEffect(()=>{
-        setOwnId(session?.user?._id);
-    },[session]);
+        if(!senderId) return;
+        setOwnId(senderId);
+    },[senderId]);
 
     async function fetchUser() {
         const result = await axios.get(`/api/user?id=${userId}`);
@@ -60,28 +66,23 @@ export default function page() {
         setJoinedDate(formatDate(user?.createdAt));
     }
 
-    function onConnect() {
-        console.log("connected :: "+socket.id);
-    }
-  
-    function onDisconnect() {
-        console.log("Disconnected")
-    }
+    useEffect(()=>{
+        if(!senderId || !userId) return;
+        socket.emit('join-room',{
+            senderId,
+            receiverId : userId
+        });
+    },[senderId, userId]);
 
     useEffect(()=>{
         fetchUser();
 
-        if (socket.connected) onConnect();
-        socket.on("connect", onConnect);
-        socket.on("disconnect", onDisconnect);
-
-        socket.on("receive-message",(data)=>{
-            console.log(data);
+        socket.on("receive-message",({senderId, text})=>{
+            setMessages((prev) => [...prev, { senderId, text }]);
         })
-    
+
         return () => {
-            socket.off("connect", onConnect);
-            socket.off("disconnect", onDisconnect);
+            socket.off("receive-message");
         };
     },[]);
 
@@ -100,8 +101,12 @@ export default function page() {
             text : value,
             messageImage : selectedImage
         }
-        const message = await axios.post('/api/messages',data);
-        socket.emit("message",value);
+        // const message = await axios.post('/api/messages',data);
+        socket.emit("send-message",{
+            senderId,
+            receiverId : userId,
+            text : value
+        });
         setValue("");
         minimize();
     }
@@ -120,14 +125,15 @@ export default function page() {
                     <p>{userInfo?.username || "Loading..."}</p>
                     <p>@_{userInfo?.username || "Loading..."}</p>
                     <p>Joined {joinedDate} . {userInfo?.followers?.length || '0'} follower</p>
-                    {/* <p>Status: { isConnected ? "connected" : "disconnected" }</p>
-                    <p>Transport: { transport }</p> */}
                 </div>
                 <div className={styles.messages}>
-                    <div className={`${styles.incoming} ${styles["not-last"]}`}>Hello</div>
-                    <div className={`${styles.incoming}`}>Incoming</div>
-                    <div className={`${styles.outgoing} ${styles["not-last"]}`}>Outgoing</div>
-                    <div className={`${styles.outgoing}`}>Outgoing</div>
+                    {
+                        messages.map((message,index) => (
+                            message.senderId === senderId ?
+                            <div key={index} className={`${styles.outgoing} ${styles["not-last"]}`}>{message.text}</div> :
+                            <div key={index} className={`${styles.incoming} ${styles["not-last"]}`}>{message.text}</div>
+                        ))
+                    }
                 </div>
             </div>
             

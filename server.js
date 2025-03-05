@@ -14,24 +14,32 @@ app.prepare().then(() => {
 
   const io = new Server(httpServer,{
     cors: {
-      origin: "http://localhost:3000", // Change this to match your frontend URL
+      origin: "http://localhost:3000",
       methods: ["GET", "POST"]
     }
   });
 
   io.on("connection", (socket) => {
-    socket.on("message",(data)=>{
-      console.log(`${socket.id} :: ${data}`);
-      socket.broadcast.emit("receive-message",data);
+
+    socket.on("join-room", ({ senderId, receiverId }) => {
+      const roomId = [senderId, receiverId].sort().join("-"); 
+      socket.join(roomId);
+      console.log(`${senderId} joined room: ${roomId}`);
+    });
+
+    socket.on("send-message", async ({ senderId, receiverId, text }) => {
+      console.log(`${senderId} :: ${text}`);
+      const roomId = [senderId, receiverId].sort().join("-");
+      io.to(roomId).emit("receive-message", { senderId, text })
+    });
+
+    socket.on("disconnect",()=>{
+      console.log("Disconnected ",socket.id);
     })
   });
 
-  httpServer
-    .once("error", (err) => {
-      console.error(err);
-      process.exit(1);
-    })
-    .listen(port, () => {
+  httpServer.listen(port, () => {
       console.log(`> Ready on http://${hostname}:${port}`);
-    });
+  });
+
 });
