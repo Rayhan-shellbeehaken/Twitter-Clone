@@ -47,7 +47,7 @@ export default function User({senderId,receiverId,image,name,lastMessageTime,las
                         {name} <span> @_{name} . {timeAgo(latestMessage.time)}</span> 
                     </div>
                     <div>
-                        {latestMessage.message}
+                        {latestMessage.message || "Image"}
                     </div>
                 </div>
             </div>

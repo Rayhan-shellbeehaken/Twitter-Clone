@@ -163,9 +163,28 @@ export default function page() {
                 <div className={styles.messages}>
                     {
                         messages.map((message,index) => (
-                            message.sender === senderId ?
-                            <div key={index} className={`${styles.outgoing}`}>{message.text}</div> :
-                            <div key={index} className={`${styles.incoming}`}>{message.text}</div>
+                            message.sender === senderId ?     
+                            <div key={index} className={`${styles.outgoing}`}>
+                                {message.messageImage && 
+                                    <div className={styles.chatImage}>
+                                        <img src={message.messageImage}></img>
+                                    </div>
+                                }
+                                {message.text &&
+                                    <div className={styles["outgoing-text"]}>{message.text}</div>
+                                }
+                            </div> 
+                            :
+                            <div key={index} className={`${styles.incoming}`}>
+                                {message.messageImage && 
+                                    <div className={styles.chatImage}>
+                                        {/* <img src={message.messageImage}></img> */}
+                                    </div>
+                                }
+                                {message.text &&
+                                    <div className={styles["incoming-text"]}>{message.text}</div>
+                                }
+                            </div>
                         ))
                     }
                 </div>
