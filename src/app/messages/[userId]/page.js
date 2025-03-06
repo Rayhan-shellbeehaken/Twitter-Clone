@@ -135,6 +135,7 @@ export default function page() {
             receiverId : userId,
             text : value
         });
+        textRef.current.focus();
         try{
             const message = await axios.patch('/api/messages', data);
             setValue("");

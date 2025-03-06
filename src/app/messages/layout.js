@@ -13,8 +13,6 @@ export default async function MessagesLayout({children}) {
   const session = await auth();
   const result = await getChatList();
   const chatList = result.chatList;
-  console.log("\n\nchatlist");
-  console.log(chatList);
   return (
     <div className={styles.layout}>
         <MessageModal username={session?.user?.username}/>
@@ -38,6 +36,8 @@ export default async function MessagesLayout({children}) {
                 chatList.map(list => (
                     <Link key={list.otherUserInfo._id} href={`/messages/${list.otherUserInfo._id}`}>
                         <User
+                            senderId={session?.user?._id}
+                            receiverId={list.otherUserInfo._id}
                             image={list.otherUserInfo.profileImage}
                             name={list.otherUserInfo.username}
                             lastMessageTime={list.lastMessageCreatedAt}
