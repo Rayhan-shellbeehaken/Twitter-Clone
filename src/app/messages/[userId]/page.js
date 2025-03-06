@@ -19,7 +19,7 @@ export default function page() {
     const socket = useMemo(()=>io("http://localhost:3000"),[]);  
 
     const {userId} = useParams();
-    const {data:session} = useSession();
+    const {data:session, status} = useSession();
     const textRef = useRef(null);
     const fileRef = useRef(null);
     const contentRef = useRef(null);
@@ -86,18 +86,19 @@ export default function page() {
 
     useEffect(()=>{
         fetchUser();
-        if(!senderId || !userId) return;
+        // if(!senderId || !userId ) return;
+        if(!session?.user || status === "loading") return;
         socket.emit('join-room',{
-            senderId,
+            senderId : session?.user?._id,
             receiverId : userId
         });
-        console.log("JOINED ON "+socket.id);
+        console.log("FROM CLIENT JOINED ON "+socket.id);
         createRoom(senderId,userId);
         fetchMessages(senderId,userId);
         return () => {
             socket.off("receive-message");
         };
-    },[senderId, userId]);
+    },[session?.user,userId,status]);
 
     useEffect(()=>{
         socket.on("receive-message",({senderId, text, image})=>{

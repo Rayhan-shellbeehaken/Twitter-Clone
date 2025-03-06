@@ -7,14 +7,13 @@ import { useEffect } from 'react';
 import { useMemo } from 'react';
 import { io } from "socket.io-client";
 
-export default function User({senderId,receiverId,image,name,lastMessageTime,lastMessage}) {
+export default function User({isActive,senderId,receiverId,image,name,lastMessageTime,lastMessage}) {
 
     const socket = useMemo(()=>io("http://localhost:3000"),[]);  
     const [latestMessage, setLatestMessage] = useState({message : lastMessage, time : lastMessageTime});
     function timeAgo(date) {
         return formatDistanceToNow(new Date(date), { addSuffix: false });
     }
-
     useEffect(()=>{
         socket.emit('join-room',{
             senderId,
@@ -35,7 +34,7 @@ export default function User({senderId,receiverId,image,name,lastMessageTime,las
     },[]);
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${isActive ? styles.active : ''}`}>
             <div className={styles.left}>
                 <div className={styles.image}>
                     {image && 

@@ -45,6 +45,11 @@
     background-color: rgb(43, 43, 43, 0.8);
 }
 
+.active{
+    background-color: rgb(43, 43, 43, 0.8);
+    border-right: 2px solid #00B2FF;
+}
+
 .right{
     color: rgb(117, 117, 117);
 }

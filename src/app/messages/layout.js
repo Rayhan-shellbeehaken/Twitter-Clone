@@ -19,13 +19,8 @@ export default function MessagesLayout({children}) {
     const [chatList, setChatList] = useState([]);
     const [info, setInfo] = useState({senderId : '', username : ''});
 
-    
-
     useEffect(()=>{
-        console.log("SESSION");
-        console.log(session?.user?.username);
         if(!session?.user) return;
-        console.log("SET HOCCHE");
         setInfo({senderId : session?.user?._id, username : session?.user?.username});
     },[session]);
     
@@ -49,6 +44,7 @@ export default function MessagesLayout({children}) {
     },[]);
 
     const isUserPage = /^\/messages\/\w+$/.test(pathName);
+    const urlId = pathName.split("/")[2];
 
     if(status === "loading"){
         return <div className={styles.blank}><Loader/></div>
@@ -79,6 +75,7 @@ export default function MessagesLayout({children}) {
                         chatList.map(list => (
                             <Link key={list.otherUserInfo._id} href={`/messages/${list.otherUserInfo._id}`}>
                                 <User
+                                    isActive={urlId === list.otherUserInfo._id}
                                     senderId={session?.user?._id}
                                     receiverId={list.otherUserInfo._id}
                                     image={list.otherUserInfo.profileImage}
