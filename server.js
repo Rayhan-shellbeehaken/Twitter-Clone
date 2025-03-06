@@ -24,6 +24,7 @@ app.prepare().then(() => {
     socket.on("join-room", async({ senderId, receiverId }) => {
       const roomId = [senderId, receiverId].sort().join("-");
       socket.join(roomId);
+      console.log(`${senderId} joined on room ${roomId}`);
     });
 
     socket.on("send-message", async ({ senderId, receiverId, text, image }) => {

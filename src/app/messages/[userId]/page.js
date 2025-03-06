@@ -57,7 +57,6 @@ export default function page() {
     async function fetchUser() {
         const result = await axios.get(`/api/user?id=${userId}`);
         const user = result.data.user;
-        console.log(user);
         setUserInfo(user);
         setJoinedDate(formatDate(user?.createdAt));
     }
@@ -68,7 +67,6 @@ export default function page() {
             const result = await axios.get(`/api/messages?roomId=${roomId}`);
             const messages = result.data.messages;
             setMessages(messages);
-            console.log(messages);
         }catch(error){
             console.log(error);
         }
@@ -93,6 +91,7 @@ export default function page() {
             senderId,
             receiverId : userId
         });
+        console.log("JOINED ON "+socket.id);
         createRoom(senderId,userId);
         fetchMessages(senderId,userId);
         return () => {

@@ -10,17 +10,24 @@ import MessageModal from '../components/messagemodal/MessageModal';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
+import Loader from '../components/loader/Loader';
 
 export default function MessagesLayout({children}) {
     const pathName = usePathname();
-    const {data:session} = useSession();
+    const {data:session,status} = useSession();
     const [hideSection, setHideSection] = useState(false);
     const [chatList, setChatList] = useState([]);
+    const [info, setInfo] = useState({senderId : '', username : ''});
 
-    const { senderId, username } = useMemo(() => ({
-        senderId: session?.user?._id,
-        username: session?.user?.username
-    }), [session]);
+    
+
+    useEffect(()=>{
+        console.log("SESSION");
+        console.log(session?.user?.username);
+        if(!session?.user) return;
+        console.log("SET HOCCHE");
+        setInfo({senderId : session?.user?._id, username : session?.user?.username});
+    },[session]);
     
     async function fetchChatList() {
         try{
@@ -42,9 +49,15 @@ export default function MessagesLayout({children}) {
     },[]);
 
     const isUserPage = /^\/messages\/\w+$/.test(pathName);
+
+    if(status === "loading"){
+        return <div className={styles.blank}><Loader/></div>
+    }
+    
     return (
+        status !== "loading" &&
         <div className={styles.layout}>
-            <MessageModal username={username}/>
+            <MessageModal username={session?.user?.username}/>
             <div className={styles.line}></div>
             {!hideSection || !isUserPage ?
                 <div className={styles.left}>
@@ -66,7 +79,7 @@ export default function MessagesLayout({children}) {
                         chatList.map(list => (
                             <Link key={list.otherUserInfo._id} href={`/messages/${list.otherUserInfo._id}`}>
                                 <User
-                                    senderId={senderId}
+                                    senderId={session?.user?._id}
                                     receiverId={list.otherUserInfo._id}
                                     image={list.otherUserInfo.profileImage}
                                     name={list.otherUserInfo.username}

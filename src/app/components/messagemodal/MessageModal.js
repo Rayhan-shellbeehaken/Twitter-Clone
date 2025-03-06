@@ -19,6 +19,7 @@ export default function MessageModal({username}) {
     const router = useRouter();
 
     useEffect(()=>{
+        if(!username) return;
         async function fetchFollowings() {
             try{
                 const result = await axios.get(`/api/user?username=${username}`);
