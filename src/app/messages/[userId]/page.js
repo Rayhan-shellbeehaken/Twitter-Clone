@@ -13,6 +13,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { io } from "socket.io-client";
 import Link from 'next/link';
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function page() {
     const socket = useMemo(()=>io("http://localhost:3000"),[]);  
@@ -149,7 +150,10 @@ export default function page() {
     return (
         <div className={styles.page}>
             <div className={styles.head}>
-                <div>{userInfo?.username || "Loading..."}</div>
+                <div>
+                    <Link href={`/messages`} className={styles.back}><FaArrowLeft/></Link>
+                    {userInfo?.username || "Loading..."}
+                </div>
                 <div><PiInfoBold/></div>
             </div>
             <div ref={contentRef} className={styles.content}>

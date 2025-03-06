@@ -15,13 +15,35 @@
     width: 100%;
     height: 7%;
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.854);
 }
 
 .head > div{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* .head > div:nth-child(1){
+    background-color: blue;
+} */
+
+.back{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    padding: 2px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    width: 0px;
+}
+
+.back:hover{
+    background-color: rgb(43, 43, 43);
 }
 
 .head > div:nth-child(2){
@@ -291,3 +313,9 @@
     color: red;
     text-align: center;
 } */
+
+@media screen and (max-width : 900px) {
+    .back{
+        width: 25px;
+    }
+}
