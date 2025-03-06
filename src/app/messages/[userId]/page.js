@@ -21,15 +21,14 @@ export default function page() {
     const {data:session} = useSession();
     const textRef = useRef(null);
     const fileRef = useRef(null);
+    const contentRef = useRef(null);
     const containerRef = useRef(null);
     const [value, setValue] = useState("");
     const [file, setFile] = useState("");
     const [selectedImage, setSelectedImage] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [joinedDate, setJoinedDate] = useState(null);
-
     const [messages, setMessages] = useState([]);
-
     const senderId = useMemo(() => session?.user?._id, [session]);
 
     useEffect(()=>{
@@ -110,6 +109,12 @@ export default function page() {
         };
     },[]);
 
+    useEffect(()=>{
+        if (contentRef.current) {
+            contentRef.current.scrollTop = contentRef.current.scrollHeight;
+        }
+    },[messages]);
+
     function formatDate(dateString) {
         const date = new Date(dateString);
         const formattedMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
@@ -145,7 +150,7 @@ export default function page() {
                 <div>{userInfo?.username || "Loading..."}</div>
                 <div><PiInfoBold/></div>
             </div>
-            <div className={styles.content}>
+            <div ref={contentRef} className={styles.content}>
                 <Link href={`/${userInfo?.username}?type=all`} className={styles.profile}>
                     <div className={styles.image}>
                         <img src={userInfo?.profileImage}></img>
