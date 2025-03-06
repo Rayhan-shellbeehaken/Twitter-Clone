@@ -86,19 +86,17 @@ export default function page() {
 
     useEffect(()=>{
         fetchUser();
-        // if(!senderId || !userId ) return;
-        if(!session?.user || status === "loading") return;
+        if(!senderId || !userId ) return;
         socket.emit('join-room',{
-            senderId : session?.user?._id,
+            senderId,
             receiverId : userId
         });
-        console.log("FROM CLIENT JOINED ON "+socket.id);
         createRoom(senderId,userId);
         fetchMessages(senderId,userId);
         return () => {
             socket.off("receive-message");
         };
-    },[session?.user,userId,status]);
+    },[senderId,userId]);
 
     useEffect(()=>{
         socket.on("receive-message",({senderId, text, image})=>{

@@ -71,7 +71,7 @@ export default function MessagesLayout({children}) {
                     <div className={styles.searchBox}>
                         <SearchBox/>
                     </div>
-                    {
+                    {chatList ?
                         chatList.map(list => (
                             <Link key={list.otherUserInfo._id} href={`/messages/${list.otherUserInfo._id}`}>
                                 <User
@@ -84,7 +84,7 @@ export default function MessagesLayout({children}) {
                                     lastMessage={list.lastMessageText}
                                 />
                             </Link>
-                        ))
+                        )) : null
                     }
                 </div> : null
             }
