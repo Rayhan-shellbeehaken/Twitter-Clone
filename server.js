@@ -9,6 +9,8 @@ const port = 3000;
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
 
+const usersInRoom = new Map();
+
 app.prepare().then(() => {
   const httpServer = createServer(handler);
 
@@ -24,16 +26,26 @@ app.prepare().then(() => {
     socket.on("join-room", async({ senderId, receiverId }) => {
       const roomId = [senderId, receiverId].sort().join("-");
       socket.join(roomId);
+      usersInRoom.set(senderId, socket.id);
+      io.to(roomId).emit("join-receiver",{receiverId : senderId});
       console.log(`${senderId} joined on room ${roomId}`);
+
     });
 
     socket.on("send-message", async ({ senderId, receiverId, text, image }) => {
       const roomId = [senderId, receiverId].sort().join("-");
-      io.to(roomId).emit("receive-message", { senderId, text, image })
+      const messageStatus = usersInRoom.has(receiverId) ? "seen" : "unseen";
+      io.to(roomId).emit("receive-message", { senderId, text, image, status : messageStatus })
     });
 
     socket.on("disconnect",()=>{
-      console.log("Disconnected ",socket.id);
+      for (const [userId, socketId] of usersInRoom.entries()) {
+        if (socketId === socket.id) {
+            usersInRoom.delete(userId);
+            console.log(`Removed user ${userId} from active users`);
+            break;
+        }
+      }
     })
   });
 

@@ -20,6 +20,14 @@ export async function addNewMessage(id,data){
     return conversation;
 }
 
+export async function changeMessageStatus(id,status) {
+  const conversation = await Conversations.findOneAndUpdate(
+    {room : id},
+    {status : status},
+    {new: true}
+  )
+}
+
 export async function getAllMessages(roomId) {
     const result = await Conversations.findOne({room : roomId});
     return result.messages;

@@ -1,4 +1,4 @@
-import { addNewMessage, getAllMessages, createNewRoom, getChatList } from "@/app/repository/message/messageRepository";
+import { addNewMessage, getAllMessages, createNewRoom, getChatList, changeMessageStatus } from "@/app/repository/message/messageRepository";
 import mongoose from "mongoose";
 
 export async function createRoom(request) {
@@ -17,6 +17,13 @@ export async function addMessage(user,request) {
         sender : user
     }
     const conversation = await addNewMessage(roomId, newMessage);
+    return conversation;
+}
+
+export async function changeStatus(request) {
+    const requestBody = await request.json();
+    const {roomId, status} = requestBody;
+    const conversation = changeMessageStatus(roomId, status);
     return conversation;
 }
 

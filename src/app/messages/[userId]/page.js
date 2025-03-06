@@ -31,6 +31,7 @@ export default function page() {
     const [joinedDate, setJoinedDate] = useState(null);
     const [messages, setMessages] = useState([]);
     const senderId = useMemo(() => session?.user?._id, [session]);
+    const [messageStatus, setMessageStatus] = useState("unseen");
 
     useEffect(()=>{
         if(textRef.current){
@@ -84,6 +85,19 @@ export default function page() {
         }
     }
 
+    async function onChangeStatus() {
+        try{
+            const roomId = [senderId, userId].sort().join("-");
+            data = {
+                roomId,
+                status: messageStatus
+            }
+            const message = await axios.patch('/api/messages',data);
+        }catch(error){
+            console.log(error);
+        }
+    }
+
     useEffect(()=>{
         fetchUser();
         if(!senderId || !userId ) return;
@@ -95,12 +109,21 @@ export default function page() {
         fetchMessages(senderId,userId);
         return () => {
             socket.off("receive-message");
+            socket.disconnect();
         };
     },[senderId,userId]);
 
     useEffect(()=>{
-        socket.on("receive-message",({senderId, text, image})=>{
+        onChangeStatus();
+    },[messageStatus])
+
+    useEffect(()=>{
+        socket.on("join-receiver",({receiverId})=>{
+            if(receiverId === userId) setMessageStatus("seen");
+        })
+        socket.on("receive-message",({senderId, text, image, status})=>{
             setMessages((prev) => [...prev, { sender : senderId, text, messageImage : image }]);
+            setMessageStatus(status);
         })
 
         return () => {
@@ -174,7 +197,9 @@ export default function page() {
                                     </div>
                                 }
                                 {message.text &&
-                                    <div className={styles["outgoing-text"]}>{message.text}</div>
+                                    <div className={styles["outgoing-text"]}>
+                                        {message.text} :: {messageStatus}
+                                    </div>
                                 }
                             </div> 
                             :
