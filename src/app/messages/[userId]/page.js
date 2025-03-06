@@ -100,8 +100,8 @@ export default function page() {
     },[senderId, userId]);
 
     useEffect(()=>{
-        socket.on("receive-message",({senderId, text})=>{
-            setMessages((prev) => [...prev, { sender : senderId, text }]);
+        socket.on("receive-message",({senderId, text, image})=>{
+            setMessages((prev) => [...prev, { sender : senderId, text, messageImage : image }]);
         })
 
         return () => {
@@ -133,7 +133,8 @@ export default function page() {
         socket.emit("send-message",{
             senderId,
             receiverId : userId,
-            text : value
+            text : value,
+            image : selectedImage
         });
         textRef.current.focus();
         try{
@@ -178,7 +179,7 @@ export default function page() {
                             <div key={index} className={`${styles.incoming}`}>
                                 {message.messageImage && 
                                     <div className={styles.chatImage}>
-                                        {/* <img src={message.messageImage}></img> */}
+                                        <img src={message.messageImage}></img>
                                     </div>
                                 }
                                 {message.text &&

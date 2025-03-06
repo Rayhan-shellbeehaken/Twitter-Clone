@@ -27,9 +27,9 @@ app.prepare().then(() => {
       console.log(`${senderId} joined room: ${roomId}`);
     });
 
-    socket.on("send-message", async ({ senderId, receiverId, text }) => {
+    socket.on("send-message", async ({ senderId, receiverId, text, image }) => {
       const roomId = [senderId, receiverId].sort().join("-");
-      io.to(roomId).emit("receive-message", { senderId, text })
+      io.to(roomId).emit("receive-message", { senderId, text, image })
     });
 
     socket.on("disconnect",()=>{
