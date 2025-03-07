@@ -308,6 +308,13 @@
     border-radius: 10px;
 }
 
+.message-status{
+    font-size: 14px;
+    align-self: flex-end;
+    margin-bottom: 5px;
+    color:rgb(104, 104, 104);
+}
+
 
 /* .textarea > textarea::-webkit-input-placeholder {
     color: red;

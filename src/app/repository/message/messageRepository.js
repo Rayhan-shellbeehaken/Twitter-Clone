@@ -29,8 +29,8 @@ export async function changeMessageStatus(id,status) {
 }
 
 export async function getAllMessages(roomId) {
-    const result = await Conversations.findOne({room : roomId});
-    return result.messages;
+    const result = await Conversations.findOne({room : roomId},{status : 1, messages : 1});
+    return result;
 }
 
 export async function getChatList(userId) {

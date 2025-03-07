@@ -32,6 +32,7 @@ export default function page() {
     const [messages, setMessages] = useState([]);
     const senderId = useMemo(() => session?.user?._id, [session]);
     const [messageStatus, setMessageStatus] = useState("unseen");
+    const [isMyLastMessage, setIsMyLastMessage] = useState(false);
 
     useEffect(()=>{
         if(textRef.current){
@@ -66,8 +67,13 @@ export default function page() {
         const roomId = [senderId, userId].sort().join("-");
         try{
             const result = await axios.get(`/api/messages?roomId=${roomId}`);
-            const messages = result.data.messages;
+            const messages = result.data.messages.messages;
+            
+            const lastTexterId = messages[messages.length - 1].sender;
+            if(lastTexterId === senderId) setIsMyLastMessage(true);
+            else setIsMyLastMessage(false);
             setMessages(messages);
+            setMessageStatus(result.data.messages.status);
         }catch(error){
             console.log(error);
         }
@@ -88,11 +94,11 @@ export default function page() {
     async function onChangeStatus() {
         try{
             const roomId = [senderId, userId].sort().join("-");
-            data = {
+            const data = {
                 roomId,
                 status: messageStatus
             }
-            const message = await axios.patch('/api/messages',data);
+            const message = await axios.patch(`/api/messages?status=true`,data);
         }catch(error){
             console.log(error);
         }
@@ -114,7 +120,15 @@ export default function page() {
     },[senderId,userId]);
 
     useEffect(()=>{
-        onChangeStatus();
+        console.log("Messages");
+        console.log(messages);
+        if(messages.length !== 0){
+            const lastTexterId = messages[messages.length - 1].sender;
+            if(lastTexterId === senderId){
+                setIsMyLastMessage(true);
+                onChangeStatus();
+            }
+        }
     },[messageStatus])
 
     useEffect(()=>{
@@ -123,6 +137,7 @@ export default function page() {
         })
         socket.on("receive-message",({senderId, text, image, status})=>{
             setMessages((prev) => [...prev, { sender : senderId, text, messageImage : image }]);
+
             setMessageStatus(status);
         })
 
@@ -147,6 +162,7 @@ export default function page() {
     
     const onSend = async() =>{
         const roomId = [senderId, userId].sort().join("-");
+        if(value === "" && selectedImage === null) return;
         const data = {
             roomId,
             text : value,
@@ -188,32 +204,40 @@ export default function page() {
                 </Link>
                 <div className={styles.messages}>
                     {
-                        messages.map((message,index) => (
-                            message.sender === senderId ?     
-                            <div key={index} className={`${styles.outgoing}`}>
-                                {message.messageImage && 
-                                    <div className={styles.chatImage}>
-                                        <img src={message.messageImage}></img>
-                                    </div>
-                                }
-                                {message.text &&
-                                    <div className={styles["outgoing-text"]}>
-                                        {message.text} :: {messageStatus}
-                                    </div>
-                                }
-                            </div> 
-                            :
-                            <div key={index} className={`${styles.incoming}`}>
-                                {message.messageImage && 
-                                    <div className={styles.chatImage}>
-                                        <img src={message.messageImage}></img>
-                                    </div>
-                                }
-                                {message.text &&
-                                    <div className={styles["incoming-text"]}>{message.text}</div>
-                                }
-                            </div>
-                        ))
+                        messages.map((message, index) => {
+                            const isLastMessage = index === messages.length - 1;
+                        
+                            return (
+                                message.sender === senderId ?     
+                                <div key={index} className={`${styles.outgoing}`}>
+                                    {message.messageImage && 
+                                        <div className={styles.chatImage}>
+                                            <img src={message.messageImage}></img>
+                                        </div>
+                                    }
+                                    {message.text &&
+                                        <div className={styles["outgoing-text"]}>
+                                            {message.text}
+                                        </div>
+                                    }
+                                    {isLastMessage &&
+                                        <p className={styles["message-status"]}>{messageStatus}</p>
+                                    }
+                                </div> 
+                                :
+                                <div key={index} className={`${styles.incoming} ${isLastMessage ? styles.lastMessage : ""}`}>
+                                    {message.messageImage && 
+                                        <div className={styles.chatImage}>
+                                            <img src={message.messageImage}></img>
+                                        </div>
+                                    }
+                                    {message.text &&
+                                        <div className={styles["incoming-text"]}>{message.text}</div>
+                                    }
+                                </div>
+                            );
+                        })
+                        
                     }
                 </div>
             </div>

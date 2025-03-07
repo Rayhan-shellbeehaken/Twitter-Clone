@@ -1,7 +1,7 @@
 .page{
     display: flex;
     justify-content: flex-start;
-    overflow-x: auto;
+    overflow-x: hidden;
     /* position: relative; */
     width: 100%;
 }
