@@ -30,9 +30,12 @@ app.prepare().then(() => {
 
     socket.on("join-room", ({ senderId, receiverId}) => {
       const roomId = [senderId, receiverId].sort().join("-");
+      const chatId = [senderId, receiverId].sort().reverse().join("-");
       socket.join(roomId);
       usersInRoom.set(senderId, socket.id);
       io.to(roomId).emit("join-receiver",{receiverId : senderId});
+      
+      io.to(chatId).emit("change-status",{ownId : senderId});
       console.log(`${senderId} joined on room ${roomId}`);
     });
 
@@ -41,7 +44,7 @@ app.prepare().then(() => {
       const chatId = [senderId, receiverId].sort().reverse().join("-");
       const messageStatus = usersInRoom.has(receiverId) ? "seen" : "unseen";
       io.to(roomId).emit("receive-message", { senderId, text, image, status : messageStatus })
-      io.to(chatId).emit("receive",{senderId, text});
+      io.to(chatId).emit("receive",{senderId, text, messageStatus});
     });
 
     socket.on("disconnect",()=>{

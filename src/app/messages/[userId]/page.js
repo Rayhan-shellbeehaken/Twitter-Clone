@@ -33,6 +33,7 @@ export default function page() {
     const senderId = useMemo(() => session?.user?._id, [session]);
     const [messageStatus, setMessageStatus] = useState("unseen");
     const [isMyLastMessage, setIsMyLastMessage] = useState(false);
+    const [lastUserId, setLastUserId] = useState("");
 
     useEffect(()=>{
         if(textRef.current){
@@ -73,6 +74,7 @@ export default function page() {
             if(lastTexterId === senderId) setIsMyLastMessage(true);
             else setIsMyLastMessage(false);
             setMessages(messages);
+            
             setMessageStatus(result.data.messages.status);
         }catch(error){
             console.log(error);
@@ -120,20 +122,26 @@ export default function page() {
     },[senderId,userId]);
 
     useEffect(()=>{
-        console.log("Messages");
-        console.log(messages);
         if(messages.length !== 0){
             const lastTexterId = messages[messages.length - 1].sender;
             if(lastTexterId === senderId){
-                setIsMyLastMessage(true);
-                onChangeStatus();
-            }
+                setIsMyLastMessage(true); 
+            } 
+            onChangeStatus();
         }
     },[messageStatus])
 
     useEffect(()=>{
         socket.on("join-receiver",({receiverId})=>{
-            if(receiverId === userId) setMessageStatus("seen");
+            const lastTexterId = messages[messages.length - 1]?.sender;
+            console.log("LAST ::: ");
+            console.log(lastTexterId);
+            console.log("RECIEVER ::: ");
+            console.log(receiverId);
+            console.log("IS MY LAST MESSAGE");
+            console.log(isMyLastMessage);
+            if(receiverId === userId) setMessageStatus("seen"); // ekhane change
+            // if(!isMyLastMessage) se
         })
         socket.on("receive-message",({senderId, text, image, status})=>{
             setMessages((prev) => [...prev, { sender : senderId, text, messageImage : image }]);

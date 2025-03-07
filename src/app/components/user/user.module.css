@@ -30,15 +30,15 @@
     color: white;
 }
 
-.info > div > span{
+/* .info > div > span{
     color: rgb(117, 117, 117);
     font-weight: 200;
-}
+} */
 
 .info > div:nth-child(2){
-    color: rgb(117, 117, 117);
+    /* color: rgb(117, 117, 117); */
     font-size: 15px;
-    font-weight: 200;
+    /* font-weight: 200; */
 }
 
 .container:hover{
@@ -52,4 +52,9 @@
 
 .right{
     color: rgb(117, 117, 117);
+}
+
+.not-bold{
+    color: rgb(117, 117, 117);
+    font-weight: 200;
 }
