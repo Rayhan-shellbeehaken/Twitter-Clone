@@ -14,22 +14,22 @@ export default function User({isActive,senderId,receiverId,image,name,lastMessag
         return formatDistanceToNow(new Date(date), { addSuffix: false });
     }
     useEffect(()=>{
-        // socket.emit('join-room',{
-        //     senderId,
-        //     receiverId
-        // });
-        // return () => {
-        //     socket.off("receive-message");
-        // };
+        socket.emit('join-room',{
+            senderId,
+            receiverId
+        });
+        return () => {
+            socket.off("receive-message");
+        };
     },[senderId,receiverId]);
 
     useEffect(()=>{
-        // socket.on("receive-message",({senderId, text})=>{
-        //     setLatestMessage({message : text , time : Date.now()});
-        // })
-        // return () => {
-        //     socket.off("receive-message");
-        // };
+        socket.on("receive-message",({senderId, text})=>{
+            setLatestMessage({message : text , time : Date.now()});
+        })
+        return () => {
+            socket.off("receive-message");
+        };
     },[]);
 
     return (
