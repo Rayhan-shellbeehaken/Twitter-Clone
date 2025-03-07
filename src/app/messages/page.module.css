@@ -117,6 +117,15 @@
     background-color: #05a1e4;
 }
 
+.hide{
+    width: 0px;
+    visibility: hidden;
+}
+
+.show{
+    width: 100%;
+}
+
 
 
 @media screen and (max-width : 1000px) {

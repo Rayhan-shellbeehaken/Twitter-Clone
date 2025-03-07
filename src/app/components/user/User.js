@@ -14,21 +14,22 @@ export default function User({isActive,senderId,receiverId,image,name,lastMessag
         return formatDistanceToNow(new Date(date), { addSuffix: false });
     }
     useEffect(()=>{
-        socket.emit('join-room',{
+        socket.emit('join-chat',{
             senderId,
             receiverId
         });
         return () => {
-            socket.off("receive-message");
+            // socket.off("receive");
+            socket.disconnect();
         };
     },[senderId,receiverId]);
 
     useEffect(()=>{
-        socket.on("receive-message",({senderId, text})=>{
+        socket.on("receive",({senderId, text})=>{
             setLatestMessage({message : text , time : Date.now()});
         })
         return () => {
-            socket.off("receive-message");
+            // socket.off("receive");
         };
     },[]);
 

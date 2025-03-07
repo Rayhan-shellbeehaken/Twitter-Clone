@@ -55,39 +55,39 @@ export default function MessagesLayout({children}) {
         <div className={styles.layout}>
             <MessageModal username={session?.user?.username}/>
             <div className={styles.line}></div>
-            {!hideSection || !isUserPage ?
-                <div className={styles.left}>
-                    <div className={styles["message-bar"]}>
-                        <div>Messages</div>
+            
+            <div className={`${styles.left} ${(!hideSection || !isUserPage) ? '' : styles.hide}`} >
+                <div className={styles["message-bar"]}>
+                    <div>Messages</div>
+                    <div>
                         <div>
-                            <div>
-                                <RiSettings3Line/>
-                            </div>
-                            <div>
-                                <RiMailAddLine/>
-                            </div>
+                            <RiSettings3Line/>
+                        </div>
+                        <div>
+                            <RiMailAddLine/>
                         </div>
                     </div>
-                    <div className={styles.searchBox}>
-                        <SearchBox/>
-                    </div>
-                    {chatList ?
-                        chatList.map(list => (
-                            <Link key={list.otherUserInfo._id} href={`/messages/${list.otherUserInfo._id}`}>
-                                <User
-                                    isActive={urlId === list.otherUserInfo._id}
-                                    senderId={session?.user?._id}
-                                    receiverId={list.otherUserInfo._id}
-                                    image={list.otherUserInfo.profileImage}
-                                    name={list.otherUserInfo.username}
-                                    lastMessageTime={list.lastMessageCreatedAt}
-                                    lastMessage={list.lastMessageText}
-                                />
-                            </Link>
-                        )) : null
-                    }
-                </div> : null
-            }
+                </div>
+                <div className={styles.searchBox}>
+                    <SearchBox/>
+                </div>
+                {chatList ?
+                    chatList.map(list => (
+                        <Link key={list.otherUserInfo._id} href={`/messages/${list.otherUserInfo._id}`}>
+                            <User
+                                isActive={urlId === list.otherUserInfo._id}
+                                senderId={session?.user?._id}
+                                receiverId={list.otherUserInfo._id}
+                                image={list.otherUserInfo.profileImage}
+                                name={list.otherUserInfo.username}
+                                lastMessageTime={list.lastMessageCreatedAt}
+                                lastMessage={list.lastMessageText}
+                            />
+                        </Link>
+                    )) : null
+                }
+            </div>
+            
             
             <div className={styles.line}></div>
             {children}
