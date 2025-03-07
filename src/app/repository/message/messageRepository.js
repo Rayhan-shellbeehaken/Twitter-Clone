@@ -45,7 +45,8 @@ export async function getChatList(userId) {
         {
           $project: {
             splitroom: { $split: ["$room", "-"] },
-            lastMessage: { $arrayElemAt: ["$messages", -1] }
+            lastMessage: { $arrayElemAt: ["$messages", -1] },
+            status: 1
           }
         },
         {
@@ -63,7 +64,8 @@ export async function getChatList(userId) {
               ]
             },
             lastMessageText: "$lastMessage.text",
-            lastMessageCreatedAt: "$lastMessage.createdAt"
+            lastMessageCreatedAt: "$lastMessage.createdAt",
+            status: 1
           }
         },
         {
@@ -88,7 +90,8 @@ export async function getChatList(userId) {
             "lastMessageCreatedAt": 1,
             "otherUserInfo.profileImage": 1,
             "otherUserInfo.username": 1,
-            "otherUserInfo._id": 1 
+            "otherUserInfo._id": 1,
+            "status":1
           }
         }
     ]

@@ -82,6 +82,7 @@ export default function MessagesLayout({children}) {
                                 name={list.otherUserInfo.username}
                                 lastMessageTime={list.lastMessageCreatedAt}
                                 lastMessage={list.lastMessageText}
+                                seenStatus={list.status}
                             />
                         </Link>
                     )) : null
