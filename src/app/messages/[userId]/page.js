@@ -93,12 +93,12 @@ export default function page() {
         }
     }
 
-    async function onChangeStatus() {
+    async function onChangeStatus(value) {
         try{
             const roomId = [senderId, userId].sort().join("-");
             const data = {
                 roomId,
-                status: messageStatus
+                status: value ? value : messageStatus
             }
             const message = await axios.patch(`/api/messages?status=true`,data);
         }catch(error){
@@ -124,24 +124,15 @@ export default function page() {
     useEffect(()=>{
         if(messages.length !== 0){
             const lastTexterId = messages[messages.length - 1].sender;
-            if(lastTexterId === senderId){
-                setIsMyLastMessage(true); 
-            } 
-            onChangeStatus();
+            if(lastTexterId !== senderId){
+                onChangeStatus("seen")
+            }else onChangeStatus();
         }
     },[messageStatus])
 
     useEffect(()=>{
         socket.on("join-receiver",({receiverId})=>{
-            const lastTexterId = messages[messages.length - 1]?.sender;
-            console.log("LAST ::: ");
-            console.log(lastTexterId);
-            console.log("RECIEVER ::: ");
-            console.log(receiverId);
-            console.log("IS MY LAST MESSAGE");
-            console.log(isMyLastMessage);
-            if(receiverId === userId) setMessageStatus("seen"); // ekhane change
-            // if(!isMyLastMessage) se
+            setMessageStatus("seen"); // ekhane change
         })
         socket.on("receive-message",({senderId, text, image, status})=>{
             setMessages((prev) => [...prev, { sender : senderId, text, messageImage : image }]);

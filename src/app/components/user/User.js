@@ -7,10 +7,10 @@ import { useEffect } from 'react';
 import { useMemo } from 'react';
 import { io } from "socket.io-client";
 
-export default function User({isActive,senderId,receiverId,image,name,lastMessageTime,lastMessage,seenStatus}) {
+export default function User({isActive,senderId,receiverId,image,name,lastMessageTime,lastMessage,lastMessageSender,seenStatus}) {
     const socket = useMemo(()=>io("http://localhost:3000"),[]);  
     const [latestMessage, setLatestMessage] = useState({message : lastMessage, time : lastMessageTime});
-    const [isBold, setIsBold] = useState(seenStatus === "unseen");
+    const [isBold, setIsBold] = useState(lastMessageSender === receiverId && seenStatus === "unseen");
     console.log(seenStatus)
     function timeAgo(date) {
         return formatDistanceToNow(new Date(date), { addSuffix: false });

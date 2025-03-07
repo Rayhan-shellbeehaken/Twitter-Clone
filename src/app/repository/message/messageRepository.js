@@ -65,6 +65,7 @@ export async function getChatList(userId) {
             },
             lastMessageText: "$lastMessage.text",
             lastMessageCreatedAt: "$lastMessage.createdAt",
+            lastMessageSender: "$lastMessage.sender",
             status: 1
           }
         },
@@ -88,6 +89,7 @@ export async function getChatList(userId) {
           $project: {
             "lastMessageText": 1,
             "lastMessageCreatedAt": 1,
+            "lastMessageSender": 1,
             "otherUserInfo.profileImage": 1,
             "otherUserInfo.username": 1,
             "otherUserInfo._id": 1,
