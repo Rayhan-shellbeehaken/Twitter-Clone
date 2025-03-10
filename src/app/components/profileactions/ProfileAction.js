@@ -8,6 +8,8 @@ import { IoSearch } from "react-icons/io5";
 import { useAppContext } from '@/app/store/store';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { addFollow } from '@/app/actions/useraction';
+import { postANotification } from '@/app/actions/notificationaction';
 
 export default function ProfileAction({ownProfile,ownId,userId,username,followed}) {
     const {setProfileModal,toggleAlert} = useAppContext();
@@ -18,7 +20,7 @@ export default function ProfileAction({ownProfile,ownId,userId,username,followed
             newFollower : ownId
         }
         try{
-            const result = await axios.patch(`/api/user?id=${userId}&followed=${followed}`,data);
+            const result = await addFollow(userId,followed,data);
             const message = followed ? "Successfully unfollowed" : "Successfully followed";
             const notification = {
                 notificationType : 'follow',
@@ -26,7 +28,7 @@ export default function ProfileAction({ownProfile,ownId,userId,username,followed
                 redirectTo : `/${username}?type=all`,
             }
             if(result.status === 200 && !followed){
-                const newNotification = await axios.post('/api/notifications',notification);
+                const newNotification = await postANotification(notification);
             }
             toggleAlert("success",message);
             router.refresh();

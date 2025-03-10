@@ -15,6 +15,7 @@ import { Months } from '@/app/helpers/birthdate';
 import axios from 'axios';
 import Popup from '../popup/Popup';
 import { useRouter } from 'next/navigation';
+import { updateUserInfo } from '@/app/actions/useraction';
 
 export default function ProfileModal({user}) {
     const {profileModal, setProfileModal, toggleAlert} = useAppContext();
@@ -93,8 +94,7 @@ export default function ProfileModal({user}) {
             dateofBirth : formattedDate
         }
         try{
-            const result = await axios.patch('/api/user',data);
-            console.log(result);
+            const result = await updateUserInfo(data);
             setProfileModal(false);
             toggleAlert("success","Saved successfully");
             router.refresh();

@@ -22,6 +22,7 @@ import { fetchUser } from '../helpers/useroperation';
 import ProfileAction from '../components/profileactions/ProfileAction';
 import ProfileModal from '../components/profilemodal/ProfileModal';
 import Popup from '../components/popup/Popup';
+import { formatDate } from '../helpers/birthdate';
 
 export default async function page({searchParams, params}) {
     const queryParams = (await searchParams).type;
@@ -38,14 +39,6 @@ export default async function page({searchParams, params}) {
 
     const ownProfile = profile[0] === session?.user?.username ? true : false;
     const followed = user.followers.includes(session?.user?._id) ? true : false;
-
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
-            month: 'long',
-            year: 'numeric',
-        });
-    }
 
     return (    
         <div className={styles.page}>

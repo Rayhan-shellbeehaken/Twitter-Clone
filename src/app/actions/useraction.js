@@ -8,3 +8,21 @@ export async function getUserInfo(username) {
         throw error;
     }
 }
+
+export async function updateUserInfo(data) {
+    try{
+        const result = await axios.patch('/api/user',data);
+        return result;
+    }catch(error){
+        throw error;
+    }
+}
+
+export async function addFollow(userId,followed,data) {
+    try{
+        const result = await axios.patch(`/api/user?id=${userId}&followed=${followed}`,data);
+        return result;
+    }catch(error){
+        throw error;
+    }
+}

@@ -50,4 +50,12 @@ export function birthDate(formData){
     return formattedDate;
 }
 
+export function formatDate(dateString){
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+    });
+}
+
 export {Days, Months, Years};
