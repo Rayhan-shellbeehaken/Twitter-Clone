@@ -43,19 +43,10 @@ export default function PostBox({username}) {
         }
     },[file]);
 
-    const convertToBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result); // Returns the Base64 string
-            reader.onerror = (error) => reject(error);
-        });
-    };
-
     const handleSubmit = async(event) =>{
         event.preventDefault();
         let postImage = null;
-        if(file) postImage = await convertToBase64(file);
+        if(file) postImage = imagePreview; 
         const data = {
             postText : value,
             postImage
@@ -77,16 +68,17 @@ export default function PostBox({username}) {
         setImagePreview(null);
     }
 
-    useEffect(()=>{
-        async function fetchData() {
-            try{
-                const user = await axios.get(`/api/user?username=${username}`);
-                console.log(user);
-                setUserInfo({name : user.data.user.username , profileImage : user.data.user.profileImage});
-            }catch(error){
-                console.log(error);
-            }
+    async function fetchData() {
+        try{
+            const user = await axios.get(`/api/user?username=${username}`);
+            console.log(user);
+            setUserInfo({name : user.data.user.username , profileImage : user.data.user.profileImage});
+        }catch(error){
+            console.log(error);
         }
+    }
+
+    useEffect(()=>{
         fetchData();
     },[])
 

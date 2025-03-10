@@ -16,3 +16,26 @@ export async function fetchNotification(user,category) {
     const data = await response.json();
     return data;
 }
+
+export async function notificationMessage(type){
+    let message="";
+    switch (type) {
+      case "react":
+        message = "reacted to your tweet"
+        break;
+      case "comment":
+        message = "commented to your tweet"
+        break;
+      case "reply":
+        message = "replied to your comment"
+        break;
+      case "repost":
+        message = "reposted your tweet"
+        break;
+      case "follow":
+        message = "followed you"
+      default:
+        break;
+    }
+    return message;
+}

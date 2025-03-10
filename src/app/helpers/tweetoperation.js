@@ -4,7 +4,6 @@ export async function fetchTweet(page,parent,user,filterBy) {
     if(!session?.user){
         throw new Error("User doesn't exist!!");
     }
-    // let userId = user !== null ? user : null;
     const response = 
     await fetch(`http://localhost:3000/api/tweets?page=${page}&parent=${parent}&user=${user}&filterBy=${filterBy}`,{
             method : "GET",

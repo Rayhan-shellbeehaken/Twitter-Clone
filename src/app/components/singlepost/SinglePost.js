@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { BiRepost } from "react-icons/bi";
 import { auth } from '@/auth';
 import ReTweet from '../retweet/ReTweet';
-import { formatDistanceToNow } from "date-fns";
+import timeAgo from '@/app/helpers/timeago';
 
 export default async function SinglePost({
     id, title,
@@ -24,10 +24,6 @@ export default async function SinglePost({
     const session = await auth();
     const reposted = (!title && !imageUrl && JSON.stringify(reposted_details) !== "{}") ? true : false; //can be modified
     const withQuote = ((title || imageUrl) && JSON.stringify(reposted_details) !== "{}") ? true : false;
-    
-    function timeAgo(date) {
-        return formatDistanceToNow(new Date(date), { addSuffix: true });
-    }
 
     const tweet_info = {
         id : reposted ? reposted_details._id : id,
