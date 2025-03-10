@@ -1,7 +1,5 @@
 import React from 'react'
 import styles from './retweet.module.css';
-import xlogo from '../../../../public/images/xprofile.png'
-import Image from 'next/image';
 import Link from 'next/link';
 import timeAgo from '@/app/helpers/timeago';
 
@@ -12,7 +10,9 @@ export default function ReTweet({id,userDetails,title,imageUrl,createdAt}) {
         <div className={styles.container}>
             <div className={styles.head}>
                 <div className={styles["image-container"]}>
-                    <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
+                    {userDetails.profileImage && 
+                        <img src={userDetails.profileImage}></img>
+                    }
                 </div>
                 <div className={styles.username}>
                     {userDetails.username} . <span>@{userDetails.username}</span> <span>. {timeAgo(createdAt)}</span>

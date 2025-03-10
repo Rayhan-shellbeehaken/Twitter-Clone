@@ -20,6 +20,9 @@ import { FaEarthAmericas } from "react-icons/fa6";
 import { useAppContext } from '@/app/store/store';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { postATweet } from '@/app/actions/tweetaction';
+import { postANotification } from '@/app/actions/notificationaction';
+import { getUserInfo } from '@/app/actions/useraction';
 
 export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl,createdAt}) {
     const textRef = useRef(null);
@@ -30,6 +33,16 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl,cr
     const {toggleAlert} = useAppContext();
     const router = useRouter();
     const {data:session} = useSession();
+    const [profileImage,setProfileImage] = useState("");
+
+    async function userInfo() {
+        const result = await getUserInfo(session?.user?.username);
+        setProfileImage(result.user.profileImage);
+    }
+
+    useEffect(()=>{
+        userInfo();
+    },[session])
 
     useEffect(()=>{
         if(textRef.current){
@@ -60,15 +73,15 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl,cr
             repostedTweet : id
         }  
         try{
-            const response = await axios.post('/api/tweets',data);
-            if(response.status === 200 && session?.user?._id !== userDetails._id){
+            const response = await postATweet(data);
+            if(session?.user?._id !== userDetails._id){
                 const notification = {
                     notificationType : "repost",
                     notifiedTo: userDetails._id,
-                    redirectTo: `/${userDetails.username}/status/${response.data.tweet._id}`
+                    redirectTo: `/${userDetails.username}/status/${response.tweet._id}`
     
                 }
-                const result = await axios.post('/api/notifications',notification);
+                const result = await postANotification(notification);
             }
             toggleAlert("success","Successfully posted");
             setQuotePopUp(false);
@@ -95,7 +108,9 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl,cr
                 </div>
                 <div className={styles["quote-container"]}>
                     <div className={styles.left}>
-                        <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
+                        {profileImage && 
+                            <img src={profileImage}></img>
+                        }
                     </div>
                     <div className={styles.right}>
                         <textarea placeholder='Add a comment' ref={textRef} value={postText} onChange={(e)=>setPostText(e.target.value)}></textarea>

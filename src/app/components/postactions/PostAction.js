@@ -17,7 +17,10 @@ import QuoteBox from '../quotebox/QuoteBox';
 import { postATweet, updateATweet } from '@/app/actions/tweetaction';
 import { postANotification } from '@/app/actions/notificationaction';
 
-export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters,reposters,createdAt}) {
+export default function PostAction({id,reacters,
+title,imageUrl,userDetails,
+commenters,reposters,createdAt}) {
+    
     const [reacted,setReacted] = useState(false);
     const [reposted,setReposted] = useState(false);
     const router = useRouter();
