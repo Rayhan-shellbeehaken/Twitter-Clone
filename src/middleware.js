@@ -3,8 +3,8 @@ import { getToken } from 'next-auth/jwt';
 
 // This function can be marked `async` if using `await` inside
 const publicPaths = ["/"];
-const privatePaths = ["/home","/profile","/dateofbirth","/notifications"];
-const privateRegexPaths = [/^\/[^\/]+\/status\/[^\/]+$/, /^\/[^\/]+$/]; 
+const privatePaths = ["/home","/profile","/dateofbirth","/notifications","/messages"];
+const privateRegexPaths = [/^\/[^\/]+\/status\/[^\/]+$/, /^\/[^\/]+$/,/^\/messages\/[^\/]+$/]; 
 
 export async function middleware(request) {
     try{
@@ -56,5 +56,7 @@ export async function middleware(request) {
  
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/","/home","/notifications","/dateofbirth","/profile","/:name/status/:tweetId*","/:profile"],
+  matcher: ["/","/home","/notifications",
+    "/dateofbirth","/profile","/:name/status/:tweetId*",
+    "/:profile","/messages","/messages/:userId"],
 }
