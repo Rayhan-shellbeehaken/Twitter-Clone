@@ -14,6 +14,9 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
 import { useRouter } from 'next/navigation';
+import { getUserInfo } from '@/app/actions/useraction';
+import { updateATweet } from '@/app/actions/tweetaction';
+import { postANotification } from '@/app/actions/notificationaction';
 
 export default function CommentBox({tweet}) {
     const textRef = useRef(null);
@@ -24,12 +27,19 @@ export default function CommentBox({tweet}) {
     const [userId, setUserId] = useState(null);
     const {toggleAlert} = useAppContext();
     const router = useRouter();
+    const [profileImage,setProfileImage] = useState("");
 
     const {data:session} = useSession();
 
-    useEffect(()=>{
+    async function userInfo() {
         setUserId(session?.user?._id);
-    },[session?.user])
+        const result = await getUserInfo(session?.user?.username);
+        if(result) setProfileImage(result.user.profileImage);
+    }
+
+    useEffect(()=>{
+        userInfo();
+    },[session])
 
     useEffect(()=>{
         if(textRef.current){
@@ -63,14 +73,14 @@ export default function CommentBox({tweet}) {
             }
         }
         try{
-            const result = await axios.patch(`/api/tweets?id=${tweet._id}`,data);
+            const result = await updateATweet(tweet._id, data);
             const notification = {
                 notificationType : result.data.tweet.parent === null ? "comment" : "reply",
                 notifiedTo : tweet.user_details._id,
                 redirectTo : `/${tweet.user_details.username}/status/${tweet._id}`
             };
             if(result.status === 200 && userId !== tweet.user_details._id){
-                const response = await axios.post('/api/notifications',notification);
+                const response = await postANotification(notification);
             }
             router.refresh();
             
@@ -86,7 +96,9 @@ export default function CommentBox({tweet}) {
     return (
         <div className={styles.commentbox}>
             <div className={styles.image}>
-                <Image src={xlogo} alt="xlogo" priority layout="intrinsic"/>
+                {profileImage && 
+                    <img src={profileImage}></img>
+                }
             </div>
             <form onSubmit={onComment} className={styles.right}>
                 <textarea ref={textRef} value={value} onChange={(e)=>setValue(e.target.value)} placeholder='What is happening?!'></textarea>
