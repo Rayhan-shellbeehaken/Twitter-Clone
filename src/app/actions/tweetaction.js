@@ -8,3 +8,12 @@ export async function postATweet(data) {
         throw error;
     }
 }
+
+export async function updateATweet(id,data) {
+    try{
+        const result = await axios.patch(`/api/tweets?id=${id}`,data);
+        return result;
+    }catch(error){
+        throw error;
+    }
+}

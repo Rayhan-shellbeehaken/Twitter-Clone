@@ -14,6 +14,8 @@ import { RiEditLine } from "react-icons/ri";
 import { useRef } from 'react';
 import { useAppContext } from '@/app/store/store';
 import QuoteBox from '../quotebox/QuoteBox';
+import { postATweet, updateATweet } from '@/app/actions/tweetaction';
+import { postANotification } from '@/app/actions/notificationaction';
 
 export default function PostAction({id,reacters,title,imageUrl,userDetails,commenters,reposters,createdAt}) {
     const [reacted,setReacted] = useState(false);
@@ -33,8 +35,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
 
     const onReact = async() => {
         reacted ? 
-        reacters = reacters.filter(userId => userId !== session?.user?._id) :
-        reacters.push(session?.user?._id); 
+        reacters = reacters.filter(userId => userId !== session?.user?._id) : reacters.push(session?.user?._id); 
         const data = {
             reacters : reacters
         }
@@ -43,16 +44,11 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
             notifiedTo : userDetails._id,
             redirectTo : `/${userDetails.username}/status/${id}`,
         };
-
-        try{
-            const tweet = await axios.patch(`/api/tweets?id=${id}`,data);
-            if(tweet.status === 200 && !reacted && session?.user?._id !== userDetails._id){
-                const result = await axios.post('/api/notifications',notification);
-            }
-            router.refresh();
-        }catch(error){
-            console.log(error);
-        }   
+        const tweet = await updateATweet(id,data);
+        if(tweet.status === 200 && !reacted && session?.user?._id !== userDetails._id){
+            const result = await postANotification(notification);
+        }
+        router.refresh(); 
     }
 
     const onComment = async() => {
@@ -60,19 +56,18 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
     }
 
     const onRepost = async() => {
-        
         const data = {
             repostedTweet : id
         }
         try{
-            const response = await axios.post('/api/tweets',data);
-            if(response.status == 200 && session?.user?._id !== userDetails._id){
+            const response = await postATweet(data);
+            if(session?.user?._id !== userDetails._id){
                 const notification = {
                     notificationType : "repost",
                     notifiedTo : userDetails._id,
-                    redirectTo: `/${userDetails.username}/status/${response.data.tweet._id}`
+                    redirectTo: `/${userDetails.username}/status/${response.tweet._id}`
                 };
-                const result = await axios.post('/api/notifications',notification);
+                const result = await postANotification(notification);
             }
             toggleAlert("success","Successfully posted");
             setRepostBox(false);
@@ -104,7 +99,7 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
         return () => {
           document.removeEventListener("mousedown", handleClickOutside);
         };
-      }, [repostBox]);
+    }, [repostBox]);
 
     return (
         <>

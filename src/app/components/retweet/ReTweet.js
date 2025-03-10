@@ -3,13 +3,9 @@ import styles from './retweet.module.css';
 import xlogo from '../../../../public/images/xprofile.png'
 import Image from 'next/image';
 import Link from 'next/link';
-import { formatDistanceToNow } from "date-fns";
+import timeAgo from '@/app/helpers/timeago';
 
 export default function ReTweet({id,userDetails,title,imageUrl,createdAt}) {
-    
-    function timeAgo(date) {
-        return formatDistanceToNow(new Date(date), { addSuffix: true });
-    }
 
     const route = `/${userDetails.username}/status/${id}`;
     return (

@@ -27,3 +27,18 @@ export async function fetchATweet(tweetId) {
     const data = await response.json();
     return data;
 }
+
+export async function getFilterBy(type) {
+    let filterBy = null;
+    switch (type) {
+        case "with_replies":
+            filterBy = "repost"
+            break;
+        case "likes":
+            filterBy = "react"
+            break;
+        default:
+            break;
+    }
+    return filterBy;
+}

@@ -5,24 +5,9 @@ import {fetchTweet} from '@/app/helpers/tweetoperation';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
 import { auth } from '@/auth';
+import { getFilterBy } from '@/app/helpers/tweetoperation';
 
 export default async function PostList({params,page,user,type}) {
-    
-    const getFilterBy = (type) =>{
-        let filterBy = null;
-        switch (type) {
-            case "with_replies":
-                filterBy = "repost"
-                break;
-            case "likes":
-                filterBy = "react"
-                break;
-            default:
-                break;
-        }
-        return filterBy;
-    }
-
     const session = await auth();
     const filterBy = getFilterBy(type);
     const result = user ? await fetchTweet(page,null,user,filterBy) : await fetchTweet(page,null,null,filterBy);
