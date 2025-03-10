@@ -10,8 +10,6 @@ import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { IoLocationOutline } from "react-icons/io5";
 import { GoXCircleFill } from "react-icons/go";
-import xlogo from '../../../../public/images/xprofile.png';
-import Image from 'next/image';
 import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
 import { useRouter } from 'next/navigation';

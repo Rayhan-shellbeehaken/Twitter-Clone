@@ -32,8 +32,6 @@ export default function page() {
     const [messages, setMessages] = useState([]);
     const senderId = useMemo(() => session?.user?._id, [session]);
     const [messageStatus, setMessageStatus] = useState("unseen");
-    const [isMyLastMessage, setIsMyLastMessage] = useState(false);
-    const [lastUserId, setLastUserId] = useState("");
 
     useEffect(()=>{
         if(textRef.current){
@@ -69,12 +67,7 @@ export default function page() {
         try{
             const result = await axios.get(`/api/messages?roomId=${roomId}`);
             const messages = result.data.messages.messages;
-            
-            const lastTexterId = messages[messages.length - 1].sender;
-            if(lastTexterId === senderId) setIsMyLastMessage(true);
-            else setIsMyLastMessage(false);
             setMessages(messages);
-            
             setMessageStatus(result.data.messages.status);
         }catch(error){
             console.log(error);
@@ -136,7 +129,6 @@ export default function page() {
         })
         socket.on("receive-message",({senderId, text, image, status})=>{
             setMessages((prev) => [...prev, { sender : senderId, text, messageImage : image }]);
-
             setMessageStatus(status);
         })
 
