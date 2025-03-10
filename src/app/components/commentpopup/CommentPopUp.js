@@ -17,6 +17,8 @@ import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
 import timeAgo from '@/app/helpers/timeago';
+import { updateATweet } from '@/app/actions/tweetaction';
+import { postANotification } from '@/app/actions/notificationaction';
 
 export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId,createdAt}) {
     const textRef = useRef(null);
@@ -53,9 +55,8 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
                 userId
             }
         }
-        
         try{
-            const result = await axios.patch(`/api/tweets?id=${id}`,data);
+            const result = await updateATweet(id,data);
             const notification = {
                 notificationType : result.data.tweet.parent === null ? "comment" : "reply",
                 notifiedTo : userDetails._id,
@@ -64,7 +65,7 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
             setShow(false);
             toggleAlert("success","Comment successfully");
             if(result.status === 200 && userId !== userDetails._id){
-                const response = await axios.post('/api/notifications',notification);
+                const response = await postANotification(notification);
             }
         }catch(error){
             toggleAlert("error","Failed to comment");
