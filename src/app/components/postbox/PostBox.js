@@ -13,6 +13,8 @@ import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
 import { useRouter } from 'next/navigation';
+import { postATweet } from '@/app/actions/tweetaction';
+import { getUserInfo } from '@/app/actions/useraction';
 
 export default function PostBox({username}) {
     const textRef = useRef(null);
@@ -50,7 +52,7 @@ export default function PostBox({username}) {
             postImage
         }
         try{
-            const response = await axios.post('/api/tweets', data);
+            const response = await postATweet(data);
             toggleAlert("success","Successfully posted");
             router.refresh();
             setValue("");
@@ -67,13 +69,8 @@ export default function PostBox({username}) {
     }
 
     async function fetchData() {
-        try{
-            const user = await axios.get(`/api/user?username=${username}`);
-            console.log(user);
-            setUserInfo({name : user.data.user.username , profileImage : user.data.user.profileImage});
-        }catch(error){
-            console.log(error);
-        }
+        const user = await getUserInfo(username);
+        setUserInfo({name : user.user.username , profileImage : user.user.profileImage});
     }
 
     useEffect(()=>{
