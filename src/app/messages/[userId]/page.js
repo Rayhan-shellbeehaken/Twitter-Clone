@@ -14,6 +14,9 @@ import { useSession } from 'next-auth/react';
 import { io } from "socket.io-client";
 import Link from 'next/link';
 import { FaArrowLeft } from "react-icons/fa6";
+import { getYearAndMonth } from '@/app/helpers/birthdate';
+import { getUserInfoById } from '@/app/actions/useraction';
+import { addARoom, addMessage, getMessages, updateMessage, updateMessageStatus } from '@/app/actions/chataction';
 
 export default function page() {
     const socket = useMemo(()=>io("http://localhost:3000"),[]);  
@@ -56,16 +59,17 @@ export default function page() {
     }
 
     async function fetchUser() {
-        const result = await axios.get(`/api/user?id=${userId}`);
+        // const result = await axios.get(`/api/user?id=${userId}`);
+        const result = await getUserInfoById(userId);
         const user = result.data.user;
         setUserInfo(user);
-        setJoinedDate(formatDate(user?.createdAt));
+        setJoinedDate(getYearAndMonth(user?.createdAt));
     }
 
     async function fetchMessages(senderId, userId) {
         const roomId = [senderId, userId].sort().join("-");
         try{
-            const result = await axios.get(`/api/messages?roomId=${roomId}`);
+            const result = await getMessages(roomId);
             const messages = result.data.messages.messages;
             setMessages(messages);
             setMessageStatus(result.data.messages.status);
@@ -79,24 +83,16 @@ export default function page() {
         const data = {
             roomId
         }
-        try{
-            const room = await axios.post('/api/messages',data);
-        }catch(error){
-            console.log(error);
-        }
+        const room = await addARoom(data);
     }
 
     async function onChangeStatus(value) {
-        try{
-            const roomId = [senderId, userId].sort().join("-");
-            const data = {
-                roomId,
-                status: value ? value : messageStatus
-            }
-            const message = await axios.patch(`/api/messages?status=true`,data);
-        }catch(error){
-            console.log(error);
+        const roomId = [senderId, userId].sort().join("-");
+        const data = {
+            roomId,
+            status: value ? value : messageStatus
         }
+        const message = await updateMessageStatus(data);
     }
 
     useEffect(()=>{
@@ -142,14 +138,6 @@ export default function page() {
             contentRef.current.scrollTop = contentRef.current.scrollHeight;
         }
     },[messages]);
-
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const formattedMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
-        const year = date.getFullYear().toString().slice(-2);
-      
-        return `${formattedMonth} ${year}`;
-    }
     
     const onSend = async() =>{
         const roomId = [senderId, userId].sort().join("-");
@@ -166,13 +154,9 @@ export default function page() {
             image : selectedImage
         });
         textRef.current.focus();
-        try{
-            const message = await axios.patch('/api/messages', data);
-            setValue("");
-            minimize();
-        }catch(error){
-            console.log(error);
-        }
+        const message = await addMessage(data);
+        setValue("");
+        minimize();
     }
 
     return (

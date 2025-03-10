@@ -58,4 +58,12 @@ export function formatDate(dateString){
     });
 }
 
+export async function getYearAndMonth(dateString) {
+    const date = new Date(dateString);
+    const formattedMonth = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
+    const year = date.getFullYear().toString().slice(-2);
+    
+    return `${formattedMonth} ${year}`;
+}
+
 export {Days, Months, Years};

@@ -6,15 +6,13 @@ import { formatDistanceToNow } from "date-fns";
 import { useEffect } from 'react';
 import { useMemo } from 'react';
 import { io } from "socket.io-client";
+import timeAgo from '@/app/helpers/timeago';
 
 export default function User({isActive,senderId,receiverId,image,name,lastMessageTime,lastMessage,lastMessageSender,seenStatus}) {
     const socket = useMemo(()=>io("http://localhost:3000"),[]);  
     const [latestMessage, setLatestMessage] = useState({message : lastMessage, time : lastMessageTime});
     const [isBold, setIsBold] = useState(lastMessageSender === receiverId && seenStatus === "unseen");
-    console.log(seenStatus)
-    function timeAgo(date) {
-        return formatDistanceToNow(new Date(date), { addSuffix: false });
-    }
+    
     useEffect(()=>{
         socket.emit('join-chat',{
             senderId,

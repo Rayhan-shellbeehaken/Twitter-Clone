@@ -9,6 +9,15 @@ export async function getUserInfo(username) {
     }
 }
 
+export async function getUserInfoById(userId) {
+    try{
+        const result = await axios.get(`/api/user?id=${userId}`);
+        return result;
+    }catch(error){
+        throw error;
+    }
+}
+
 export async function updateUserInfo(data) {
     try{
         const result = await axios.patch('/api/user',data);

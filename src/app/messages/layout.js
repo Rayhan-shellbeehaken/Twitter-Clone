@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import Loader from '../components/loader/Loader';
+import { getChatList } from '../actions/chataction';
 
 export default function MessagesLayout({children}) {
     const pathName = usePathname();
@@ -26,7 +27,7 @@ export default function MessagesLayout({children}) {
     
     async function fetchChatList() {
         try{
-            const result = await axios.get('/api/messages');
+            const result = await getChatList();
             setChatList(result.data.chatList);
         }catch(error){
             console.log(error);

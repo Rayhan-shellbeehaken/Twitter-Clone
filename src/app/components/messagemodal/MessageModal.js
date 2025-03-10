@@ -10,6 +10,7 @@ import { FaUser } from "react-icons/fa6";
 import axios from 'axios';
 import Loader from '../loader/Loader';
 import { useRouter } from 'next/navigation';
+import { getUserInfo } from '@/app/actions/useraction';
 
 export default function MessageModal({username}) {
     const {messageModal, setMessageModal} = useAppContext();
@@ -22,8 +23,9 @@ export default function MessageModal({username}) {
         if(!username) return;
         async function fetchFollowings() {
             try{
-                const result = await axios.get(`/api/user?username=${username}`);
-                const followings = result.data.user.following;
+                const result = await getUserInfo(username);
+                const followings = result.user.following;
+                console.log(followings);
                 setFollowings(followings);
                 setLoading(false);
                 // console.log(result);
