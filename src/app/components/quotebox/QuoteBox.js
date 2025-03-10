@@ -31,8 +31,6 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl,cr
     const router = useRouter();
     const {data:session} = useSession();
 
-   
-
     useEffect(()=>{
         if(textRef.current){
             textRef.current.style.height = "45px";
@@ -60,9 +58,7 @@ export default function QuoteBox({id,setQuotePopUp,userDetails,title,imageUrl,cr
             postText,
             postImage,
             repostedTweet : id
-        }
-
-        
+        }  
         try{
             const response = await axios.post('/api/tweets',data);
             if(response.status === 200 && session?.user?._id !== userDetails._id){

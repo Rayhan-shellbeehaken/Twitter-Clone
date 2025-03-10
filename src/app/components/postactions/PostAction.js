@@ -35,11 +35,9 @@ export default function PostAction({id,reacters,title,imageUrl,userDetails,comme
         reacted ? 
         reacters = reacters.filter(userId => userId !== session?.user?._id) :
         reacters.push(session?.user?._id); 
-
         const data = {
             reacters : reacters
         }
-
         const notification = {
             notificationType : "react",
             notifiedTo : userDetails._id,

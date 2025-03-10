@@ -37,12 +37,16 @@ export default function ProfileAction({ownProfile,ownId,userId,username,followed
         }
     }
 
+    const onMessage = () =>{
+        router.push(`/messages/${userId}`)
+    }
+
     return ( 
         <div className={styles.container}>
             <button className={`${styles.circle} ${!ownProfile ? '' : styles.hide}`}><RiMoreFill/></button>
             <button className={`${styles.circle} ${!ownProfile ? '' : styles.hide}`}><VscVscode/></button>
             <button className={`${styles.circle} ${!ownProfile ? '' : styles.hide}`}><IoSearch/></button>
-            <button className={`${styles.circle} ${!ownProfile ? '' : styles.hide}`}><FiMail/></button>
+            <button className={`${styles.circle} ${!ownProfile ? '' : styles.hide}`} onClick={onMessage}><FiMail/></button>
             <button className={`${styles.button} ${!ownProfile ? '' : styles.hide}`} onClick={onFollow}>
                 {followed ? "Following" : "Follow"}
             </button>

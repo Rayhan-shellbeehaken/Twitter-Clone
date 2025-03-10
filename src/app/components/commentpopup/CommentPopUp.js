@@ -16,7 +16,7 @@ import { GoArrowLeft } from "react-icons/go";
 import { GoXCircleFill } from "react-icons/go";
 import axios from 'axios';
 import { useAppContext } from '@/app/store/store';
-import { formatDistanceToNow } from "date-fns";
+import timeAgo from '@/app/helpers/timeago';
 
 export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,commenters,userId,createdAt}) {
     const textRef = useRef(null);
@@ -42,10 +42,6 @@ export default function CommentPopUp({id,setShow,title,imageUrl,userDetails,comm
             reader.readAsDataURL(file);
         }
     },[file]);
-
-    function timeAgo(date) {
-        return formatDistanceToNow(new Date(date), { addSuffix: true });
-    }
 
     const onComment = async(event) =>{
         event.preventDefault();
