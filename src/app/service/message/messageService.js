@@ -23,7 +23,7 @@ export async function addMessage(user,request) {
 export async function changeStatus(request) {
     const requestBody = await request.json();
     const {roomId, status} = requestBody;
-    const conversation = changeMessageStatus(roomId, status);
+    const conversation = await changeMessageStatus(roomId, status);
     return conversation;
 }
 

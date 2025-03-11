@@ -26,7 +26,6 @@ export async function GET(request){
         const category = url.searchParams.get('category') || null;
         
         if(!user){
-            console.log("HERE IS THE PROBLEM");
             return NextResponse.json({message : 'Login first'},{status : 400});
         }
         const notifications = await getAllNotifications(user,category);

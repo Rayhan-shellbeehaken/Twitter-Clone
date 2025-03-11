@@ -1,8 +1,7 @@
 import { connect } from "@/app/db/db.config";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { addTweet,getTweet, getTweets, updateTweet } from "@/app/service/tweet/tweetService";
-// import { getTweet } from "@/app/service/tweet/tweetService";
+import { addTweet, getTweet, getTweets, updateTweet } from "@/app/service/tweet/tweetService";
 
 connect();
 
