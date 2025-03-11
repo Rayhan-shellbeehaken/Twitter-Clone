@@ -9,7 +9,7 @@ import { getFilterBy } from '@/app/helpers/tweetoperation';
 
 export default async function PostList({params,page,user,type}) {
     const session = await auth();
-    const filterBy = getFilterBy(type);
+    const filterBy = await getFilterBy(type);
     const result = user ? await fetchTweet(page,null,user,filterBy) : await fetchTweet(page,null,null,filterBy);
     const tweets = result.result;
     if(tweets.length === 0) return <div className={styles.end}>No more post available</div>;
