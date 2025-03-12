@@ -38,6 +38,11 @@ export async function getUserInfoById(id){
   return user;
 }
 
+export async function getAllUser() {
+  const user = await User.find({},{username : 1, profileImage : 1, followers : 1}).sort({createdAt : -1}).limit(3);
+  return user;
+}
+
 export async function updateUserInfo(id,reqBody,followed) {
     if(reqBody.newFollower){
         const field = "followers";

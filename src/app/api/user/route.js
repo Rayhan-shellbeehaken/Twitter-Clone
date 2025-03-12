@@ -14,7 +14,9 @@ export async function GET(request) {
         const url = new URL(request.url);
         const id = url.searchParams.get('id') || null;
         const username = url.searchParams.get('username') || null;
-        const user = await getUser(id,username);
+        const type = url.searchParams.get('type') || null;
+        const user = await getUser(id,username,type);
+        console.log(user);
 
         return NextResponse.json({
             message : 'Successfully get user info',

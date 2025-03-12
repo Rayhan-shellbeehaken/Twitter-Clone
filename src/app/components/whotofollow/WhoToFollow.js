@@ -1,51 +1,85 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import styles from './whotofollow.module.css'
 import Image from 'next/image';
 import xprofile from '../../../../public/images/xprofile.png'
+import { addFollow, getUsers } from '@/app/actions/useraction';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function WhoToFollow() {
-    const items = [
-        {
-            indx: 0,
-            username: "Physics Today",
-            accountName: "@PhysicsToday"
-        },
-        {
-            indx: 1,
-            username: "Elon Mask",
-            accountName: "@elonmusk"
-        },
-        {
-            indx: 2,
-            username: "NASA",
-            accountName: "@NASA"
+    const [users, setUsers] = useState([]);
+    const {data:session, status} = useSession(); 
+    const router = useRouter();
+
+    async function fetchUsers() {
+        const result = await getUsers();
+        console.log(result.data.user);
+        setUsers(result.data.user);
+    }
+
+    useEffect(()=>{
+        fetchUsers();
+    },[]);
+
+    async function changeFollowStatus(userId,followed) {
+        setUsers(prevUsers =>
+            prevUsers.map(user =>
+                user._id === userId
+                    ? { ...user, followers: followed 
+                        ? user.followers.filter(follower => follower !== session?.user?._id) 
+                        : [...user.followers, session?.user?._id] } 
+                    : user
+            )
+        );
+    }
+
+    const onFollow = async(userId,followed)=>{
+        changeFollowStatus(userId,followed);
+        const data = { 
+            "newFollower" :  session?.user?._id
         }
-    ]
+        try{
+            const result = await addFollow(userId,followed,data);
+        }catch(error){
+            console.log(error);
+        }
+        
+    }
 
     return (
         <div className={styles.container}>
-            <h2>Who to follow</h2>
-            <div className={styles["list-container"]}>
-                {
-                    items.map(item => (
-                        <div key={item.indx} className={styles.item}>
-                            <div className={styles.left}>
-                                <div className={styles.image}>
-                                    <Image src={xprofile} alt='xlogo' priority layout='intrinsic'></Image>
+            {status === "loading" ? <h2>Loading...</h2> :
+                <>
+                    <h2>Who to follow</h2>
+                    <div className={styles["list-container"]}>
+                        {
+                            users.map(user => (
+                                <div key={user._id} className={styles.item}>
+                                    <div className={styles.left}>
+                                        <div className={styles.image}>
+                                            {user.profileImage && 
+                                                <img src={user.profileImage}></img>
+                                            }
+                                        </div>
+                                        <div>
+                                            <p>{user.username}</p>
+                                            <p>@_{user.username}</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.right}>
+                                        <button onClick={()=>onFollow(user._id, user.followers.includes(session?.user?._id))}>
+                                            {user.followers.includes(session?.user?._id) ? "Unfollow" : "Follow"} 
+                                        </button>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p>{item.username}</p>
-                                    <p>{item.accountName}</p>
-                                </div>
-                            </div>
-                            <div className={styles.right}>
-                                <button>Follow</button>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-            <p>Show More</p>
+                            ))
+                        }
+                    </div>
+                    <p>Show More</p>
+                </>
+            }
+            
         </div>
     )
 }

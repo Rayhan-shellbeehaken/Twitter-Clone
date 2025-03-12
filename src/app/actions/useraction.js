@@ -35,3 +35,12 @@ export async function addFollow(userId,followed,data) {
         throw error;
     }
 }
+
+export async function getUsers(category) {
+    try{
+        const result = category ?  await axios.get(`/api/user?type=${category}`) : await axios.get('/api/user');
+        return result;
+    }catch(error){
+        throw error;
+    }
+}

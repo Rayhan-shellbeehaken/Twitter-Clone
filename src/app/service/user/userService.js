@@ -1,9 +1,13 @@
-import { getUserInfo, getUserInfoById, updateUserInfo } from "@/app/repository/user/userRepository";
+import { getAllUser, getUserInfo, getUserInfoById, updateUserInfo } from "@/app/repository/user/userRepository";
 
-export async function getUser(id,username) {
+export async function getUser(id,username,type) {
     let user;
     if(id) user = await getUserInfoById(id);
     else if(username) user = await getUserInfo(username);
+    else if(type){
+
+    }
+    else user = await getAllUser();
     return user;
 }
 
