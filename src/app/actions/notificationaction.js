@@ -8,3 +8,12 @@ export async function postANotification(data) {
         throw error;
     }
 }
+
+export async function updateNotification() {
+    try{
+        const result = await axios.patch('/api/notifications');
+        return result;
+    }catch(error){
+        throw error;
+    }
+}

@@ -1,7 +1,7 @@
 import { connect } from "@/app/db/db.config";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { addNewNotification, getAllNotifications } from "@/app/service/notification/notificationService";
+import { addNewNotification, getAllNotifications, updateNotification } from "@/app/service/notification/notificationService";
 
 connect();
 
@@ -32,5 +32,18 @@ export async function GET(request){
         return NextResponse.json({message : 'Get all notification successfully',notifications},{status : 200});
     }catch(error){
         return NextResponse.json({error : error.message},{status : 500});
+    }
+}
+
+export async function PATCH(request) {
+    try{
+        const session = await auth();
+        if(!session?.user){
+            return NextResponse.json({message : 'Login first'},{status : 404});
+        }
+        const notifications = await updateNotification(session?.user?._id);
+        return NextResponse.json({message : 'Update all notification successfully', notifications},{status : 200});
+    }catch(error){
+        return NextResponse.json({message : error.message},{status : 500});
     }
 }

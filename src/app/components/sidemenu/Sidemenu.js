@@ -18,10 +18,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SideBarPopUp from '../sidebarpopup/SideBarPopUp';
 import SideBarProfile from '../sidebarprofile/SideBarProfile';
+import { fetchNotification } from '@/app/helpers/notificationoperation';
+import NotificationButton from './NotificationButton';
 
 export default async function Sidemenu() {
     const session = await auth();
     const profile = `/${session?.user?.username}?type=all`;
+    const result = await fetchNotification(session?.user?._id,undefined);
+    const notifications = result.notifications;
+    console.log(result.notifications);
+    const unreadNotification = notifications.filter(item => item.notificationStatus === "unread");
     return (
         <div className={styles.container}>
             <div className={styles.sidemenu}>
@@ -31,7 +37,7 @@ export default async function Sidemenu() {
                 <ul className={styles["menu-items"]}>
                     <li><Link href="/home?feed=foryou"><GoHomeFill/> <span>Home</span></Link></li>
                     <li><Link href="#"><IoSearch/> <span>Explore</span></Link></li>
-                    <li><Link href="/notifications"><RiNotification2Line/> <span>Notifications</span></Link></li>
+                    <NotificationButton status={unreadNotification.length ? true : false}/>
                     <li><Link href="/messages"><FiMail/> <span>Messages</span></Link></li>
                     <li><Link href="#"><VscVscode/> <span>Grok</span></Link></li>
                     <li><Link href="#"><PiBookmarkSimpleBold/> <span>Bookmarks</span></Link></li>

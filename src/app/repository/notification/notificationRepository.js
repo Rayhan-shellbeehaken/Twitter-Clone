@@ -48,6 +48,14 @@ export async function getNotifications(user,category) {
   return notifications;
 }
 
+export async function updateAllNotifications(user) {
+  const notifications = await Notification.updateMany(
+    { notifiedTo : new mongoose.Types.ObjectId(user)},
+    { $set : {notificationStatus : "read"}}
+  );
+  return notifications;
+}
+
 function notificationCategory(user,category) {
   let matcher;
   if(category === "followed"){
@@ -67,3 +75,4 @@ function notificationCategory(user,category) {
   }
   return matcher;
 }
+

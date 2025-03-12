@@ -39,7 +39,7 @@ export async function getUserInfoById(id){
 }
 
 export async function getAllUser() {
-  const user = await User.find({},{username : 1, profileImage : 1, followers : 1}).sort({createdAt : -1}).limit(3);
+  const user = await User.find({},{username : 1, profileImage : 1, followers : 1}).sort({createdAt : -1});
   return user;
 }
 

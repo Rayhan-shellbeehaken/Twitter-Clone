@@ -14,8 +14,8 @@ export default function WhoToFollow() {
 
     async function fetchUsers() {
         const result = await getUsers();
-        console.log(result.data.user);
-        setUsers(result.data.user);
+        const profiles = result.data.user;
+        setUsers(profiles.filter(profile => profile._id !== session?.user?._id).slice(0,3));
     }
 
     useEffect(()=>{
