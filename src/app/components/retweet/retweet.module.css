@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(35, 176, 184);
+    background-color: rgb(190, 239, 241);
 }
 
 .image-container > img{
@@ -52,6 +52,7 @@
 
 .content > div{
     width: 100%;
+    word-wrap: break-word;
 }
 
 .content > img{
