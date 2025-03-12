@@ -30,24 +30,33 @@ commenters,reposters,createdAt}) {
     const [repostBox,setRepostBox] = useState(false);
     const popupRef = useRef(null);
     const {toggleAlert} = useAppContext();
+    const [totalReacter, setTotalReacter] = useState(reacters.length);
 
     useEffect(()=>{
         setReacted(reacters.includes(session?.user?._id));
         setReposted(reposters.includes(session?.user?._id));
-    },[reacters,reposters,session]);
+    },[reposters,session]);
 
     const onReact = async() => {
-        reacted ? 
-        reacters = reacters.filter(userId => userId !== session?.user?._id) : reacters.push(session?.user?._id); 
-        const data = {
-            reacters : reacters
+        let updatedReacters = new Set(reacters);
+        if(reacted){
+            updatedReacters.delete(session?.user?._id);
+            setTotalReacter(prev => prev - 1);
+            setReacted(false);
+        }else{
+            updatedReacters.add(session?.user?._id);
+            setTotalReacter(prev => prev + 1);
+            setReacted(true);   
         }
+        const data = {
+            reacters: Array.from(updatedReacters)
+        }
+        const tweet = await updateATweet(id,data);
         const notification = {
             notificationType : "react",
             notifiedTo : userDetails._id,
             redirectTo : `/${userDetails.username}/status/${id}`,
         };
-        const tweet = await updateATweet(id,data);
         if(tweet.status === 200 && !reacted && session?.user?._id !== userDetails._id){
             const result = await postANotification(notification);
         }
@@ -147,7 +156,7 @@ commenters,reposters,createdAt}) {
                     <TiHeartFullOutline/> : 
                     <CiHeart/>
                 }
-                <span>{reacters.length || 0}</span>
+                <span>{totalReacter || 0}</span>
             </div>
         </>
     )
