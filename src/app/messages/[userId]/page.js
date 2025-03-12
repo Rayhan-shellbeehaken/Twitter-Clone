@@ -113,15 +113,16 @@ export default function page() {
     useEffect(()=>{
         if(messages.length !== 0){
             const lastTexterId = messages[messages.length - 1].sender;
-            if(lastTexterId !== senderId){
-                onChangeStatus("seen")
-            }else onChangeStatus();
+            // if(lastTexterId !== senderId){
+            //     onChangeStatus("seen")
+            // }else onChangeStatus();
+            onChangeStatus();
         }
     },[messageStatus])
 
     useEffect(()=>{
         socket.on("join-receiver",({receiverId})=>{
-            setMessageStatus("seen"); // ekhane change
+            if(receiverId === userId) setMessageStatus("seen"); // ekhane change
         })
         socket.on("receive-message",({senderId, text, image, status})=>{
             setMessages((prev) => [...prev, { sender : senderId, text, messageImage : image }]);
