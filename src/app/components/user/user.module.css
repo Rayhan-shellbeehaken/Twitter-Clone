@@ -10,6 +10,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    width: 95%;
 }
 
 .image{
@@ -20,7 +21,7 @@
 }
 
 .image > img{
-    width: 100%;
+    width: 40px;
     height: 100%;
     border-radius: 50%;
 }
@@ -28,6 +29,7 @@
 .info{
     margin-left: 8px;
     color: white;
+    width: 90%;
 }
 
 /* .info > div > span{
@@ -38,7 +40,12 @@
 .info > div:nth-child(2){
     /* color: rgb(117, 117, 117); */
     font-size: 15px;
+    white-space: nowrap;       
+    overflow: hidden;          
+    text-overflow: ellipsis;   
+    max-width: 100%; 
     /* font-weight: 200; */
+    
 }
 
 .container:hover{
