@@ -17,16 +17,30 @@ export async function getUserInfo(username) {
           }
         },
         {
+          $lookup : {
+            from : "users",
+            localField : "followers",
+            foreignField: "_id",
+            as: "followers"
+          }
+        },
+        {
           $project: {
             password : 0,
             isVerified : 0,
             __v : 0,
             "following.createdAt" : 0,
+            "following.password" : 0,
             "following.followers" : 0,
-            "following.following" : 0,
             "following.email" : 0,
             "following.__v" : 0,
             "following.isVerified" : 0,
+            "followers.createdAt" : 0,
+            "followers.password" : 0,
+            "followers.followers" : 0,
+            "followers.email" : 0,
+            "followers.__v" : 0,
+            "followers.isVerified" : 0,
           }
         }
     ]);

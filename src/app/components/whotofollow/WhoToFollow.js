@@ -44,7 +44,6 @@ export default function WhoToFollow() {
         }catch(error){
             console.log(error);
         }
-        
     }
 
     return (

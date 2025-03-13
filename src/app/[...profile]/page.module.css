@@ -76,10 +76,11 @@
     color: rgb(123, 123, 123);
 }
 
-.profile{
-    height: 400px;
+/* .profile{ */
+    /* height: 400px; */
+    /* height: 100%; */
     /* background-color: antiquewhite; */
-}
+/* } */
 
 .profile-top{
     background-color: black;

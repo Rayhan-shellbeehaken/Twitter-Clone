@@ -23,6 +23,8 @@ import ProfileAction from '../components/profileactions/ProfileAction';
 import ProfileModal from '../components/profilemodal/ProfileModal';
 import Popup from '../components/popup/Popup';
 import { formatDate } from '../helpers/birthdate';
+import FollowBar from '../components/followbar/FollowBar';
+import ConnectionList from '../components/connectionlist/ConnectionList';
 
 export default async function page({searchParams, params}) {
     const queryParams = (await searchParams).type;
@@ -39,6 +41,9 @@ export default async function page({searchParams, params}) {
 
     const ownProfile = profile[0] === session?.user?.username ? true : false;
     const followed = user.followers.includes(session?.user?._id) ? true : false;
+
+    const followers = user.followers;
+    const followings = user.following;
 
     return (    
         <div className={styles.page}>
@@ -57,67 +62,82 @@ export default async function page({searchParams, params}) {
                     </div>
                 </div>
                 <div className={styles.profile}>
-                    <div className={styles["profile-top"]}>
-                        {user.coverImage && 
-                            <img src={user.coverImage}></img>
-                        }
-                    </div>
-                    <div className={styles["profile-bottom"]}>
-                        <div className={styles.first}>
-                            <div>
-                                <img src={user.profileImage ? user.profileImage : xlogo} alt='profile picture'></img>
-                            </div>
-                            <ProfileAction 
-                                ownProfile={ownProfile}
-                                ownId={session?.user?._id}
-                                userId={user._id}
-                                username={session?.user?.username}
-                                followed={followed}
+                    {(queryParams === "follower" || queryParams === "following") ? 
+                        <>
+                            <FollowBar queryParams={queryParams}/>
+                            <ConnectionList
+                                userId={session?.user?._id}
+                                followers={followers}
+                                followings={followings}
+                                type={queryParams}
                             />
-                        </div>
-                        
-                        <div className={styles.second}>
-                            <div>
-                                <div>
-                                    <h3>{user.username}</h3>
-                                    <p>_@{user.username}</p>
-                                </div>
-                                <div>
-                                    <RiVerifiedBadgeFill className={styles.verified}/>
-                                    Get verified
-                                </div>
+                        </> 
+                        : 
+                        <>
+                            <div className={styles["profile-top"]}>
+                                {user.coverImage && 
+                                    <img src={user.coverImage}></img>
+                                }
                             </div>
-                            <div>
-                                <div>
-                                    <SlCalender className={styles.calender}/>
-                                    Joined {formatDate(user.createdAt)}
+                            <div className={styles["profile-bottom"]}>
+                                <div className={styles.first}>
+                                    <div>
+                                        <img src={user.profileImage ? user.profileImage : xlogo} alt='profile picture'></img>
+                                    </div>
+                                    <ProfileAction 
+                                        ownProfile={ownProfile}
+                                        ownId={session?.user?._id}
+                                        userId={user._id}
+                                        username={session?.user?.username}
+                                        followed={followed}
+                                    />
                                 </div>
-                                <div>
-                                    <Link href="#">{user.following.length} following</Link>
-                                    <Link href="#">{user.followers.length} follower</Link>
+                            
+                                <div className={styles.second}>
+                                    <div>
+                                        <div>
+                                            <h3>{user.username}</h3>
+                                            <p>_@{user.username}</p>
+                                        </div>
+                                        <div>
+                                            <RiVerifiedBadgeFill className={styles.verified}/>
+                                            Get verified
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <SlCalender className={styles.calender}/>
+                                            Joined {formatDate(user.createdAt)}
+                                        </div>
+                                        <div>
+                                            <Link href={`/${profile[0]}?type=following`}>{user.following.length} following</Link>
+                                            <Link href={`/${profile[0]}?type=follower`}>{user.followers.length} follower</Link>
+                                        </div>
+                                    </div>
                                 </div>
+                                <ProfileNavBar base={queryParams} ownProfile={ownProfile}/>
+                                {queryParams === "likes" && 
+                                    <div className={styles["likes-message"]}>
+                                        <IoMdLock/>
+                                        <p>Your likes are private. Only you can see them.</p>
+                                    </div>
+                                }
+                                {(queryParams === "highlights" || queryParams === "media" || queryParams === "articles") &&
+                                    <div className={styles["likes-message"]}>
+                                        <TbError404/>
+                                        <p>Didn't work on this page.</p>
+                                    </div>
+                                }
+                                {(queryParams !== "highlights" && queryParams !== "media" && queryParams !== "articles") &&
+                                    <Suspense fallback={<Loader/>}>
+                                        <PostList page={1} user={user._id} type={queryParams}/>
+                                    </Suspense>
+                                }
+                            
                             </div>
-                        </div>
-                        <ProfileNavBar base={queryParams} ownProfile={ownProfile}/>
-                        {queryParams === "likes" && 
-                            <div className={styles["likes-message"]}>
-                                <IoMdLock/>
-                                <p>Your likes are private. Only you can see them.</p>
-                            </div>
-                        }
-                        {(queryParams === "highlights" || queryParams === "media" || queryParams === "articles") &&
-                            <div className={styles["likes-message"]}>
-                                <TbError404/>
-                                <p>Didn't work on this page.</p>
-                            </div>
-                        }
-                        {(queryParams !== "highlights" && queryParams !== "media" && queryParams !== "articles") &&
-                            <Suspense fallback={<Loader/>}>
-                                <PostList page={1} user={user._id} type={queryParams}/>
-                            </Suspense>
-                        }
-                        
-                    </div>
+                        </>
+                    }
+                    
                 </div>
             </div>
             <div className={styles.line}>
