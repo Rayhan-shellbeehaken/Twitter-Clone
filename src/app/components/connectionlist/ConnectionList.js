@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './connection.module.css';
 import { addFollow } from '@/app/actions/useraction';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function ConnectionList({ userId, followers, followings, type }) {
     const [userList, setUserList] = useState(type === "following" ? followings : followers);
@@ -38,7 +39,7 @@ export default function ConnectionList({ userId, followers, followings, type }) 
         <div className={styles.container}>
             {userList.map(user => (
                 <div key={user._id} className={styles.user}>
-                    <div className={styles.left}>
+                    <Link href={`/${user.username}?type=all`} className={styles.left}>
                         <div className={styles.image}>
                             {user.profileImage && <img src={user.profileImage} alt={user.username} />}
                         </div>
@@ -46,7 +47,7 @@ export default function ConnectionList({ userId, followers, followings, type }) 
                             <p>{user.username}</p>
                             <p>@_{user.username}</p>
                         </div>
-                    </div>
+                    </Link>
                     <div className={styles.right}>
                         <button onClick={() => toggleFollow(user._id)}>
                             {followingList.has(user._id) ? 'Unfollow' : 'Follow'}

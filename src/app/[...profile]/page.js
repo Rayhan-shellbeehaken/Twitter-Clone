@@ -33,7 +33,9 @@ export default async function page({searchParams, params}) {
     const cookieStore = cookies();
     const prevPagesString = (await cookieStore).get("pageHistory")?.value;
     const prevPages = JSON.parse(prevPagesString);
-    const backPage = prevPages[prevPages.length - 1] || '/home?feed=foryou';
+    // const backPage = prevPages[prevPages.length - 1] || '/home?feed=foryou';
+    const backPage = (queryParams === "follower" || queryParams === "following") ? 
+                    `/${profile[0]}?type=all` : prevPages[prevPages.length - 1] || '/home?feed=foryou'
 
     const session = await auth();
     const result = await fetchUser(profile[0]);

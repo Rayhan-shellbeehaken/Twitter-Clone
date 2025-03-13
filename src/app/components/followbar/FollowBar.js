@@ -32,7 +32,7 @@ export default function FollowBar({queryParams}) {
             case "follower":
                 setActive(1);
                 break;
-            case 2:
+            case "following":
                 setActive(2)
                 break;
             default:
