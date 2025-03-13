@@ -35,6 +35,7 @@ export default function page() {
     const [messages, setMessages] = useState([]);
     const senderId = useMemo(() => session?.user?._id, [session]);
     const [messageStatus, setMessageStatus] = useState("unseen");
+    const [isLastMessage, setIsLastMessage] = useState(false);
 
     useEffect(()=>{
         if(textRef.current){
@@ -138,9 +139,16 @@ export default function page() {
 
     useEffect(()=>{
         if (contentRef.current) {
-            contentRef.current.scrollTop = contentRef.current.scrollHeight;
+            contentRef.current.scrollTop = contentRef.current.scrollHeight - 100;
         }
     },[messages]);
+
+    useEffect(() => {
+        if (messages.length > 0) {
+            const lastMessage = messages[messages.length - 1];
+            setIsLastMessage(lastMessage.sender === senderId);
+        }
+    }, [messages, senderId]);
     
     const onSend = async() =>{
         const roomId = [senderId, userId].sort().join("-");
@@ -183,10 +191,10 @@ export default function page() {
                 <div className={styles.messages}>
                     {
                         messages.map((message, index) => {
-                            const isLastMessage = index === messages.length - 1;
-                        
+                            const isLast = index === messages.length - 1;
+                            
                             return (
-                                message.sender === senderId ?     
+                                message.sender === senderId ?      
                                 <div key={index} className={`${styles.outgoing}`}>
                                     {message.messageImage && 
                                         <div className={styles.chatImage}>
@@ -198,12 +206,9 @@ export default function page() {
                                             {message.text}
                                         </div>
                                     }
-                                    {isLastMessage &&
-                                        <p className={styles["message-status"]}>{messageStatus}</p>
-                                    }
                                 </div> 
                                 :
-                                <div key={index} className={`${styles.incoming} ${isLastMessage ? styles.lastMessage : ""}`}>
+                                <div key={index} className={`${styles.incoming}`}>
                                     {message.messageImage && 
                                         <div className={styles.chatImage}>
                                             <img src={message.messageImage}></img>
@@ -215,8 +220,9 @@ export default function page() {
                                 </div>
                             );
                         })
-                        
                     }
+                    
+                    <p className={`${styles["message-status"]} ${isLastMessage ? '' : styles.hide}`}>{messageStatus}</p>
                 </div>
             </div>
             

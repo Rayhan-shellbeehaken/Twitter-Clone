@@ -257,6 +257,9 @@
     visibility: hidden;
 }
 
+.hide{
+    visibility: hidden;
+}
 
 .messages{
     display: flex;
@@ -272,6 +275,7 @@
     max-width: 70%;
 }
 
+
 .outgoing{
     align-self: flex-end;
     margin: 5px 0;
@@ -281,11 +285,18 @@
     max-width: 70%;
 }
 
+
+
 .outgoing-text{
     background-color: #00B2FF;
+    /* padding: 12px 10px; */
     padding: 12px 10px;
     border-radius: 30px;
     display: inline-block;
+    /* display: flex;
+    justify-content: flex-start;
+    align-items: center; */
+    /* text-align: center; */
     margin: 3px 0;
     width: 100%;
     word-wrap: break-word;
