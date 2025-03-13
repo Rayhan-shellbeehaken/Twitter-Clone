@@ -1,4 +1,5 @@
 import Conversations from "@/app/models/conversation.model";
+import mongoose from "mongoose";
 
 export async function createNewRoom(roomId) {
     const room = await Conversations.findOne({room : roomId});
@@ -10,22 +11,30 @@ export async function createNewRoom(roomId) {
     }
 }
 
-export async function addNewMessage(id,data){
+export async function addNewMessage(id, user, data){
     const conversation = await Conversations.findOneAndUpdate(
         {room : id},
-        {$push: { messages: data } },
+        {
+          $set : { lastSender : user },
+          $push: { messages: data } },
         {new: true }
     )
-    
     return conversation;
 }
 
-export async function changeMessageStatus(id,status) {
+export async function changeMessageStatus(id, user, status) {
+  const query = { room: id };
+
+  if (status === "seen") {
+      query.lastSender = { $ne: new mongoose.Types.ObjectId(user) };
+  }
+
   const conversation = await Conversations.findOneAndUpdate(
-    {room : id},
+    query,
     {status : status},
     {new: true}
   )
+  return conversation;
 }
 
 export async function getAllMessages(roomId) {

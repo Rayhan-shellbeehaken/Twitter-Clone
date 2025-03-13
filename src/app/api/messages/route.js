@@ -28,7 +28,7 @@ export async function PATCH(request){
         const url = new URL(request.url);
         const messageStatus = url.searchParams.get('status') || null;
         if(messageStatus){
-            const message = await changeStatus(request);
+            const message = await changeStatus(user, request);
             return NextResponse.json({message : 'Successfully changed status', message}, {status : 200});
         }else{
             const message = await addMessage(user, request);

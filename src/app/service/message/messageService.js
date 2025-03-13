@@ -16,14 +16,14 @@ export async function addMessage(user,request) {
         messageImage,
         sender : user
     }
-    const conversation = await addNewMessage(roomId, newMessage);
+    const conversation = await addNewMessage(roomId, user, newMessage);
     return conversation;
 }
 
-export async function changeStatus(request) {
+export async function changeStatus(user, request) {
     const requestBody = await request.json();
     const {roomId, status} = requestBody;
-    const conversation = await changeMessageStatus(roomId, status);
+    const conversation = await changeMessageStatus(roomId, user, status);
     return conversation;
 }
 

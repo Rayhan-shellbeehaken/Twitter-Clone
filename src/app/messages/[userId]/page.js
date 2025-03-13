@@ -113,16 +113,17 @@ export default function page() {
     useEffect(()=>{
         if(messages.length !== 0){
             const lastTexterId = messages[messages.length - 1].sender;
-            // if(lastTexterId !== senderId){
-            //     onChangeStatus("seen")
-            // }else onChangeStatus();
-            onChangeStatus();
+            if(lastTexterId !== senderId){
+                onChangeStatus("seen")
+            }else onChangeStatus();
+            
         }
     },[messageStatus])
 
     useEffect(()=>{
         socket.on("join-receiver",({receiverId})=>{
             if(receiverId === userId) setMessageStatus("seen"); // ekhane change
+            onChangeStatus("seen");
         })
         socket.on("receive-message",({senderId, text, image, status})=>{
             setMessages((prev) => [...prev, { sender : senderId, text, messageImage : image }]);
@@ -130,6 +131,7 @@ export default function page() {
         })
 
         return () => {
+            socket.off("join-reciever");
             socket.off("receive-message");
         };
     },[]);

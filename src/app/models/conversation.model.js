@@ -8,6 +8,10 @@ const conversationSchema = new mongoose.Schema({
         unique : true
     },
     messages : [messageSchema],
+    lastSender : {
+        type : mongoose.Types.ObjectId,
+        ref : "users"
+    },
     status : {
         type : String,
         enum : ["seen","unseen"],
