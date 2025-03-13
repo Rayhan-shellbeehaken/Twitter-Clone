@@ -19,11 +19,16 @@ export default function MessagesLayout({children}) {
     const [hideSection, setHideSection] = useState(false);
     const [chatList, setChatList] = useState([]);
     const [info, setInfo] = useState({senderId : '', username : ''});
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(()=>{
         if(!session?.user) return;
         setInfo({senderId : session?.user?._id, username : session?.user?.username});
     },[session]);
+
+    const filteredChatList = chatList?.filter(list =>
+        list.otherUserInfo.username.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     
     async function fetchChatList() {
         try{
@@ -70,10 +75,10 @@ export default function MessagesLayout({children}) {
                     </div>
                 </div>
                 <div className={styles.searchBox}>
-                    <SearchBox/>
+                    <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
                 </div>
-                {chatList ?
-                    chatList.map(list => (
+                {filteredChatList.length > 0 ?
+                    filteredChatList.map(list => (
                         <Link key={list.otherUserInfo._id} href={`/messages/${list.otherUserInfo._id}`}>
                             <User
                                 isActive={urlId === list.otherUserInfo._id}
