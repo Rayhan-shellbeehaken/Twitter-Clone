@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { RiNotification2Line } from "react-icons/ri";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { updateNotification } from '@/app/actions/notificationaction';
+import styles from './sidemenu.module.css'
 
 export default function NotificationButton({status}) {
     const [active,setActive] = useState(status);
@@ -16,7 +17,7 @@ export default function NotificationButton({status}) {
     return (
         <li>
             <Link href="/notifications" onClick={updateStatus}>
-                {active ? <MdOutlineNotificationsActive/> : <RiNotification2Line/>}
+                {active ? <MdOutlineNotificationsActive className={styles.unread}/> : <RiNotification2Line/>}
                 <span>Notifications</span>
             </Link>
         </li>

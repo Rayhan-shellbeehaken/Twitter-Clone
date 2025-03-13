@@ -64,6 +64,10 @@
     background-color: rgb(25, 25, 25);
 }
 
+.unread{
+    color: rgb(209, 54, 54);
+}
+
 .button{
     width: 90%;
     padding: 15px;

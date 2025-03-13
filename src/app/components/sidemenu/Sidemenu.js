@@ -20,6 +20,7 @@ import SideBarPopUp from '../sidebarpopup/SideBarPopUp';
 import SideBarProfile from '../sidebarprofile/SideBarProfile';
 import { fetchNotification } from '@/app/helpers/notificationoperation';
 import NotificationButton from './NotificationButton';
+import MessageButton from './MessageButton';
 
 export default async function Sidemenu() {
     const session = await auth();
@@ -38,7 +39,7 @@ export default async function Sidemenu() {
                     <li><Link href="/home?feed=foryou"><GoHomeFill/> <span>Home</span></Link></li>
                     <li><Link href="#"><IoSearch/> <span>Explore</span></Link></li>
                     <NotificationButton status={unreadNotification.length ? true : false}/>
-                    <li><Link href="/messages"><FiMail/> <span>Messages</span></Link></li>
+                    <MessageButton userId={session?.user?._id}/>
                     <li><Link href="#"><VscVscode/> <span>Grok</span></Link></li>
                     <li><Link href="#"><PiBookmarkSimpleBold/> <span>Bookmarks</span></Link></li>
                     <li><Link href="#"><IoMdPeople/> <span>Communities</span></Link></li>
