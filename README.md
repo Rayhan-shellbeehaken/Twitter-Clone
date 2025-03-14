@@ -1,6 +1,6 @@
 # 🐦 Twitter Clone
 
-A full-featured Twitter clone that lets users post tweets, follow others, like posts, and engage in real-time interactions.
+A full-featured Twitter clone that lets users post tweets, follow others, like posts, and engage in real-time communication.
 
 ## ✨ Features
 - 📝 **Post Tweets** – Share your thoughts with the world.
